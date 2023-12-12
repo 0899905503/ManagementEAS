@@ -97,13 +97,13 @@ class AppTextField extends StatelessWidget {
             Visibility(
               visible: (title ?? "").isNotEmpty,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 0),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
                   title ?? "",
                   style: TextStyle(
                       fontSize: 18,
                       color: Color(0xff663300),
-                      fontWeight: FontWeight.w600),
+                      fontWeight: FontWeight.w500),
                 ),
               ),
             ),

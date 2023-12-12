@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/UI/widgets/appbar/tk_app_bar.dart';
 import 'package:flutter_base/UI/widgets/textfields/app_text_field.dart';
 import 'package:flutter_base/common/app_images.dart';
+import 'package:flutter_base/common/app_text_styles.dart';
 
 class Myapp extends StatefulWidget {
   const Myapp({super.key});
@@ -30,18 +31,6 @@ class _MyappState extends State<Myapp> {
       ),
       child: Column(
         children: [
-          // boxlogin("username", "error"),
-          // const SizedBox(
-          //   height: 30,
-          // ),
-          // boxlogin("password", "error"),
-          // const AppTextField(
-          //   prefixIcon: AppImages.icPerson,
-          //   //  enableValidator: state.enableValidate,
-          //   hintText: "username ",
-          //   background: Color(0xff000000),
-          //   fontWeight: FontWeight.bold,
-          // ),
           const SizedBox(
             height: 350,
           ),
@@ -54,18 +43,31 @@ class _MyappState extends State<Myapp> {
                 bottom: Radius.circular(0),
               ),
             ),
-            child: const Column(
+            child: Column(
               children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: 300,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      boxMenu("Login"),
+                      boxMenu("Sign Up"),
+                    ],
+                  ),
+                ),
                 SizedBox(
-                  height: 100,
+                  height: 30,
                 ),
                 SizedBox(
                   width: 350,
                   child: AppTextField(
                     title: "Email",
-                    prefixIcon: AppImages.icPerson,
+                    // prefixIcon: AppImages.icPerson,
                     //  enableValidator: state.enableValidate,
-                    hintText: "username ",
+                    // hintText: "username ",
                     background: Color(0xffFFF5EE),
                     fontWeight: FontWeight.bold,
                     borderColor: Color(0xff663300),
@@ -74,15 +76,15 @@ class _MyappState extends State<Myapp> {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 15,
                 ),
                 SizedBox(
                   width: 350,
                   child: AppTextField(
                     title: "Password",
-                    prefixIcon: AppImages.icPerson,
+                    // prefixIcon: AppImages.icPerson,
                     //  enableValidator: state.enableValidate,
-                    hintText: "password ",
+                    // hintText: "password ",
                     background: Color(0xffFFF5EE),
                     fontWeight: FontWeight.bold,
                     borderColor: Color(0xff663300),
@@ -90,7 +92,7 @@ class _MyappState extends State<Myapp> {
                     showOutline: true,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 500,
                 ),
               ],
@@ -101,21 +103,22 @@ class _MyappState extends State<Myapp> {
     );
   }
 
-  Widget boxlogin(String input, String error) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.brown[300],
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(),
-      ),
-      child: TextFormField(
-        decoration: InputDecoration(
-            hintText: input,
-            hintStyle: const TextStyle(
-                color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w600),
-            errorText: error,
-            errorStyle: const TextStyle(color: Colors.red)),
-      ),
+  Widget boxMenu(String content) {
+    String value;
+    return Row(
+      children: [
+        TextButton(
+          child: Text(content, style: AppTextStyle.brownS20W800),
+          onPressed: () {
+            if (content == "Login") {
+              print(content);
+            }
+            if (content == "Sign Up") {
+              print(content);
+            }
+          },
+        )
+      ],
     );
   }
 }
