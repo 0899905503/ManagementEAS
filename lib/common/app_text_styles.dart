@@ -109,6 +109,14 @@ class AppTextStyle {
   static final whiteS24Bold = whiteS24.copyWith(fontWeight: FontWeight.w700);
   static final whiteS24W800 = whiteS24.copyWith(fontWeight: FontWeight.w800);
 
+  static final whiteS35 = white.copyWith(fontSize: 35);
+  static final whiteS35Bold = whiteS24.copyWith(fontWeight: FontWeight.w700);
+  static final whiteS35W800 = whiteS24.copyWith(fontWeight: FontWeight.w800);
+
+  static final whiteS50 = white.copyWith(fontSize: 50);
+  static final whiteS50Bold = whiteS24.copyWith(fontWeight: FontWeight.w700);
+  static final whiteS50W800 = whiteS24.copyWith(fontWeight: FontWeight.w800);
+
   ///Gray
   static const grey = TextStyle(color: Colors.grey);
 
@@ -174,4 +182,8 @@ class AppTextStyle {
   static final brownS20 = brown.copyWith(fontSize: 20);
   static final brownS20Bold = brownS20.copyWith(fontWeight: FontWeight.bold);
   static final brownS20W800 = brownS20.copyWith(fontWeight: FontWeight.w800);
+  //s14
+  static final brownS14 = brown.copyWith(fontSize: 14);
+  static final brownSvBold = brownS14.copyWith(fontWeight: FontWeight.bold);
+  static final brownS14W800 = brownS14.copyWith(fontWeight: FontWeight.w800);
 }

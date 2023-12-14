@@ -1,17 +1,22 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_base/UI/widgets/appbar/tk_app_bar.dart';
+import 'package:flutter_base/UI/widgets/buttons/app_button.dart';
 import 'package:flutter_base/UI/widgets/textfields/app_text_field.dart';
+import 'package:flutter_base/common/app_colors.dart';
 import 'package:flutter_base/common/app_images.dart';
 import 'package:flutter_base/common/app_text_styles.dart';
+import 'package:flutter_base/generated/l10n.dart';
 
-class Myapp extends StatefulWidget {
-  const Myapp({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Myapp> createState() => _MyappState();
+  State<Login> createState() => _LoginState();
 }
 
-class _MyappState extends State<Myapp> {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,16 +28,25 @@ class _MyappState extends State<Myapp> {
     ));
   }
 
-  @override
   Widget _buildBodyWidget() {
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xff663300),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 350,
+            height: 200,
+          ),
+          SizedBox(
+              height: 120,
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[title("Hey!", "Welcome Back")],
+              )),
+          const SizedBox(
+            height: 30,
           ),
           Container(
             height: 469,
@@ -53,15 +67,15 @@ class _MyappState extends State<Myapp> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      boxMenu("Login"),
-                      boxMenu("Sign Up"),
+                      boxMenu("Login", 25, FontWeight.w800),
+                      boxMenu("Sign Up", 25, FontWeight.w800),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 350,
                   child: AppTextField(
                     title: "Email",
@@ -75,10 +89,10 @@ class _MyappState extends State<Myapp> {
                     showOutline: true,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 350,
                   child: AppTextField(
                     title: "Password",
@@ -93,8 +107,21 @@ class _MyappState extends State<Myapp> {
                   ),
                 ),
                 const SizedBox(
-                  width: 500,
+                  height: 30,
                 ),
+                _buildSignButton(),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 150,
+                    ),
+                    boxMenu("Or sign up here", 14, FontWeight.w400),
+                  ],
+                ),
+                Text(
+                  "BAVO",
+                  style: AppTextStyle.brownS14,
+                )
               ],
             ),
           ),
@@ -103,12 +130,15 @@ class _MyappState extends State<Myapp> {
     );
   }
 
-  Widget boxMenu(String content) {
-    String value;
+  Widget boxMenu(String content, double? size, FontWeight weight) {
     return Row(
       children: [
         TextButton(
-          child: Text(content, style: AppTextStyle.brownS20W800),
+          child: Text(content,
+              style: TextStyle(
+                  fontSize: size,
+                  fontWeight: weight,
+                  color: AppColors.defaultText)),
           onPressed: () {
             if (content == "Login") {
               print(content);
@@ -120,5 +150,53 @@ class _MyappState extends State<Myapp> {
         )
       ],
     );
+  }
+
+  Widget title(String title1, String title2) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            const SizedBox(
+              width: 30,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title1,
+                  style: AppTextStyle.whiteS50W800,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  title2,
+                  style: AppTextStyle.whiteS50W800,
+                )
+              ],
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _buildSignButton() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 80),
+      child: AppButton(
+        // title: S.current.login,
+        title: "Login",
+        onPressed: _signIn,
+        // isLoading: state.signInStatus == LoadStatus.loading,
+      ),
+    );
+  }
+
+  void _signIn() {
+    // _cubit.changeUsername(username: usernameTextController.text);
+    // _cubit.changePassword(password: passwordTextController.text);
+    // _cubit.signIn(_appSettingCubit.state.locale?.languageCode ?? "de");
   }
 }

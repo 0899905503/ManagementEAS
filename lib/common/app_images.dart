@@ -1,6 +1,10 @@
 class AppImages {
   ///==============================INVENTORY MODULE================================
 
+//Background
+  static const ic_background = 'assets/images/ic_background.png';
+  static const ic_doan = 'assets/images/ic_doan.png';
+
   /// Common
   static const bgImagePlaceholder = 'assets/images/bg_image_placeholder.png';
   static const icLogo = 'assets/images/ic_logo_app.png';
