@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/UI/Employee/home_page/home_page.dart';
+import 'package:flutter_base/UI/Employee/jd_page/jd_page.dart';
 import 'package:flutter_base/common/app_colors.dart';
 import 'package:flutter_base/models/enums/main_tab.dart';
 
@@ -47,6 +48,7 @@ class _TkMainChildPageState extends State<TkMainChildPage> {
   late PageController pageController;
 
   final tabs = [
+    //maintab dinh dang cho cac bottom navigator bar item
     MainTab.home,
     MainTab.checkIn,
     MainTab.workOffHistory,
@@ -60,6 +62,7 @@ class _TkMainChildPageState extends State<TkMainChildPage> {
     _cubit.loadInitialData();
     pageList = [
       const Homepage(),
+      const Homepage1(),
       // const TkHomePage(),
       // const TkTimekeepingPage(),
       // const TkWorkOffHistoryPage(),
@@ -71,9 +74,11 @@ class _TkMainChildPageState extends State<TkMainChildPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildPageView(),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+    return MaterialApp(
+      home: Scaffold(
+        body: _buildPageView(),
+        bottomNavigationBar: _buildBottomNavigationBar(),
+      ),
     );
   }
 
@@ -106,7 +111,7 @@ class _TkMainChildPageState extends State<TkMainChildPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              color: AppColors.dividerB5E6ED,
+              color: Color(0xff663300),
               width: double.infinity,
               height: 1.5,
             ),
@@ -117,7 +122,7 @@ class _TkMainChildPageState extends State<TkMainChildPage> {
               elevation: 0,
               type: BottomNavigationBarType.fixed,
               currentIndex: state.selectedIndex,
-              unselectedItemColor: Colors.grey,
+              unselectedItemColor: Color(0xff663300),
               selectedItemColor: theme.indicatorColor,
               items: tabs.map((e) => e.tab).toList(),
               onTap: (index) {
