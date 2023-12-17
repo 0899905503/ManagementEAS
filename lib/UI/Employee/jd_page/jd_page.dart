@@ -9,10 +9,6 @@ class Homepage1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: TKCommonAppBar(
-          hasLeadingIcon: false,
-          title: "jd",
-        ),
         body: SafeArea(
           child: Container(
             decoration: BoxDecoration(color: Colors.green),

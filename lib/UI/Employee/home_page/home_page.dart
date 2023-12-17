@@ -9,12 +9,12 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: TKCommonAppBar(
-          hasLeadingIcon: false,
-          title: "homepage",
-        ),
         body: SafeArea(
-          child: Container(),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.red,
+            ),
+          ),
         ),
       ),
     );
