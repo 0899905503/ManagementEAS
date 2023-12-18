@@ -113,15 +113,15 @@ class AppTextField extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: background ?? Color(0xff663300),
+                color: background ?? Colors.white,
                 borderRadius: BorderRadius.circular(borderRadius ?? 15),
                 boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.7),
-                    spreadRadius: 1,
-                    blurRadius: 2,
-                    offset: const Offset(2, 2), // changes position of shadow
-                  ),
+                  // BoxShadow(
+                  //   color: Colors.grey.withOpacity(0.7),
+                  //   spreadRadius: 1,
+                  //   blurRadius: 2,
+                  //   offset: const Offset(2, 2), // changes position of shadow
+                  // ),
                 ],
               ),
               child: TextFormField(
@@ -166,7 +166,7 @@ class AppTextField extends StatelessWidget {
                   ),
                   hintStyle: TextStyle(
                     fontSize: fontSize!,
-                    color: hintTextColor ?? Colors.black38,
+                    color: hintTextColor ?? Color(0xFF535050),
                     fontWeight: fontWeight ?? FontWeight.w500,
                   ),
                   enabledBorder: OutlineInputBorder(

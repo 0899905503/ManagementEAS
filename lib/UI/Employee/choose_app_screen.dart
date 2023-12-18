@@ -35,14 +35,6 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
   Widget _buildBodyWidget() {
     return Stack(
       children: [
-        SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Image.asset(
-            AppImages.icTKBackground,
-            fit: BoxFit.fitWidth,
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(

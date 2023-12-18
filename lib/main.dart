@@ -6,5 +6,5 @@ import 'package:flutter_base/UI/Employee/main_page/main_page.dart';
 import 'package:flutter_base/UI/Login/login.dart';
 
 void main() {
-  runApp(const TkMainPage());
+  runApp(const Login());
 }

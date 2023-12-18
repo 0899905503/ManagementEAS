@@ -29,63 +29,43 @@ class _LoginState extends State<Login> {
   }
 
   Widget _buildBodyWidget() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xff663300),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 200,
-          ),
-          SizedBox(
-              height: 120,
-              child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[title("Hey!", "Welcome Back")],
-              )),
-          const SizedBox(
-            height: 30,
-          ),
-          Container(
-            height: 469,
-            decoration: const BoxDecoration(
-              color: Color(0xffEECBAD),
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(40),
-                bottom: Radius.circular(0),
-              ),
-            ),
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(color: Color(0xFFF1F0EF)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 10,
+                  height: 35,
                 ),
-                Container(
-                  width: 300,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      boxMenu("Login", 25, FontWeight.w800),
-                      boxMenu("Sign Up", 25, FontWeight.w800),
-                    ],
+                Text(
+                  "MEAS",
+                  style: AppTextStyle.brownS40W800.copyWith(
+                    fontSize: 40,
                   ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 49,
+                ),
+                SizedBox(
+                  height: 228,
+                  width: 228,
+                  child: Image.asset(AppImages.ic_background),
                 ),
                 const SizedBox(
-                  width: 350,
+                  height: 99,
+                ),
+                const SizedBox(
+                  width: 367,
                   child: AppTextField(
-                    title: "Email",
-                    // prefixIcon: AppImages.icPerson,
-                    //  enableValidator: state.enableValidate,
-                    // hintText: "username ",
-                    background: Color(0xffFFF5EE),
-                    fontWeight: FontWeight.bold,
-                    borderColor: Color(0xff663300),
-                    borderRadius: 30,
+                    hintText: "Username ",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    borderRadius: 10,
                     showOutline: true,
                   ),
                 ),
@@ -93,40 +73,46 @@ class _LoginState extends State<Login> {
                   height: 15,
                 ),
                 const SizedBox(
-                  width: 350,
+                  width: 367,
                   child: AppTextField(
-                    title: "Password",
-                    // prefixIcon: AppImages.icPerson,
-                    //  enableValidator: state.enableValidate,
-                    // hintText: "password ",
-                    background: Color(0xffFFF5EE),
-                    fontWeight: FontWeight.bold,
-                    borderColor: Color(0xff663300),
-                    borderRadius: 30,
+                    hintText: "Password ",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    borderRadius: 10,
                     showOutline: true,
                   ),
                 ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 204,
+                    ),
+                    boxMenu("Forgot Password?", 12, FontWeight.w400),
+                  ],
+                ),
                 const SizedBox(
-                  height: 30,
+                  height: 50,
                 ),
                 _buildSignButton(),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      width: 150,
+                      width: 60,
                     ),
-                    boxMenu("Or sign up here", 14, FontWeight.w400),
+                    Text(
+                      "You don't have an account ?",
+                      style: AppTextStyle.blackS12W400,
+                    ),
+                    boxMenu("Sign Up", 12, FontWeight.w700)
                   ],
-                ),
-                Text(
-                  "BAVO",
-                  style: AppTextStyle.brownS14,
                 )
               ],
             ),
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 
@@ -152,7 +138,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget title(String title1, String title2) {
+  Widget title(String title1) {
     return Column(
       children: [
         Row(
@@ -165,15 +151,11 @@ class _LoginState extends State<Login> {
               children: [
                 Text(
                   title1,
-                  style: AppTextStyle.whiteS50W800,
+                  style: AppTextStyle.brownS20Bold,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Text(
-                  title2,
-                  style: AppTextStyle.whiteS50W800,
-                )
               ],
             )
           ],
@@ -184,9 +166,10 @@ class _LoginState extends State<Login> {
 
   Widget _buildSignButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 80),
+      // padding: const EdgeInsets.symmetric(horizontal: 80),
       child: AppButton(
         // title: S.current.login,
+
         title: "Login",
         onPressed: _signIn,
         // isLoading: state.signInStatus == LoadStatus.loading,

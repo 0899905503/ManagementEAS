@@ -58,7 +58,7 @@ class AppImages {
   static const icAdd = 'assets/images/add.png';
 
   ///==============================TIMEKEEPING MODULE================================
-  static const icTKBackground = 'assets/images/tk_background.png';
+
   static const icTKHomeMenuActive = 'assets/images/tk_ic_home_active.png';
   static const icTKHomeMenuInActive = 'assets/images/tk_ic_home_inactive.png';
   static const icTKCalendarMenuActive =
@@ -95,4 +95,6 @@ class AppImages {
   static const icTkLogout = 'assets/images/tk_ic_logout.png';
   static const icTkMail = 'assets/images/tk_ic_mail.png';
   static const icTkPhone = 'assets/images/tk_ic_phone.png';
+  // MEAS ===================================================================================
+  //===========================================================================================
 }

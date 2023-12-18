@@ -51,7 +51,7 @@ class AppButton extends StatelessWidget {
       },
       child: Container(
         height: height ?? AppDimens.buttonHeight,
-        width: width ?? double.infinity,
+        width: width ?? 367,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
             cornerRadius ?? AppDimens.buttonLogin,
@@ -92,8 +92,8 @@ class AppButton extends StatelessWidget {
                   title!,
                   style: textStyle ??
                       TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                         color: textColor ?? Colors.white,
                       ),
                 )
