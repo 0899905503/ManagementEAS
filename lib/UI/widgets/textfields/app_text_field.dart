@@ -174,7 +174,7 @@ class AppTextField extends StatelessWidget {
                     borderSide: BorderSide(
                       color:
                           showOutline! ? Color(0xff663300) : Colors.transparent,
-                      width: 3,
+                      width: 2,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
