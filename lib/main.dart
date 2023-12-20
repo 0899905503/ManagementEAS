@@ -7,5 +7,5 @@ import 'package:flutter_base/UI/Login/Sign%20In/login.dart';
 import 'package:flutter_base/UI/Login/Sign%20Up/signup.dart';
 
 void main() {
-  runApp(const Signup());
+  runApp(const ChooseAppScreen());
 }

@@ -96,5 +96,9 @@ class AppImages {
   static const icTkMail = 'assets/images/tk_ic_mail.png';
   static const icTkPhone = 'assets/images/tk_ic_phone.png';
   // MEAS ===================================================================================
+
+//Choose App Screen
+  static const icEmployee = "assets/images/ic_employee.png";
+  static const icSalary = "assets/images/ic_salary.png";
   //===========================================================================================
 }

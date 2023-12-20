@@ -192,6 +192,11 @@ class AppTextStyle {
   static final brownS14 = brown.copyWith(fontSize: 14);
   static final brownSvBold = brownS14.copyWith(fontWeight: FontWeight.bold);
   static final brownS14W800 = brownS14.copyWith(fontWeight: FontWeight.w800);
+  //s30
+  static final brownS30 = brown.copyWith(fontSize: 30);
+  static final brownS30Bold = brownS30.copyWith(fontWeight: FontWeight.bold);
+  static final brownS30W800 = brownS30.copyWith(fontWeight: FontWeight.w800);
+  static final brownS30W700 = brownS30.copyWith(fontWeight: FontWeight.w700);
 
   //da
   static const da = TextStyle(color: Color(0xffEECBAD));

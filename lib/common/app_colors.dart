@@ -71,5 +71,6 @@ class AppColors {
 
   //button login
   static const Color buttonLogin = Color(0xff663300);
+  static const Color borderMenuItem = Color(0xff663300);
   static const Color defaultText = Color(0xFF535050);
 }

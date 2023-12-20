@@ -1,5 +1,6 @@
 import 'package:flutter_base/UI/Employee/choose_app_screen.dart';
 import 'package:flutter_base/UI/Employee/home_page/home_page.dart';
+import 'package:flutter_base/UI/Salary/Sum/salary.dart';
 import 'package:get/get.dart';
 
 class RouteConfig {
@@ -11,13 +12,12 @@ class RouteConfig {
   static const String home = "/home";
 
   ///==============================Timekeeping app==================================
-  static const String chooseAppScreen = "/chooseAppScreen";
+  static const String chooseAppScreen = "/ChooseAppScreen";
   static const String tkHomePage = "/tkHomePage";
-  static const String tkTakeLeavePage = "/tkTakeLeavePage";
-  static const String tkWorkLatePage = "/tkWorkLatePage";
-  static const String tkTimekeepingHistoryPage = "/tkTimekeepingHistoryPage";
-  static const String tkProfilePage = "/tkProfilePage";
-  static const String tkChangePassword = "/tkChangePassword";
+  // MEAS ======================================================================================================
+  static const String managementSalary = "/salary";
+  static const String managementEmployee = "Homepage";
+  //============================================================================================================
 
   ///Alias ​​mapping page
   static final List<GetPage> getPages = [
@@ -37,13 +37,8 @@ class RouteConfig {
           ),
     ),
 
-    // GetPage(
-    //   name: tkTimekeepingHistoryPage,
-    //   page: () => const TkTimekeepingHistoryPage(
-    //       // arguments: Get.arguments,
-    //       ),
-    // ),
-    // GetPage(name: tkHomePage, page: () => const TkChangePassword()),
-    // GetPage(name: tkChangePassword, page: () => const TkChangePassword()),
+    //MEAS =============================================================================================
+    GetPage(name: managementEmployee, page: () => Homepage()),
+    GetPage(name: managementSalary, page: () => salary()),
   ];
 }
