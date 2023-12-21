@@ -14,7 +14,7 @@ class AppDimens {
   static const double buttonBorderWidth = 1;
   static const double buttonWidth = 367;
 
-  static const double appBarHeight = 56;
+  static const double appBarHeight = 100;
 
   static const double paddingNormal = 20;
   static const double paddingSmall = 10;

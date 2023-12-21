@@ -62,7 +62,7 @@ class _TkMainChildPageState extends State<TkMainChildPage> {
     _cubit = BlocProvider.of(context);
     _cubit.loadInitialData();
     pageList = [
-      const Homepage(),
+      const HomePage(),
       const Homepage1(),
       const Profile(),
       const Profile(),

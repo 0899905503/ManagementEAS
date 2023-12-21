@@ -22,7 +22,7 @@ class RouteConfig {
   ///Alias ​​mapping page
   static final List<GetPage> getPages = [
     // GetPage(name: signIn, page: () => const SignInPage()),
-    GetPage(name: home, page: () => const Homepage()),
+    GetPage(name: home, page: () => const HomePage()),
 
     ///===================Timekeeping App=============================
 
@@ -32,13 +32,13 @@ class RouteConfig {
     ),
     GetPage(
       name: tkHomePage,
-      page: () => const Homepage(
+      page: () => const HomePage(
           // arguments: Get.arguments,
           ),
     ),
 
     //MEAS =============================================================================================
-    GetPage(name: managementEmployee, page: () => Homepage()),
+    GetPage(name: managementEmployee, page: () => HomePage()),
     GetPage(name: managementSalary, page: () => salary()),
   ];
 }

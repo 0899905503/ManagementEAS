@@ -19,7 +19,11 @@ class TKCommonAppBar extends AppBar {
           title: Center(
             child: Text(
               title ?? "",
-              style: TextStyle(fontSize: 18, color: Colors.black),
+              style: const TextStyle(
+                fontSize: 30,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           elevation: 0,
