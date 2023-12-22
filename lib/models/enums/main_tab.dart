@@ -11,26 +11,26 @@ enum MainTab {
     switch (this) {
       case MainTab.home:
         return BottomNavigationBarItem(
-          icon: Image.asset(AppImages.icTKHomeMenuInActive),
-          activeIcon: Image.asset(AppImages.icTKHomeMenuActive),
+          icon: Image.asset(AppImages.icHomeBar),
+          activeIcon: Image.asset(AppImages.icHomeBar),
           label: "Home",
         );
       case MainTab.checkIn:
         return BottomNavigationBarItem(
-          icon: Image.asset(AppImages.icTKTimekeepingMenuInActive),
-          activeIcon: Image.asset(AppImages.icTKTimekeepingMenuActive),
+          icon: Image.asset(AppImages.icClockBar),
+          activeIcon: Image.asset(AppImages.icClockBar),
           label: "Movies",
         );
       case MainTab.workOffHistory:
         return BottomNavigationBarItem(
-          icon: Image.asset(AppImages.icTKCalendarMenuInActive),
-          activeIcon: Image.asset(AppImages.icTKCalendarMenuActive),
+          icon: Image.asset(AppImages.icCalendarBar),
+          activeIcon: Image.asset(AppImages.icCalendarBar),
           label: "Widgets",
         );
       case MainTab.profile:
         return BottomNavigationBarItem(
-          icon: Image.asset(AppImages.icTKPersonMenuInActive),
-          activeIcon: Image.asset(AppImages.icTKPersonMenuActive),
+          icon: Image.asset(AppImages.icProfileBar),
+          activeIcon: Image.asset(AppImages.icProfileBar),
           label: "Profile",
         );
     }

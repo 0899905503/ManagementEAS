@@ -100,5 +100,11 @@ class AppImages {
 //Choose App Screen
   static const icEmployee = "assets/images/ic_employee.png";
   static const icSalary = "assets/images/ic_salary.png";
+  //Bottom navigator Bar
+  static const icHomeBar = "assets/images/ic_homebar.png";
+  static const icClockBar = "assets/images/ic_clockbar.png";
+  static const icCalendarBar = "assets/images/ic_calendarBar.png";
+  static const icProfileBar = "assets/images/ic_profileBar.png";
+
   //===========================================================================================
 }

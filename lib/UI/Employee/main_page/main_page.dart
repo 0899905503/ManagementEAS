@@ -121,7 +121,7 @@ class _TkMainChildPageState extends State<TkMainChildPage> {
             BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              backgroundColor: Color(0xffEECBAD),
+              backgroundColor: Color(0xff663300),
               elevation: 0,
               type: BottomNavigationBarType.fixed,
               currentIndex: state.selectedIndex,
