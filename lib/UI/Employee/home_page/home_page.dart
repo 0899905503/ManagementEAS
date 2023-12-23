@@ -107,26 +107,26 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
               children: [
                 _menuItem(
                   "Chấm công",
-                  AppImages.icTKMenuTimekeeping,
+                  AppImages.icTimekeeping,
                   onTap: () {
                     // Get.toNamed(RouteConfig.tkTimekeepingHistoryPage);
                   },
                 ),
                 _menuItem(
                   "Công việc",
-                  AppImages.icTKMenuTodoList,
+                  AppImages.icJob,
                   onTap: () {},
                 ),
                 _menuItem(
                   "Xin nghỉ phép",
-                  AppImages.icTKMenuSchedule,
+                  AppImages.icLeave,
                   onTap: () {
                     // Get.toNamed(RouteConfig.tkTakeLeavePage);
                   },
                 ),
                 _menuItem(
                   "Xin đi trễ, về sớm",
-                  AppImages.icTKWorkLate,
+                  AppImages.icTime,
                   onTap: () {
                     //  Get.toNamed(RouteConfig.tkWorkLatePage);
                   },

@@ -105,6 +105,10 @@ class AppImages {
   static const icClockBar = "assets/images/ic_clockbar.png";
   static const icCalendarBar = "assets/images/ic_calendarBar.png";
   static const icProfileBar = "assets/images/ic_profileBar.png";
-
+//Home Page
+  static const icTimekeeping = "assets/images/icTimekeeping.png";
+  static const icTime = "assets/images/icTime.png";
+  static const icLeave = "assets/images/icLeave.png";
+  static const icJob = "assets/images/.icJob.png";
   //===========================================================================================
 }
