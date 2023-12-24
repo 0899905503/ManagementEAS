@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
   Widget _buildBodyWidget() {
     return Container(
         decoration: const BoxDecoration(
-          color: Color(0xff663300),
+          color: Color(0xFFF1F0EF),
         ),
         child: Column(
           children: [
@@ -37,7 +37,7 @@ class _ProfileState extends State<Profile> {
               children: [
                 userInfo(),
                 _avatarWidget(
-                    "https://upos.nq72.de/uploads/media/1701657308_595413654_OIG.y7Qm3KY4fs5.iN9qWcy3"),
+                    "https://upos.nq72.de/uploads/media/1701657308_595413654_OIG.y7Qm3KY4fs5"),
               ],
             ),
             const SizedBox(
@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> {
             _itemMenu(
               "Change password",
               AppImages.icTkLock,
-              iconBgColor: Colors.green,
+              iconBgColor: Colors.red[200],
               onTap: () => print("change password"),
             ),
             const SizedBox(
@@ -91,7 +91,8 @@ class _ProfileState extends State<Profile> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
-          color: const Color(0xffEECBAD),
+          border: Border.all(color: AppColors.borderMenuItem, width: 1),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
             BoxShadow(
@@ -138,8 +139,8 @@ class _ProfileState extends State<Profile> {
         ],
         gradient: const LinearGradient(
           colors: [
-            Color(0xffEECBAD),
-            Colors.white,
+            Color(0xff663300),
+            Color.fromARGB(255, 110, 73, 36),
           ],
           stops: [0.0, 1.0],
           begin: FractionalOffset.topCenter,
@@ -153,7 +154,7 @@ class _ProfileState extends State<Profile> {
           const SizedBox(height: 15),
           Text(
             "name",
-            style: AppTextStyle.blackS22W800,
+            style: AppTextStyle.whiteS22W800,
           ),
           const SizedBox(height: 15),
           Row(
@@ -161,7 +162,7 @@ class _ProfileState extends State<Profile> {
             children: [
               Text(
                 "chuc vu",
-                style: AppTextStyle.greyS16,
+                style: AppTextStyle.whiteS16,
               ),
               Container(
                 width: 6,
@@ -174,7 +175,7 @@ class _ProfileState extends State<Profile> {
               ),
               Text(
                 "nam tham gia",
-                style: AppTextStyle.greyS16,
+                style: AppTextStyle.whiteS16,
               ),
               Container(
                 width: 6,
@@ -187,7 +188,7 @@ class _ProfileState extends State<Profile> {
               ),
               Text(
                 " text",
-                style: AppTextStyle.greyS16,
+                style: AppTextStyle.whiteS16,
               ),
             ],
           ),
@@ -201,7 +202,7 @@ class _ProfileState extends State<Profile> {
                   const SizedBox(width: 5),
                   Text(
                     "phone number",
-                    style: AppTextStyle.greyS14,
+                    style: AppTextStyle.whiteS14,
                   ),
                 ],
               ),
@@ -212,7 +213,7 @@ class _ProfileState extends State<Profile> {
                   const SizedBox(width: 5),
                   Text(
                     "email",
-                    style: AppTextStyle.greyS14,
+                    style: AppTextStyle.whiteS14,
                   )
                 ],
               ),
