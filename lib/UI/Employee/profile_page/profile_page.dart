@@ -77,7 +77,8 @@ class _ProfileState extends State<Profile> {
           ],
         ),
         child: AppCacheImage(
-          url: url ?? "",
+          url: url ??
+              "https://avatars.githubusercontent.com/u/126176258?s=400&u=45024de77e178dd9643ed95289adaf5f748d0796&v=4",
           borderRadius: 60,
         ),
       ),
