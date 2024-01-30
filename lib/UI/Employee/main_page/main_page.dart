@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/UI/Employee/home_page/home_page.dart';
 import 'package:flutter_base/UI/Employee/jd_page/jd_page.dart';
-import 'package:flutter_base/UI/Employee/profile_page/profile_page.dart';
+import 'package:flutter_base/UI/Employee/profile_page/tk_profile_page.dart';
 import 'package:flutter_base/common/app_colors.dart';
 import 'package:flutter_base/models/enums/main_tab.dart';
 
@@ -64,8 +64,8 @@ class _TkMainChildPageState extends State<TkMainChildPage> {
     pageList = [
       const HomePage(),
       const Homepage1(),
-      const Profile(),
-      const Profile(),
+      const TkProfilePage(),
+      const TkProfilePage(),
       // const TkHomePage(),
       // const TkTimekeepingPage(),
       // const TkWorkOffHistoryPage(),

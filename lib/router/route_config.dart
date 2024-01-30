@@ -17,6 +17,7 @@ class RouteConfig {
   // MEAS ======================================================================================================
   static const String managementSalary = "/salary";
   static const String managementEmployee = "Homepage";
+  static const String notification = "/notification";
   //============================================================================================================
 
   ///Alias ​​mapping page
