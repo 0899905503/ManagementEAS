@@ -1,5 +1,6 @@
 import 'package:flutter_base/UI/Employee/choose_app_screen.dart';
 import 'package:flutter_base/UI/Employee/home_page/home_page.dart';
+import 'package:flutter_base/UI/Employee/profile_page/tk_profile_page.dart';
 import 'package:flutter_base/UI/Salary/Sum/salary.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,7 @@ class RouteConfig {
   // MEAS ======================================================================================================
   static const String managementSalary = "/salary";
   static const String managementEmployee = "Homepage";
+  static const String profile = "TkProfilePage";
   static const String notification = "/notification";
   //============================================================================================================
 
@@ -37,9 +39,16 @@ class RouteConfig {
           // arguments: Get.arguments,
           ),
     ),
+    GetPage(
+      name: profile,
+      page: () => const TkProfilePage(
+          // arguments: Get.arguments,
+          ),
+    ),
 
     //MEAS =============================================================================================
     GetPage(name: managementEmployee, page: () => HomePage()),
     GetPage(name: managementSalary, page: () => salary()),
+    GetPage(name: profile, page: () => TkProfilePage()),
   ];
 }

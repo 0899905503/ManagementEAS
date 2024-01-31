@@ -5,7 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_base/router/route_config.dart';
 import 'package:flutter_base/utils/local_notification_service.dart';
-
 import 'package:flutter_base/utils/logger.dart';
 import 'package:get/get.dart';
 

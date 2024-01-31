@@ -7,6 +7,8 @@ import 'configs/app_configs.dart';
 import 'configs/app_env_config.dart';
 
 void main() async {
+  const String environment = 'development';
+
   AppConfigs.env = Environment.dev;
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(

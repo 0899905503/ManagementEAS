@@ -115,7 +115,7 @@ class _TkProfileChildPageState extends State<TkProfileChildPage> {
               Stack(
                 children: [
                   //_userInfo(state.profile?.user),
-                  _avatarWidget('state.profile?.user?.profileImage')
+                  _avatarWidget(state.profile?.user?.profileImage)
                 ],
               ),
               const SizedBox(height: 30),
