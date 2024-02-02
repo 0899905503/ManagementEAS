@@ -3,5 +3,6 @@
     "joined": "joined",
     "updating": "updating",
     "minutes": "minutes",
-    "hours": "hours"
+    "hours": "hours",
+    "seconds": "seconds"
 }

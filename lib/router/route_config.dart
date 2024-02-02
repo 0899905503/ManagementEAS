@@ -39,16 +39,9 @@ class RouteConfig {
           // arguments: Get.arguments,
           ),
     ),
-    GetPage(
-      name: profile,
-      page: () => const TkProfilePage(
-          // arguments: Get.arguments,
-          ),
-    ),
 
     //MEAS =============================================================================================
-    GetPage(name: managementEmployee, page: () => HomePage()),
-    GetPage(name: managementSalary, page: () => salary()),
-    GetPage(name: profile, page: () => TkProfilePage()),
+    // GetPage(name: managementEmployee, page: () => HomePage()),
+    // GetPage(name: managementSalary, page: () => salary()),
   ];
 }

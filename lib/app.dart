@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     _apiClient = ApiUtil.apiClient;
-    HandlePushNotification.instance.init();
+    // HandlePushNotification.instance.init();
     WsConnector.instance.initWS();
     super.initState();
   }

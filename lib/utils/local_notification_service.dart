@@ -33,7 +33,7 @@ class LocalNotificationService {
             // );
             // HandleNavigateFromNotification.handleNavigate(notification);
             logger.d('------------------ selectedNotification');
-            HandlePushNotification.instance.handleNavigate();
+            //HandlePushNotification.instance.handleNavigate();
 
             ///Indicates that a user has selected a notification
             break;
@@ -86,7 +86,7 @@ class LocalNotificationService {
       NotificationResponse notificationResponse) {
     // Map<String, dynamic> notificationData =
     //     json.decode(notificationResponse.payload!);
-    HandlePushNotification.instance.handleNavigate();
+   //s HandlePushNotification.instance.handleNavigate();
     if (notificationResponse.input?.isNotEmpty ?? false) {
       logger.d(
           'notification action tapped with input: ${notificationResponse.input}');

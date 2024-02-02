@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "joined" : MessageLookupByLibrary.simpleMessage("joined"),
     "login" : MessageLookupByLibrary.simpleMessage("login"),
     "minutes" : MessageLookupByLibrary.simpleMessage("minutes"),
+    "seconds" : MessageLookupByLibrary.simpleMessage("seconds"),
     "updating" : MessageLookupByLibrary.simpleMessage("updating")
   };
 }
