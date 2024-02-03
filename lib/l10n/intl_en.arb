@@ -4,5 +4,6 @@
     "updating": "updating",
     "minutes": "minutes",
     "hours": "hours",
-    "seconds": "seconds"
+    "seconds": "seconds",
+    "date": "date"
 }
