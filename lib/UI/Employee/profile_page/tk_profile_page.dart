@@ -29,7 +29,7 @@ class TkProfilePage extends StatelessWidget {
   // final TkHomeArguments arguments;
 
   const TkProfilePage({
-    Key? key, required arguments,
+    Key? key,
     // required this.arguments,
   }) : super(key: key);
 

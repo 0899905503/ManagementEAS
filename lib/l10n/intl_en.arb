@@ -5,5 +5,6 @@
     "minutes": "minutes",
     "hours": "hours",
     "seconds": "seconds",
-    "date": "date"
+    "date": "date",
+    "logout": "logout"
 }
