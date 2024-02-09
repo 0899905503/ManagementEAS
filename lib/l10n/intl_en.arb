@@ -6,5 +6,6 @@
     "hours": "hours",
     "seconds": "seconds",
     "date": "date",
-    "logout": "logout"
+    "logout": "logout",
+    "profile": "profile"
 }
