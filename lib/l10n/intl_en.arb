@@ -7,5 +7,6 @@
     "seconds": "seconds",
     "date": "date",
     "logout": "logout",
-    "profile": "profile"
+    "profile": "profile",
+    "locale": "locale"
 }

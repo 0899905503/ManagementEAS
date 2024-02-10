@@ -136,6 +136,16 @@ class S {
       args: [],
     );
   }
+
+  /// `locale`
+  String get locale {
+    return Intl.message(
+      'locale',
+      name: 'locale',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
