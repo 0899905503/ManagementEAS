@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "minutes" : MessageLookupByLibrary.simpleMessage("minutes"),
     "profile" : MessageLookupByLibrary.simpleMessage("profile"),
     "seconds" : MessageLookupByLibrary.simpleMessage("seconds"),
+    "time_keeping" : MessageLookupByLibrary.simpleMessage("time_keeping"),
     "updating" : MessageLookupByLibrary.simpleMessage("updating")
   };
 }

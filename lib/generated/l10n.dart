@@ -146,6 +146,16 @@ class S {
       args: [],
     );
   }
+
+  /// `time_keeping`
+  String get time_keeping {
+    return Intl.message(
+      'time_keeping',
+      name: 'time_keeping',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

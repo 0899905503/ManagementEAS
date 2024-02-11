@@ -8,5 +8,6 @@
     "date": "date",
     "logout": "logout",
     "profile": "profile",
-    "locale": "locale"
+    "locale": "locale",
+    "time_keeping": "time_keeping"
 }
