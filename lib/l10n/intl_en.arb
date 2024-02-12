@@ -9,5 +9,6 @@
     "logout": "logout",
     "profile": "profile",
     "locale": "locale",
-    "time_keeping": "time_keeping"
+    "time_keeping": "time_keeping",
+    "day_off": "day_off"
 }

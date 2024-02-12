@@ -156,6 +156,16 @@ class S {
       args: [],
     );
   }
+
+  /// `day_off`
+  String get day_off {
+    return Intl.message(
+      'day_off',
+      name: 'day_off',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
