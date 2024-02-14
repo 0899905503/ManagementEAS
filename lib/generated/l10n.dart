@@ -166,6 +166,16 @@ class S {
       args: [],
     );
   }
+
+  /// `total_work`
+  String get total_work {
+    return Intl.message(
+      'total_work',
+      name: 'total_work',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
