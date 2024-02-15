@@ -11,5 +11,6 @@
     "locale": "locale",
     "time_keeping": "time_keeping",
     "day_off": "day_off",
-    "total_work": "total_work"
+    "total_work": "total_work",
+    "department": "department"
 }
