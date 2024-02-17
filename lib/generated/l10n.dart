@@ -176,6 +176,26 @@ class S {
       args: [],
     );
   }
+
+  /// `department`
+  String get department {
+    return Intl.message(
+      'department',
+      name: 'department',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `employees`
+  String get employees {
+    return Intl.message(
+      'employees',
+      name: 'employees',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
