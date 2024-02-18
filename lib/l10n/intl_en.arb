@@ -13,5 +13,6 @@
     "day_off": "day_off",
     "total_work": "total_work",
     "department": "department",
-    "employees": "employees"
+    "employees": "employees",
+    "salary": "salary"
 }
