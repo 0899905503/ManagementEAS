@@ -206,6 +206,16 @@ class S {
       args: [],
     );
   }
+
+  /// `break_day`
+  String get break_day {
+    return Intl.message(
+      'break_day',
+      name: 'break_day',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

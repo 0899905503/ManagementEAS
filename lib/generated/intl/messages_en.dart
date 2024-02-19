@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "break_day" : MessageLookupByLibrary.simpleMessage("break_day"),
     "date" : MessageLookupByLibrary.simpleMessage("date"),
     "day_off" : MessageLookupByLibrary.simpleMessage("day_off"),
     "department" : MessageLookupByLibrary.simpleMessage("department"),
@@ -36,6 +37,4 @@ class MessageLookup extends MessageLookupByLibrary {
     "seconds" : MessageLookupByLibrary.simpleMessage("seconds"),
     "time_keeping" : MessageLookupByLibrary.simpleMessage("time_keeping"),
     "total_work" : MessageLookupByLibrary.simpleMessage("total_work"),
-    "updating" : MessageLookupByLibrary.simpleMessage("updating")
-  };
-}
+    
