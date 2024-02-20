@@ -16,14 +16,5 @@ Future<void> _firebaseMessagingBackgroundHandler() async {
   // await Firebase.initializeApp();
 }
 void main() async {
-  const String environment = 'default';
-
-  AppConfigs.env = Environment.prod;
-  WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getTemporaryDirectory(),
-  );
-  runApp(const MyApp());
+  runApp(ChooseAppScreen());
 }

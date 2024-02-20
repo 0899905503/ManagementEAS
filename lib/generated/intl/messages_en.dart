@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "day_off" : MessageLookupByLibrary.simpleMessage("day_off"),
     "department" : MessageLookupByLibrary.simpleMessage("department"),
     "employees" : MessageLookupByLibrary.simpleMessage("employees"),
+    "enniversary" : MessageLookupByLibrary.simpleMessage("enniversary"),
     "hours" : MessageLookupByLibrary.simpleMessage("hours"),
     "joined" : MessageLookupByLibrary.simpleMessage("joined"),
     "locale" : MessageLookupByLibrary.simpleMessage("locale"),
@@ -37,4 +38,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "seconds" : MessageLookupByLibrary.simpleMessage("seconds"),
     "time_keeping" : MessageLookupByLibrary.simpleMessage("time_keeping"),
     "total_work" : MessageLookupByLibrary.simpleMessage("total_work"),
-    
+    "updating" : MessageLookupByLibrary.simpleMessage("updating")
+  };
+}

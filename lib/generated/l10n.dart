@@ -216,6 +216,16 @@ class S {
       args: [],
     );
   }
+
+  /// `enniversary`
+  String get enniversary {
+    return Intl.message(
+      'enniversary',
+      name: 'enniversary',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

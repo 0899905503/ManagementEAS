@@ -15,5 +15,6 @@
     "department": "department",
     "employees": "employees",
     "salary": "salary",
-    "break_day": "break_day"
+    "break_day": "break_day",
+    "enniversary": "enniversary"
 }
