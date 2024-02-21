@@ -1,13 +1,17 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_base/UI/Login/Sign%20In/sign_in_cubit.dart';
 import 'package:flutter_base/UI/widgets/appbar/tk_app_bar.dart';
 import 'package:flutter_base/UI/widgets/buttons/app_button.dart';
 import 'package:flutter_base/UI/widgets/textfields/app_text_field.dart';
+import 'package:flutter_base/blocs/setting/app_setting_cubit.dart';
 import 'package:flutter_base/common/app_colors.dart';
 import 'package:flutter_base/common/app_images.dart';
 import 'package:flutter_base/common/app_text_styles.dart';
 import 'package:flutter_base/generated/l10n.dart';
+import 'package:flutter_base/models/enums/load_status.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -17,6 +21,11 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
+  late TextEditingController usernameTextController;
+  late TextEditingController passwordTextController;
+
+  late SignInCubit _cubit;
+  late AppSettingCubit _appSettingCubit;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -163,21 +172,23 @@ class _SigninState extends State<Signin> {
   }
 
   Widget _buildSignButton() {
-    return Container(
-      // padding: const EdgeInsets.symmetric(horizontal: 80),
-      child: AppButton(
-        // title: S.current.Signin,
-
-        title: "Sign In",
-        onPressed: _signIn,
-        // isLoading: state.signInStatus == LoadStatus.loading,
-      ),
+    return BlocBuilder<SignInCubit, SignInState>(
+      builder: (context, state) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 80),
+          child: AppButton(
+            title: S.current.login,
+            onPressed: _signIn,
+            isLoading: state.signInStatus == LoadStatus.loading,
+          ),
+        );
+      },
     );
   }
 
   void _signIn() {
-    // _cubit.changeUsername(username: usernameTextController.text);
-    // _cubit.changePassword(password: passwordTextController.text);
-    // _cubit.signIn(_appSettingCubit.state.locale?.languageCode ?? "de");
+    _cubit.changeUsername(username: usernameTextController.text);
+    _cubit.changePassword(password: passwordTextController.text);
+    _cubit.signIn(_appSettingCubit.state.locale?.languageCode ?? "vi");
   }
 }

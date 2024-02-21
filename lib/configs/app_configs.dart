@@ -5,7 +5,7 @@ import 'app_env_config.dart';
 class AppConfigs {
   AppConfigs._();
 
-  static const String appName = "Inventory";
+  static const String appName = "MEAS";
 
   static Environment env = Environment.prod;
 

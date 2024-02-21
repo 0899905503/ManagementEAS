@@ -57,9 +57,9 @@ class _MyAppState extends State<MyApp> {
     ]);
     return MultiRepositoryProvider(
       providers: [
-        // RepositoryProvider<AuthRepository>(create: (context) {
-        //   return AuthRepositoryImpl(apiClient: _apiClient);
-        // }),
+        RepositoryProvider<AuthRepository>(create: (context) {
+          return AuthRepositoryImpl(apiClient: _apiClient);
+        }),
         // RepositoryProvider<CategoryRepository>(create: (context) {
         //   return CategoryRepositoryImpl(apiClient: _apiClient);
         // }),

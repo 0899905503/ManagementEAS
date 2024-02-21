@@ -19,11 +19,11 @@ extension EnvironmentExt on Environment {
   String get baseUrl {
     switch (this) {
       case Environment.dev:
-        return "https://api-inventory.nq72.de/api/";
+        return "http://127.0.0.1:8000/api/";
       case Environment.stg:
-        return "https://api-inventory.nq72.de/api/";
+        return "http://127.0.0.1:8000/api/";
       case Environment.prod:
-        return "https://api-inventory.nq72.de/api/";
+        return "http://127.0.0.1:8000/api/";
     }
   }
 

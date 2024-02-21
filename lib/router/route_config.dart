@@ -13,11 +13,11 @@ class RouteConfig {
   static const String home = "/home";
 
   ///==============================Timekeeping app==================================
-  static const String chooseAppScreen = "/ChooseAppScreen";
+  static const String chooseAppScreen = "/chooseAppScreen";
   static const String tkHomePage = "/tkHomePage";
   // MEAS ======================================================================================================
   static const String managementSalary = "/salary";
-  static const String managementEmployee = "Homepage";
+  static const String managementEmployee = "/homepage";
   static const String profile = "TkProfilePage";
   static const String notification = "/notification";
   //============================================================================================================
@@ -25,7 +25,7 @@ class RouteConfig {
   ///Alias ​​mapping page
   static final List<GetPage> getPages = [
     // GetPage(name: signIn, page: () => const SignInPage()),
-    GetPage(name: home, page: () => const HomePage()),
+    // GetPage(name: home, page: () => const HomePage()),
 
     ///===================Timekeeping App=============================
 
@@ -41,7 +41,7 @@ class RouteConfig {
     ),
 
     //MEAS =============================================================================================
-    // GetPage(name: managementEmployee, page: () => HomePage()),
-    // GetPage(name: managementSalary, page: () => salary()),
+    GetPage(name: managementEmployee, page: () => HomePage()),
+    GetPage(name: managementSalary, page: () => salary()),
   ];
 }

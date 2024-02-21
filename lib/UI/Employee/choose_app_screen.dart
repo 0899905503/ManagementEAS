@@ -69,7 +69,7 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
                       "Nhân viên",
                       AppImages.icEmployee,
                       onTap: () {
-                        Get.toNamed(RouteConfig.managementSalary);
+                        Get.toNamed(RouteConfig.managementEmployee);
                       },
                     ),
                     const SizedBox(
