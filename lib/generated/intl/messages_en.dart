@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "department" : MessageLookupByLibrary.simpleMessage("department"),
     "employees" : MessageLookupByLibrary.simpleMessage("employees"),
     "enniversary" : MessageLookupByLibrary.simpleMessage("enniversary"),
+    "failed" : MessageLookupByLibrary.simpleMessage("failed"),
     "hours" : MessageLookupByLibrary.simpleMessage("hours"),
     "joined" : MessageLookupByLibrary.simpleMessage("joined"),
     "locale" : MessageLookupByLibrary.simpleMessage("locale"),

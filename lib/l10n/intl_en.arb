@@ -17,5 +17,6 @@
     "salary": "salary",
     "break_day": "break_day",
     "enniversary": "enniversary",
-    "check_in": "check_in"
+    "check_in": "check_in",
+    "failed": "failed"
 }
