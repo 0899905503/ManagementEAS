@@ -246,6 +246,16 @@ class S {
       args: [],
     );
   }
+
+  /// `successfuly`
+  String get successfuly {
+    return Intl.message(
+      'successfuly',
+      name: 'successfuly',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

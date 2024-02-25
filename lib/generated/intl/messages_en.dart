@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "profile" : MessageLookupByLibrary.simpleMessage("profile"),
     "salary" : MessageLookupByLibrary.simpleMessage("salary"),
     "seconds" : MessageLookupByLibrary.simpleMessage("seconds"),
+    "successfuly" : MessageLookupByLibrary.simpleMessage("successfuly"),
     "time_keeping" : MessageLookupByLibrary.simpleMessage("time_keeping"),
     "total_work" : MessageLookupByLibrary.simpleMessage("total_work"),
     "updating" : MessageLookupByLibrary.simpleMessage("updating")
