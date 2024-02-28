@@ -256,6 +256,16 @@ class S {
       args: [],
     );
   }
+
+  /// `address`
+  String get address {
+    return Intl.message(
+      'address',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
