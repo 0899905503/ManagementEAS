@@ -266,6 +266,16 @@ class S {
       args: [],
     );
   }
+
+  /// `subsidy`
+  String get subsidy {
+    return Intl.message(
+      'subsidy',
+      name: 'subsidy',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

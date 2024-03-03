@@ -20,5 +20,6 @@
     "check_in": "check_in",
     "failed": "failed",
     "successfuly": "successfuly",
-    "address": "address"
+    "address": "address",
+    "subsidy": "subsidy"
 }
