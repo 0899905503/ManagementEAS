@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_base/generated/l10n.dart';
 
 class ErrorUtils {
   const ErrorUtils._();

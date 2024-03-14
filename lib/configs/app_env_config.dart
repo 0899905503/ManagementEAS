@@ -17,14 +17,7 @@ extension EnvironmentExt on Environment {
   }
 
   String get baseUrl {
-    switch (this) {
-      case Environment.dev:
-        return "http://127.0.0.1:8000/api/";
-      case Environment.stg:
-        return "http://127.0.0.1:8000/api/";
-      case Environment.prod:
-        return "http://127.0.0.1:8000/api/";
-    }
+    return "http://192.168.18.46:8000/";
   }
 
   String get wsKey => "98dc33b1317783036aba";

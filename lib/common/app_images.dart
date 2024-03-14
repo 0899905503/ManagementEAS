@@ -2,8 +2,9 @@ class AppImages {
   ///==============================INVENTORY MODULE================================
 
 //Background
-  static const ic_background = 'assets/images/ic_background.png';
-  static const ic_doan = 'assets/images/ic_doan.png';
+  static const icbackground = 'assets/images/ic_background.png';
+  static const icdoan = 'assets/images/ic_doan.png';
+  static const avatar = 'assets/images/avt1.jpg';
 
   /// Common
   static const bgImagePlaceholder = 'assets/images/bg_image_placeholder.png';
@@ -110,5 +111,9 @@ class AppImages {
   static const icTime = "assets/images/icTime.png";
   static const icLeave = "assets/images/icLeave.png";
   static const icJob = "assets/images/.icJob.png";
+  static const icEmployees = "assets/images/Employees.png";
+  static const icRelatives = "assets/images/Relatives.png";
+  static const icProfile = "assets/images/Profile.png";
+
   //===========================================================================================
 }

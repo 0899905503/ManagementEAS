@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_base/models/entities/token_entity.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:meas/Data/entities/token_entity.dart';
 
 import 'share_preferences_helper.dart';
 

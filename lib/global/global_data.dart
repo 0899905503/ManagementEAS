@@ -1,7 +1,6 @@
-import 'package:flutter_base/models/entities/user/app_permission.dart';
-import 'package:flutter_base/models/entities/user/permission_entity.dart';
-//import 'package:flutter_base/models/entities/user/permission_entity.dart';
-import 'package:flutter_base/models/response/login_response.dart';
+import 'package:meas/Data/entities/app_permission.dart';
+import 'package:meas/Data/entities/permission_entity.dart';
+import 'package:meas/Data/response/login_response.dart';
 
 class GlobalData {
   GlobalData._privateConstructor();
@@ -11,7 +10,7 @@ class GlobalData {
   LoginResponse? loginResponse;
 
   PermissionEntity? get permission => loginResponse?.permissions;
-  AppPermission? get appPermission => loginResponse?.appPermissions;
+  //AppPermission? get appPermission => loginResponse?.appPermissions;
 
   String get fullName {
     return "${loginResponse?.user?.firstName ?? ""} ${loginResponse?.user?.lastName ?? ""}";

@@ -7,7 +7,8 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -20,29 +21,5 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
-    "address" : MessageLookupByLibrary.simpleMessage("address"),
-    "break_day" : MessageLookupByLibrary.simpleMessage("break_day"),
-    "check_in" : MessageLookupByLibrary.simpleMessage("check_in"),
-    "date" : MessageLookupByLibrary.simpleMessage("date"),
-    "day_off" : MessageLookupByLibrary.simpleMessage("day_off"),
-    "department" : MessageLookupByLibrary.simpleMessage("department"),
-    "employees" : MessageLookupByLibrary.simpleMessage("employees"),
-    "enniversary" : MessageLookupByLibrary.simpleMessage("enniversary"),
-    "failed" : MessageLookupByLibrary.simpleMessage("failed"),
-    "hours" : MessageLookupByLibrary.simpleMessage("hours"),
-    "joined" : MessageLookupByLibrary.simpleMessage("joined"),
-    "locale" : MessageLookupByLibrary.simpleMessage("locale"),
-    "login" : MessageLookupByLibrary.simpleMessage("login"),
-    "logout" : MessageLookupByLibrary.simpleMessage("logout"),
-    "minutes" : MessageLookupByLibrary.simpleMessage("minutes"),
-    "profile" : MessageLookupByLibrary.simpleMessage("profile"),
-    "salary" : MessageLookupByLibrary.simpleMessage("salary"),
-    "seconds" : MessageLookupByLibrary.simpleMessage("seconds"),
-    "subsidy" : MessageLookupByLibrary.simpleMessage("subsidy"),
-    "successfuly" : MessageLookupByLibrary.simpleMessage("successfuly"),
-    "time_keeping" : MessageLookupByLibrary.simpleMessage("time_keeping"),
-    "total_work" : MessageLookupByLibrary.simpleMessage("total_work"),
-    "updating" : MessageLookupByLibrary.simpleMessage("updating")
-  };
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
 }

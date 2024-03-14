@@ -1,6 +1,6 @@
 {
-    "name": "management_eas",
-    "short_name": "management_eas",
+    "name": "meas",
+    "short_name": "meas",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

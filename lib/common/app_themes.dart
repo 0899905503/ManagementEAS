@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/common/app_colors.dart';
+
+import 'package:meas/common/app_colors.dart';
 
 class AppThemes {
   bool isDarkMode;
@@ -45,7 +46,7 @@ class AppThemes {
       primaryColor: primaryColor,
       fontFamily: "AlumniSans",
       scaffoldBackgroundColor: backgroundColor,
-      splashColor:  Colors.transparent,
+      splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       appBarTheme: AppBarTheme(
         color: backgroundColor,

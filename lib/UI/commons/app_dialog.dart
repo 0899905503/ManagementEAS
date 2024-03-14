@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/common/app_colors.dart';
-import 'package:flutter_base/generated/l10n.dart';
-import 'package:flutter_base/ui/commons/common_dialog.dart';
-
-import 'package:flutter_base/ui/widgets/buttons/app_button.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
     as datetime_picker;
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+
 import 'package:get/get.dart';
+import 'package:meas/UI/commons/common_dialog.dart';
+import 'package:meas/common/app_colors.dart';
+import 'package:meas/widgets/buttons/app_button.dart';
 
 class AppDialog {
   static void deleteDialog({
@@ -86,16 +85,16 @@ class AppDialog {
     BuildContext context, {
     DateTime? minTime,
     DateTime? maxTime,
-    DateChangedCallback? onConfirm,
-    LocaleType locale = LocaleType.en,
+    // DateChangedCallback? onConfirm,
+    // LocaleType locale = LocaleType.en,
     DateTime? currentTime,
   }) {
     DatePicker.showDatePicker(
       context,
       minTime: minTime,
       maxTime: maxTime,
-      onConfirm: onConfirm,
-      locale: locale,
+      //onConfirm: onConfirm,
+      //  locale: locale,
       currentTime: currentTime,
       theme: const datetime_picker.DatePickerTheme(),
     );
@@ -105,16 +104,16 @@ class AppDialog {
     BuildContext context, {
     DateTime? minTime,
     DateTime? maxTime,
-    DateChangedCallback? onConfirm,
-    LocaleType locale = LocaleType.en,
+    // DateChangedCallback? onConfirm,
+    // LocaleType locale = LocaleType.en,
     DateTime? currentTime,
   }) {
     DatePicker.showDateTimePicker(
       context,
       minTime: minTime,
       maxTime: maxTime,
-      onConfirm: onConfirm,
-      locale: LocaleType.vi,
+      //onConfirm: onConfirm,
+      //locale: LocaleType.vi,
       currentTime: currentTime,
       theme: const datetime_picker.DatePickerTheme(),
     );
@@ -122,14 +121,14 @@ class AppDialog {
 
   static void showTimePicker(
     BuildContext context, {
-    DateChangedCallback? onConfirm,
-    LocaleType locale = LocaleType.en,
+    // DateChangedCallback? onConfirm,
+    //  LocaleType locale = LocaleType.en,
     DateTime? currentTime,
   }) {
     DatePicker.showTimePicker(
       context,
-      onConfirm: onConfirm,
-      locale: locale,
+      //onConfirm: onConfirm,
+      // locale: locale,
       currentTime: currentTime,
       showSecondsColumn: false,
       theme: const datetime_picker.DatePickerTheme(),

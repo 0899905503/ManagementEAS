@@ -10,7 +10,7 @@ import 'intl/messages_all.dart';
 
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
 // ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
-// ignore_for_file: avoid_redundant_argument_values
+// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
 
 class S {
   S();
@@ -18,263 +18,36 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null, 'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(_current != null,
+        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
     return _current!;
   }
 
-  static const AppLocalizationDelegate delegate =
-    AppLocalizationDelegate();
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name); 
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       final instance = S();
       S._current = instance;
- 
+
       return instance;
     });
-  } 
+  }
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null, 'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(instance != null,
+        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
     return instance!;
   }
 
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
-  }
-
-  /// `login`
-  String get login {
-    return Intl.message(
-      'login',
-      name: 'login',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `joined`
-  String get joined {
-    return Intl.message(
-      'joined',
-      name: 'joined',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `updating`
-  String get updating {
-    return Intl.message(
-      'updating',
-      name: 'updating',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `minutes`
-  String get minutes {
-    return Intl.message(
-      'minutes',
-      name: 'minutes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `hours`
-  String get hours {
-    return Intl.message(
-      'hours',
-      name: 'hours',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `seconds`
-  String get seconds {
-    return Intl.message(
-      'seconds',
-      name: 'seconds',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `date`
-  String get date {
-    return Intl.message(
-      'date',
-      name: 'date',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `logout`
-  String get logout {
-    return Intl.message(
-      'logout',
-      name: 'logout',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `profile`
-  String get profile {
-    return Intl.message(
-      'profile',
-      name: 'profile',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `locale`
-  String get locale {
-    return Intl.message(
-      'locale',
-      name: 'locale',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `time_keeping`
-  String get time_keeping {
-    return Intl.message(
-      'time_keeping',
-      name: 'time_keeping',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `day_off`
-  String get day_off {
-    return Intl.message(
-      'day_off',
-      name: 'day_off',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `total_work`
-  String get total_work {
-    return Intl.message(
-      'total_work',
-      name: 'total_work',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `department`
-  String get department {
-    return Intl.message(
-      'department',
-      name: 'department',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `employees`
-  String get employees {
-    return Intl.message(
-      'employees',
-      name: 'employees',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `salary`
-  String get salary {
-    return Intl.message(
-      'salary',
-      name: 'salary',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `break_day`
-  String get break_day {
-    return Intl.message(
-      'break_day',
-      name: 'break_day',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `enniversary`
-  String get enniversary {
-    return Intl.message(
-      'enniversary',
-      name: 'enniversary',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `check_in`
-  String get check_in {
-    return Intl.message(
-      'check_in',
-      name: 'check_in',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `failed`
-  String get failed {
-    return Intl.message(
-      'failed',
-      name: 'failed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `successfuly`
-  String get successfuly {
-    return Intl.message(
-      'successfuly',
-      name: 'successfuly',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `address`
-  String get address {
-    return Intl.message(
-      'address',
-      name: 'address',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `subsidy`
-  String get subsidy {
-    return Intl.message(
-      'subsidy',
-      name: 'subsidy',
-      desc: '',
-      args: [],
-    );
   }
 }
 

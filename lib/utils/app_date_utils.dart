@@ -1,7 +1,6 @@
-import 'package:flutter_base/configs/app_configs.dart';
 import 'package:intl/intl.dart';
-
-import 'logger.dart';
+import 'package:meas/configs/app_configs.dart';
+import 'package:meas/utils/logger.dart';
 
 class AppDateUtils {
   AppDateUtils._();
@@ -99,6 +98,14 @@ extension DateTimeExtension on DateTime {
   }
 
   String toDateAPIString({String format = AppConfigs.dateAPIFormat}) {
+    try {
+      return DateFormat(format).format(this);
+    } catch (e) {
+      return '';
+    }
+  }
+
+  String todateAPIString({String format = AppConfigs.dateAPI}) {
     try {
       return DateFormat(format).format(this);
     } catch (e) {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_base/models/response/login_response.dart';
-import 'package:flutter_base/utils/logger.dart';
+import 'package:meas/Data/response/login_response.dart';
+import 'package:meas/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesHelper {
