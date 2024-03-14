@@ -97,7 +97,7 @@ class _TkProfileChildPageState extends State<TkProfileChildPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TKCommonAppBar(
-        hasLeadingIcon: false,
+        hasLeadingIcon: true,
         title: 'Profile',
       ),
       body: SafeArea(
@@ -460,6 +460,9 @@ class _TkProfileChildPageState extends State<TkProfileChildPage> {
         const SizedBox(width: 70),
         Column(
           children: [
+            const SizedBox(
+              height: 5,
+            ),
             Text(
               content,
               style: AppTextStyle.blackS16W800,

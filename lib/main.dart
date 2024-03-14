@@ -84,6 +84,7 @@ class MyApp extends StatelessWidget {
                   name: '/relativeInformation',
                   page: () => const RelativeIFPage()),
               GetPage(name: '/relative', page: () => const RelativeList()),
+              GetPage(name: '/listRelative', page: () => const RelativeList()),
             ],
           );
         },

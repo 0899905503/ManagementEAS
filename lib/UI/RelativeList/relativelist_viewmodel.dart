@@ -10,12 +10,12 @@ class RelativeListViewModel extends ChangeNotifier {
   final String? Url = AppConfigs.baseUrl;
   static String apiUrlPath = "api";
 
-  static const String getRelative = "/getRelativesAndRelationships/1";
+  static const String getRelative = "/getRelativesAndRelationships/";
 
-  Future<List<Map<String, dynamic>>> getRelativeApi() async {
+  Future<List<Map<String, dynamic>>> getRelativeApi(int UserId) async {
     try {
       http.Response response = await http.get(
-        Uri.parse("$Url$apiUrlPath$getRelative"),
+        Uri.parse("$Url$apiUrlPath$getRelative$UserId"),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },

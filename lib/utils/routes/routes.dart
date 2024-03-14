@@ -23,6 +23,7 @@ class RouteConfig {
   static const String personalInformation = "personalInformation";
   static const String relativeInformation = "relativeInformation";
   static const String relative = "relative";
+  static const String listRelative = "listRelative";
   //============================================================================================================
 
   ///Alias ​​mapping page

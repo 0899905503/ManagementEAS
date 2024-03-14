@@ -16,11 +16,13 @@ class RelativeList extends StatefulWidget {
 }
 
 class _RelativeListState extends State<RelativeList> {
-  List<Map<String, dynamic>>? relatives; // Danh sách người dùng
+  List<Map<String, dynamic>>? relatives;
+  late int userData; // Danh sách người dùng
 
   @override
   void initState() {
     super.initState();
+    userData = Get.arguments['user'];
     fetchUsers(); // Gọi hàm để lấy thông tin người dùng khi Widget được tạo
   }
 
@@ -30,7 +32,7 @@ class _RelativeListState extends State<RelativeList> {
       var relativeListViewModel =
           Provider.of<RelativeListViewModel>(context, listen: false);
       List<Map<String, dynamic>> relativeData =
-          await relativeListViewModel.getRelativeApi();
+          await relativeListViewModel.getRelativeApi(userData);
       List a = [relativeData];
       setState(() {
         // Update the list of users

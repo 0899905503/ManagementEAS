@@ -165,27 +165,30 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
                   "Employees",
                   AppImages.icEmployee,
                   onTap: () {
-                    if (res!['Role_id'] == 4) {
-                      Get.offNamed(RouteConfig.employeeList);
-                    } else {
-                      Get.snackbar(
-                        "Warning!!!",
-                        "You do not have sufficient access rights",
-                        colorText: Colors.white,
-                        icon: const Icon(
-                          IconData(0x2757, fontFamily: 'Alumi Sans'),
-                          color: Colors.yellow, // Thay đổi màu sắc nếu cần
-                          size: 30, // Thay đổi kích thước nếu cần
-                        ),
-                      );
-                    }
+                    Get.offNamed(RouteConfig.employeeList);
+                    // if (res!['Role_id'] == 4) {
+                    //   Get.offNamed(RouteConfig.employeeList);
+                    // } else {
+                    //   Get.snackbar(
+                    //     "Warning!!!",
+                    //     "You do not have sufficient access rights",
+                    //     colorText: Colors.white,
+                    //     icon: const Icon(
+                    //       IconData(0x2757, fontFamily: 'Alumi Sans'),
+                    //       color: Colors.yellow, // Thay đổi màu sắc nếu cần
+                    //       size: 30, // Thay đổi kích thước nếu cần
+                    //     ),
+                    //   );
+                    // }
                   },
                 ),
                 _menuItem(
                   "Relatives",
                   AppImages.icJob,
                   onTap: () {
-                    //   Get.toNamed(RouteConfig.relative);
+                    Get.toNamed(
+                      RouteConfig.relative,
+                    );
                   },
                 ),
                 _menuItem(

@@ -451,9 +451,8 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
                 ),
                 const SizedBox(width: 150),
                 _menuItem("Relative", onTap: () {
-                  Get.toNamed(
-                    RouteConfig.relative,
-                  );
+                  Get.toNamed(RouteConfig.relative,
+                      arguments: {'user': userData!['id']});
                 }),
                 const SizedBox(width: 10),
                 _menuItem("Fix", onTap: () {
