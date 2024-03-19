@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:meas/UI/EmployeeList/employeelist_view.dart';
 import 'package:meas/UI/EmployeeList/employeelist_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
@@ -329,8 +330,8 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
                                     width: 10,
                                   ),
                                   Container(
-                                    width: 160,
-                                    height: 30,
+                                    width: 170,
+                                    height: 40,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10),
@@ -508,7 +509,10 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
                         ),
 
                         EmployeeInfor(
-                            "Birth day", userData!['birth_date'].toString()),
+                          "Birth day",
+                          DateFormat(AppConfigs.dateAPI).format(DateTime.parse(
+                              userData!['birth_date'].toString())),
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -542,7 +546,10 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
                           height: 10,
                         ),
                         EmployeeInfor(
-                            "Issue Date", userData!['Issue_Date'].toString()),
+                          "Issue Date",
+                          DateFormat(AppConfigs.dateAPI).format(DateTime.parse(
+                              userData!['Issue_Date'].toString())),
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -552,7 +559,10 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
                           height: 10,
                         ),
                         EmployeeInfor(
-                            "Start Date", userData!['Start_Date'].toString()),
+                          "Start Date",
+                          DateFormat(AppConfigs.dateAPI).format(DateTime.parse(
+                              userData!['Start_Date'].toString())),
+                        ),
                         const SizedBox(
                           height: 10,
                         ),

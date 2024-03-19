@@ -9,6 +9,7 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:meas/Data/network/api_client.dart';
 import 'package:meas/UI/Homepage/home_page_model.dart';
 import 'package:meas/UI/Login/auth_viewmodel.dart';
@@ -101,12 +102,6 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
   }
 
   Widget _buildBodyWidget() {
-    final _storage = FlutterSecureStorage();
-    // Biến tạm thời để lưu trữ giá trị token
-    String? _token;
-    String? firstName;
-    Response _response;
-
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
@@ -132,7 +127,8 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
                         ),
                       ),
                       Text(
-                        res!['Start_Date'].toString(),
+                        DateFormat(AppConfigs.dateAPI).format(
+                            DateTime.parse(res!['Start_Date'].toString())),
                         style: AppTextStyle.brownS14.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
@@ -187,7 +183,7 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
                   AppImages.icJob,
                   onTap: () {
                     Get.toNamed(
-                      RouteConfig.relative,
+                      RouteConfig.listRelative,
                     );
                   },
                 ),

@@ -24,6 +24,7 @@ class RouteConfig {
   static const String relativeInformation = "relativeInformation";
   static const String relative = "relative";
   static const String listRelative = "listRelative";
+  static const String profileRelative = "profileRelative";
   //============================================================================================================
 
   ///Alias ​​mapping page

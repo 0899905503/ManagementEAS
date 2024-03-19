@@ -27,10 +27,10 @@ class TkHomeArguments {
   });
 }
 
-class RelativeIFPage extends StatelessWidget {
+class ProfileRelativePage extends StatelessWidget {
   // final TkHomeArguments arguments;
 
-  const RelativeIFPage({
+  const ProfileRelativePage({
     Key? key,
 
     // required this.arguments,
@@ -39,19 +39,20 @@ class RelativeIFPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: const RelativeIFChildPage(),
+      child: const ProfileRelativeChildPage(),
     );
   }
 }
 
-class RelativeIFChildPage extends StatefulWidget {
-  const RelativeIFChildPage({Key? key}) : super(key: key);
+class ProfileRelativeChildPage extends StatefulWidget {
+  const ProfileRelativeChildPage({Key? key}) : super(key: key);
 
   @override
-  State<RelativeIFChildPage> createState() => _RelativeIFChildPageState();
+  State<ProfileRelativeChildPage> createState() =>
+      _ProfileRelativeChildPageState();
 }
 
-class _RelativeIFChildPageState extends State<RelativeIFChildPage> {
+class _ProfileRelativeChildPageState extends State<ProfileRelativeChildPage> {
   Map<String, dynamic>? relativeData;
   @override
   void initState() {
@@ -89,7 +90,7 @@ class _RelativeIFChildPageState extends State<RelativeIFChildPage> {
               width: 2000,
             ),
             SizedBox(
-              height: 220,
+              height: 200,
               width: 600,
               child: Container(
                 decoration: BoxDecoration(
@@ -111,16 +112,13 @@ class _RelativeIFChildPageState extends State<RelativeIFChildPage> {
                               height: 10,
                             ),
                             EmployeeInfor(
-                                "Relative Id",
-                                relativeData!['relative_info']['id']
-                                    .toString()),
+                                "Relative Id", relativeData!['id'].toString()),
                             const SizedBox(
                               height: 10,
                             ),
                             EmployeeInfor(
                               "Name",
-                              relativeData!['relative_info']['hotentn']
-                                  .toString(),
+                              relativeData!['hotentn'].toString(),
                             ),
                             const SizedBox(
                               height: 10,
@@ -133,64 +131,18 @@ class _RelativeIFChildPageState extends State<RelativeIFChildPage> {
                             EmployeeInfor(
                               "Birth day",
                               DateFormat(AppConfigs.dateAPI).format(
-                                  DateTime.parse(relativeData!['relative_info']
-                                          ['ngaysinh']
-                                      .toString())),
+                                  DateTime.parse(
+                                      relativeData!['ngaysinh'].toString())),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             EmployeeInfor(
-                                "Address",
-                                relativeData!['relative_info']['diachi']
-                                    .toString()),
+                                "Address", relativeData!['diachi'].toString()),
                             const SizedBox(
                               height: 10,
                             ),
-                            EmployeeInfor("Relationship",
-                                relativeData!['relationships'].toString()),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            // EmployeeInfor("Qualification",
-                            //     relativeData!['Qualification'].toString()),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // EmployeeInfor("Nationality",
-                            //     relativeData!['Nationality'].toString()),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // EmployeeInfor("Ethnicity",
-                            //     relativeData!['Ethnicity'].toString()),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // EmployeeInfor("Issue Date",
-                            //     relativeData!['Issue Date'].toString()),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // EmployeeInfor("Start Date",
-                            //     relativeData!['Start Date'].toString()),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // EmployeeInfor("Language",
-                            //     relativeData!['Language'].toString()),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // EmployeeInfor("Computer Science",
-                            //     relativeData!['Computer Science'].toString()),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // EmployeeInfor(
-                            //     "Permanent AddrelativeDatas",
-                            //     relativeData!['Permanent AddrelativeDatas']
-                            //         .toString()),
+
                             const SizedBox(
                               height: 10,
                             ),

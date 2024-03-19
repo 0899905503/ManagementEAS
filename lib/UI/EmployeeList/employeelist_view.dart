@@ -36,6 +36,7 @@ class _EmployeeListState extends State<EmployeeList> {
   List<Map<String, dynamic>>? users; // Danh sách người dùng
   final String? Url = AppConfigs.baseUrl;
   final String? Path = "storage/Img/AVT/";
+
   final EmployeeListViewModel employeeListViewModel = EmployeeListViewModel();
 //Create User
   final TextEditingController personalIdController = TextEditingController();
@@ -45,6 +46,7 @@ class _EmployeeListState extends State<EmployeeList> {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
+  final TextEditingController birthdayController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController qualificationController = TextEditingController();
   final TextEditingController nationalityController = TextEditingController();
@@ -57,12 +59,17 @@ class _EmployeeListState extends State<EmployeeList> {
   final TextEditingController issueByController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController roleIdController = TextEditingController();
+  final TextEditingController subsidyIdController = TextEditingController();
+  final TextEditingController departmentIdController = TextEditingController();
   final TextEditingController permanentAddressController =
       TextEditingController();
 //
   String selectedRoleId = '1';
+  String selectedDepartmentId = '1';
+  String selectedSubsidyId = '1';
   DateTime? selectedIssueDate;
   DateTime? selectedStartDate;
+  DateTime? selectedBirthday;
   String selectedGender = 'male';
   late StreamSubscription<String> emailSubscription;
 
@@ -154,8 +161,11 @@ class _EmployeeListState extends State<EmployeeList> {
                         StreamBuilder<String>(
                             stream: employeeListViewModel.passwordStream,
                             builder: (context, snapshot) {
-                              return createUser("Password:", "Password",
-                                  controller: passwordController);
+                              return createPassword(
+                                "Password:",
+                                "Password",
+                                controller: passwordController,
+                              );
                             }),
                         const SizedBox(
                           height: 10,
@@ -193,7 +203,7 @@ class _EmployeeListState extends State<EmployeeList> {
                               String gender = snapshot.data ?? selectedGender;
                               return Row(
                                 children: [
-                                  createUser("Gender", "Gender",
+                                  createUser("Gender:", "Gender",
                                       controller: genderController),
                                   const SizedBox(
                                     width: 10,
@@ -232,6 +242,30 @@ class _EmployeeListState extends State<EmployeeList> {
                                 ],
                               );
                             }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        StreamBuilder<String>(
+                          stream: employeeListViewModel.birthdayStream,
+                          builder: (context, snapshot) {
+                            return createUser1("Birthday:", "Birthday",
+                                controller: birthdayController,
+                                onTap: () => _selectDate(
+                                      context,
+                                      selectedBirthday,
+                                      (date) {
+                                        setState(() {
+                                          selectedBirthday = date;
+                                          birthdayController.text =
+                                              selectedBirthday!
+                                                  .toLocal()
+                                                  .toString()
+                                                  .split(' ')[0];
+                                        });
+                                      },
+                                    ));
+                          },
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -369,8 +403,8 @@ class _EmployeeListState extends State<EmployeeList> {
                                     width: 10,
                                   ),
                                   Container(
-                                    width: 160,
-                                    height: 30,
+                                    width: 170,
+                                    height: 40,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10),
@@ -418,6 +452,132 @@ class _EmployeeListState extends State<EmployeeList> {
                           height: 10,
                         ),
                         StreamBuilder<String>(
+                            stream: employeeListViewModel.departmentIdStream,
+                            builder: (context, snapshot) {
+                              String departmentId =
+                                  snapshot.data ?? selectedDepartmentId;
+                              return Row(
+                                children: [
+                                  createUser("Department Id", "Department Id",
+                                      controller: departmentIdController),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    width: 170,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            width: 2,
+                                            color: Color(0xff663300))),
+                                    child: DropdownButton<String>(
+                                      value: departmentId,
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          selectedDepartmentId = newValue!;
+                                          departmentIdController.text =
+                                              selectedDepartmentId;
+                                        });
+                                      },
+                                      underline: Container(),
+                                      items: const [
+                                        DropdownMenuItem(
+                                          value: '1',
+                                          child: Text('HR'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '2',
+                                          child: Text('Accounting'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '3',
+                                          child: Text('Marketing'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '4',
+                                          child: Text('Technical'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '5',
+                                          child: Text('Executive'),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              );
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        StreamBuilder<String>(
+                            stream: employeeListViewModel.subsidyIdStream,
+                            builder: (context, snapshot) {
+                              String subsidyId =
+                                  snapshot.data ?? selectedSubsidyId;
+                              return Row(
+                                children: [
+                                  createUser("Subsidy Id", "Subsidy Id",
+                                      controller: subsidyIdController),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    width: 170,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            width: 2,
+                                            color: Color(0xff663300))),
+                                    child: DropdownButton<String>(
+                                      value: subsidyId,
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          selectedSubsidyId = newValue!;
+                                          subsidyIdController.text =
+                                              selectedSubsidyId;
+                                        });
+                                      },
+                                      underline: Container(),
+                                      items: const [
+                                        DropdownMenuItem(
+                                          value: '1',
+                                          child: Text('phucapchucvu'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '2',
+                                          child: Text('phucapkhuvuc'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '3',
+                                          child: Text('phucapthamnien'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '4',
+                                          child: Text('phucapdilai'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '5',
+                                          child: Text('phucapthoivu'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '6',
+                                          child: Text('phucapcadem'),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              );
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        StreamBuilder<String>(
                             stream:
                                 employeeListViewModel.permanentAddressStream,
                             builder: (context, snapshot) {
@@ -442,6 +602,7 @@ class _EmployeeListState extends State<EmployeeList> {
                     'first_name': firstNameController.text,
                     'last_name': lastNameController.text,
                     'phone_number': phoneNumberController.text,
+                    'birth_date': birthdayController.text,
                     'gender': genderController.text,
                     'address': addressController.text,
                     'Qualification': qualificationController.text,
@@ -454,6 +615,8 @@ class _EmployeeListState extends State<EmployeeList> {
                     'Issued_By': issueByController.text,
                     'Start_Date': startDateController.text,
                     'Role_id': roleIdController.text,
+                    'Department_id': departmentIdController.text,
+                    'Subsidy_id': subsidyIdController.text,
                     'Permanent_Address': permanentAddressController.text,
                     // Thêm các trường khác tương tự
                   };
@@ -686,7 +849,40 @@ Widget createUser(String title, String hintText,
             ],
           ),
           AppTextField(
+            obscureText: false,
             hintText: hintText,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            borderRadius: 10,
+            showOutline: true,
+            controller: controller,
+          ),
+        ],
+      ));
+}
+
+Widget createPassword(String title, String hintText,
+    {required TextEditingController controller}) {
+  return SizedBox(
+      width: 367,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: AppTextStyle.brownS14W800
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(
+                width: 100,
+              )
+            ],
+          ),
+          AppTextField(
+            hintText: hintText,
+            obscureText: true,
             fontSize: 14,
             fontWeight: FontWeight.w400,
             borderRadius: 10,

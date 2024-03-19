@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:meas/UI/EmployeeList/employeelist_view.dart';
 import 'package:meas/UI/EmployeeList/employeelist_viewmodel.dart';
 import 'package:meas/UI/Homepage/home_page_view.dart';
+import 'package:meas/UI/ListRelative/ListRelative_view.dart';
+import 'package:meas/UI/ListRelative/ListRelative_viewmodel.dart';
+import 'package:meas/UI/ListRelative/profileRelative.dart';
 import 'package:meas/UI/Login/signin/signin_view.dart';
 import 'package:meas/UI/Personal_information.dart/Personal_information_view.dart';
 import 'package:meas/UI/Profile/profile_view.dart';
@@ -62,6 +65,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => EmployeeListViewModel()),
         ChangeNotifierProvider(create: (_) => RelativeListViewModel()),
         ChangeNotifierProvider(create: (_) => ProfileViewModel()),
+        ChangeNotifierProvider(create: (_) => ListRelativeViewModel()),
       ],
       child: Builder(
         builder: (context) {
@@ -84,7 +88,10 @@ class MyApp extends StatelessWidget {
                   name: '/relativeInformation',
                   page: () => const RelativeIFPage()),
               GetPage(name: '/relative', page: () => const RelativeList()),
-              GetPage(name: '/listRelative', page: () => const RelativeList()),
+              GetPage(name: '/listRelative', page: () => const ListRelative()),
+              GetPage(
+                  name: '/profileRelative',
+                  page: () => const ProfileRelativePage()),
             ],
           );
         },

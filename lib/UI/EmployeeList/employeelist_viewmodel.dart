@@ -148,6 +148,8 @@ class EmployeeListViewModel extends ChangeNotifier {
   final BehaviorSubject<String> _emailSubject = BehaviorSubject<String>();
   final BehaviorSubject<String> _PersonalIdSubject = BehaviorSubject<String>();
   final BehaviorSubject<String> _passwordSubject = BehaviorSubject<String>();
+  final BehaviorSubject<String> _birthdaySubject = BehaviorSubject<String>();
+
   final BehaviorSubject<String> _firstNameSubject = BehaviorSubject<String>();
   final BehaviorSubject<String> _lastNameSubject = BehaviorSubject<String>();
   final BehaviorSubject<String> _phoneNumberSubject = BehaviorSubject<String>();
@@ -165,6 +167,9 @@ class EmployeeListViewModel extends ChangeNotifier {
   final BehaviorSubject<String> _issueBySubject = BehaviorSubject<String>();
   final BehaviorSubject<String> _startDateSubject = BehaviorSubject<String>();
   final BehaviorSubject<String> _roleIdSubject = BehaviorSubject<String>();
+  final BehaviorSubject<String> _subsidyIdSubject = BehaviorSubject<String>();
+  final BehaviorSubject<String> _departmentIdSubject =
+      BehaviorSubject<String>();
   final BehaviorSubject<String> _permanentAddressSubject =
       BehaviorSubject<String>();
 
@@ -178,6 +183,9 @@ class EmployeeListViewModel extends ChangeNotifier {
 
   Stream<String> get passwordStream => _passwordSubject.stream;
   Sink<String> get passwordSink => _passwordSubject.sink;
+
+  Stream<String> get birthdayStream => _birthdaySubject.stream;
+  Sink<String> get birthdaySink => _birthdaySubject.sink;
 
   Stream<String> get firstNameStream => _firstNameSubject.stream;
   Sink<String> get firstNameSink => _firstNameSubject.sink;
@@ -224,6 +232,12 @@ class EmployeeListViewModel extends ChangeNotifier {
   Stream<String> get roleIdStream => _roleIdSubject.stream;
   Sink<String> get roleIdSink => _roleIdSubject.sink;
 
+  Stream<String> get subsidyIdStream => _subsidyIdSubject.stream;
+  Sink<String> get subsidyIdSink => _subsidyIdSubject.sink;
+
+  Stream<String> get departmentIdStream => _departmentIdSubject.stream;
+  Sink<String> get departmentIdIdSink => _departmentIdSubject.sink;
+
   Stream<String> get permanentAddressStream => _permanentAddressSubject.stream;
   Sink<String> get permanentAddressSink => _permanentAddressSubject.sink;
 
@@ -238,6 +252,7 @@ class EmployeeListViewModel extends ChangeNotifier {
       firstNameStream,
       lastNameStream,
       phoneNumberStream,
+      birthdayStream,
       genderStream,
       addressStream,
       qualificationStream,
@@ -250,6 +265,8 @@ class EmployeeListViewModel extends ChangeNotifier {
       issueBytream,
       startDateStream,
       roleIdStream,
+      subsidyIdStream,
+      departmentIdStream,
       permanentAddressStream,
     ]).map((List<String> values) {
       // Kiểm tra điều kiện để trả về giá trị của saveStream
