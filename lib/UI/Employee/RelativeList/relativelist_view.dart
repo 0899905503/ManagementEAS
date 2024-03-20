@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:meas/UI/RelativeList/relativelist_viewmodel.dart';
+import 'package:meas/UI/Employee/RelativeList/relativelist_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_text_styles.dart';
 import 'package:meas/utils/routes/routes.dart';

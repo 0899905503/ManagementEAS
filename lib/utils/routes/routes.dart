@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:meas/UI/Homepage/home_page_view.dart';
-import 'package:meas/UI/Login/signin/signin_view.dart';
+import 'package:meas/UI/Employee/Homepage/home_page_view.dart';
+import 'package:meas/UI/Employee/Login/signin/signin_view.dart';
 import 'package:meas/UI/choose_app_screen.dart';
 
 class RouteConfig {

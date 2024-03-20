@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meas/Data/entities/profile_entity.dart';
 import 'package:meas/Data/entities/user_entity.dart';
-import 'package:meas/UI/Profile/profile_viewmodel.dart';
+import 'package:meas/UI/Employee/Profile/profile_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_images.dart';
 import 'package:meas/common/app_text_styles.dart';

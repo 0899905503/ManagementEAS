@@ -74,4 +74,8 @@ class AppColors {
   static const Color borderMenuItem = Color(0xff663300);
   static const Color defaultText = Color(0xFF535050);
   static const Color title = Color(0xFFCD853F);
+  //chart
+  static const Color universeGradientStart = Color(0xFF20002c); // Dark Purple
+  static const Color universeGradientEnd = Color(0xFFb000ff); // Light Magenta
+  static const Color chart = Color(0xFF522157); // Light Magenta
 }

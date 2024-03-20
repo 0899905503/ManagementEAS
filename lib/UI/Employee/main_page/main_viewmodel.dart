@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:meas/UI/Homepage/home_page_view.dart';
+import 'package:meas/UI/Employee/Homepage/home_page_view.dart';
 
 import 'package:meas/utils/enums/main_tab.dart';
 

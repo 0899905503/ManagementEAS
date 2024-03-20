@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:meas/UI/EmployeeList/employeelist_view.dart';
-import 'package:meas/UI/EmployeeList/employeelist_viewmodel.dart';
+import 'package:meas/UI/Employee/EmployeeList/employeelist_view.dart';
+import 'package:meas/UI/Employee/EmployeeList/employeelist_viewmodel.dart';
+
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_images.dart';
 import 'package:meas/common/app_text_styles.dart';
