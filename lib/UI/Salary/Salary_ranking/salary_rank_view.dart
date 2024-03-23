@@ -5,8 +5,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:get/get.dart';
 import 'package:meas/UI/Employee/EmployeeList/employeelist_viewmodel.dart';
-import 'package:meas/UI/Salary/salary_details/salary_details_viewmodel.dart';
-import 'package:meas/UI/Salary/salary_details/salrary_details_view.dart';
+import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
+import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_view.dart';
 
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_images.dart';
