@@ -11,7 +11,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:meas/Data/network/api_client.dart';
-import 'package:meas/UI/Employee/Homepage/home_page_model.dart';
+
 import 'package:meas/UI/Employee/Login/auth_viewmodel.dart';
 import 'package:meas/UI/Employee/Login/signin/signin_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
@@ -33,10 +33,10 @@ class TkHomeArguments {
   });
 }
 
-class HomePage extends StatelessWidget {
+class SalaryHomePage extends StatelessWidget {
   // final TkHomeArguments arguments;
 
-  const HomePage({
+  const SalaryHomePage({
     Key? key,
 
     // required this.arguments,
@@ -59,7 +59,7 @@ class TkHomeChildPage extends StatefulWidget {
 }
 
 class _TkHomeChildPageState extends State<TkHomeChildPage> {
-  HomeViewModel homeViewModel = HomeViewModel();
+  SigninViewModel homeViewModel = SigninViewModel();
   AuthViewModel authViewModel = AuthViewModel();
   final SigninViewModel signinViewModel = SigninViewModel();
   Map<String, dynamic>? res;
@@ -158,10 +158,10 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
               alignment: WrapAlignment.start,
               children: [
                 _menuItem(
-                  "Employees",
+                  "Salary Infor",
                   AppImages.icEmployee,
                   onTap: () {
-                    Get.toNamed(RouteConfig.employeeList);
+                    Get.toNamed(RouteConfig.salaryInfor);
                     // if (res!['Role_id'] == 4) {
                     //   Get.offNamed(RouteConfig.employeeList);
                     // } else {
@@ -179,26 +179,33 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
                   },
                 ),
                 _menuItem(
-                  "Relatives",
+                  "Salary Statistics",
+                  AppImages.icEmployee,
+                  onTap: () {
+                    Get.toNamed(RouteConfig.salaryStatistic);
+                    // if (res!['Role_id'] == 4) {
+                    //   Get.offNamed(RouteConfig.employeeList);
+                    // } else {
+                    //   Get.snackbar(
+                    //     "Warning!!!",
+                    //     "You do not have sufficient access rights",
+                    //     colorText: Colors.white,
+                    //     icon: const Icon(
+                    //       IconData(0x2757, fontFamily: 'Alumi Sans'),
+                    //       color: Colors.yellow, // Thay đổi màu sắc nếu cần
+                    //       size: 30, // Thay đổi kích thước nếu cần
+                    //     ),
+                    //   );
+                    // }
+                  },
+                ),
+                _menuItem(
+                  "Ranking",
                   AppImages.icJob,
                   onTap: () {
                     Get.toNamed(
-                      RouteConfig.listRelative,
+                      RouteConfig.salaryRanking,
                     );
-                  },
-                ),
-                _menuItem(
-                  "Xin nghỉ phép",
-                  AppImages.icLeave,
-                  onTap: () {
-                    // Get.toNamed(RouteConfig.tkTakeLeavePage);
-                  },
-                ),
-                _menuItem(
-                  "Profile",
-                  AppImages.icMenuSupplier,
-                  onTap: () {
-                    Get.toNamed(RouteConfig.profile);
                   },
                 ),
               ],

@@ -16,15 +16,23 @@ class RouteConfig {
   static const String tkHomePage = "/tkHomePage";
   static const String employeeList = "/employeeList";
   // MEAS ======================================================================================================
-  static const String managementSalary = "/salary";
+
+  //EMPLOYEE
+
   static const String managementEmployee = "/managementEmployee";
-  static const String profile = "profile";
+  static const String profile = "/profile";
   static const String notification = "/notification";
-  static const String personalInformation = "personalInformation";
+  static const String personalInformation = "/personalInformation";
   static const String relativeInformation = "relativeInformation";
-  static const String relative = "relative";
-  static const String listRelative = "listRelative";
-  static const String profileRelative = "profileRelative";
+  static const String relative = "/relative";
+  static const String listRelative = "/listRelative";
+  static const String profileRelative = "/profileRelative";
+
+  //SALARY
+  static const String salaryStatistic = "/salaryStatistic";
+  static const String managementSalary = "/managementSalary";
+  static const String salaryRanking = "/salaryRanking";
+  static const String salaryInfor = "/salaryInfor";
   //============================================================================================================
 
   ///Alias ​​mapping page

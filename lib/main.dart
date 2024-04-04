@@ -14,9 +14,12 @@ import 'package:meas/UI/Employee/Profile/profile_viewmodel.dart';
 import 'package:meas/UI/Employee/RelativeList/relativeInformation.dart';
 import 'package:meas/UI/Employee/RelativeList/relativelist_view.dart';
 import 'package:meas/UI/Employee/RelativeList/relativelist_viewmodel.dart';
+import 'package:meas/UI/Salary/Salary_infor/salary_infor_view.dart';
+import 'package:meas/UI/Salary/Salary_infor/salary_infor_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_ranking/salary_rank_view.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_view.dart';
+import 'package:meas/UI/Salary/salary_homepage/salary_home_page_view.dart';
 import 'package:meas/UI/choose_app_screen.dart';
 import 'package:meas/UI/Employee/main_page/main_viewmodel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -70,12 +73,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RelativeListViewModel()),
         ChangeNotifierProvider(create: (_) => ProfileViewModel()),
         ChangeNotifierProvider(create: (_) => SalaryDetailViewModel()),
+        ChangeNotifierProvider(create: (_) => RelativeListViewModel()),
+        ChangeNotifierProvider(create: (_) => ListRelativeViewModel()),
+        ChangeNotifierProvider(create: (_) => SalaryInforViewModel())
       ],
       child: Builder(
         builder: (context) {
           // Use GetMaterialApp here to access providers
           return GetMaterialApp(
-            home: SalaryRankPage(),
+            home: const Signin(),
             getPages: [
               GetPage(name: '/signin', page: () => const Signin()),
               GetPage(
@@ -94,8 +100,25 @@ class MyApp extends StatelessWidget {
               GetPage(name: '/relative', page: () => const RelativeList()),
               GetPage(name: '/listRelative', page: () => const ListRelative()),
               GetPage(
-                  name: '/profileRelative',
-                  page: () => const ProfileRelativePage()),
+                name: '/profileRelative',
+                page: () => const ProfileRelativePage(),
+              ),
+              GetPage(
+                name: '/salaryStatistic',
+                page: () => const SalaryPage(),
+              ),
+              GetPage(
+                name: '/managementSalary',
+                page: () => const SalaryHomePage(),
+              ),
+              GetPage(
+                name: '/salaryRanking',
+                page: () => const SalaryRankPage(),
+              ),
+              GetPage(
+                name: '/salaryInfor',
+                page: () => const SalaryInforPage(),
+              )
             ],
           );
         },

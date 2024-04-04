@@ -210,7 +210,7 @@ class _SigninState extends State<Signin> {
                     ],
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 10,
                   ),
                   _buildSignButton(),
                   Center(

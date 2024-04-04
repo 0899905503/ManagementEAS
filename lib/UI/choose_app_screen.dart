@@ -117,7 +117,7 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
                     //   style: AppTextStyle.brownS14W800
                     //       .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                     // ),
-                    boxMenu("Log Out", 12, FontWeight.w700)
+                    // boxMenu("Log Out", 12, FontWeight.w700)
                   ],
                 )
               ],

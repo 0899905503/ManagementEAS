@@ -86,7 +86,7 @@ class _SalaryRankChildPageState extends State<SalaryRankChildPage> {
     var salaryRankDetailViewModel = Provider.of<SalaryDetailViewModel>(context);
     return Scaffold(
       appBar: TKCommonAppBar(
-        hasLeadingIcon: false,
+        hasLeadingIcon: true,
         title: "SalaryRank",
       ),
       body: SafeArea(

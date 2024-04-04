@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:intl/intl.dart';
+
 import 'app_env_config.dart';
 
 class AppConfigs {
@@ -33,6 +35,8 @@ class AppConfigs {
   static const dayDisplayFormat = 'EEEE, dd.MM.yyyy';
   static const timeDisplayFormat = 'hh:mm a';
   static const timeDisplay = 'kk:mm';
+  //format month take salary
+  static const salaryMonth = 'MM.yyyy';
 
   static const dateTimeAPIFormat =
       "MM/dd/yyyy'T'hh:mm:ss.SSSZ"; //Use DateTime.parse(date) instead of ...
@@ -47,6 +51,9 @@ class AppConfigs {
 
   ///Font
   static const fontFamily = 'Roboto';
+
+  //NUMBER FORMAT
+  static final formatter = "#,###";
 
   ///Max file
   static const maxAttachFile = 5;
