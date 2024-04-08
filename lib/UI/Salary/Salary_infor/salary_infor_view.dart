@@ -56,13 +56,37 @@ class SalaryInforChildPage extends StatefulWidget {
 
 class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
   List<Map<String, dynamic>>? salaryInforData;
+  List<Map<String, dynamic>>? salaryInforByMonthData;
+
+  // selectdate
+
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectMonthYear(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2101),
+      initialDatePickerMode: DatePickerMode.year,
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = DateTime(picked.year, picked.month, 1);
+      });
+      getSalary();
+    }
+  }
+
+  late int userId;
   @override
   void initState() {
     super.initState();
     // Nhận dữ liệu từ arguments khi khởi tạo màn hình
-    // relativeData = Get.arguments['relative'];
+    userId = Get.arguments['userId'];
     // infor();
     fetchUsers();
+    getSalary();
   }
 
   Future<void> fetchUsers() async {
@@ -71,14 +95,40 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
       var salaryInforviewmodel =
           Provider.of<SalaryInforViewModel>(context, listen: false);
       List<Map<String, dynamic>> salaryData =
+          // await salaryInforviewmodel.getSalaryInfor(userId);
           await salaryInforviewmodel.getSalaryInfor(1);
-
       setState(() {
         // Update the list of users
         salaryInforData = List<Map<String, dynamic>>.from(salaryData);
       });
     } catch (e) {
       print('Error fetching users: $e');
+    }
+  }
+
+  Future<void> getSalary() async {
+    try {
+      // Sử dụng Provider để lấy RelativeListViewModel
+      var salaryInforviewmodel =
+          Provider.of<SalaryInforViewModel>(context, listen: false);
+      List<Map<String, dynamic>> salaryByMonth =
+          //  await salaryInforviewmodel.getSalaryInfor(userId);
+          await salaryInforviewmodel.getSalaryInforByMonth(
+        // int.parse(await salaryInforviewmodel.getSalaryInfor(userId).toString()),
+        1,
+        int.parse(DateFormat(AppConfigs.month).format(DateTime.parse(
+          _selectedDate.toString(),
+        ))),
+        int.parse(DateFormat(AppConfigs.year).format(DateTime.parse(
+          _selectedDate.toString(),
+        ))),
+      );
+      setState(() {
+        // Update the list of users
+        salaryInforByMonthData = List<Map<String, dynamic>>.from(salaryByMonth);
+      });
+    } catch (e) {
+      print('Error fetching salary: $e');
     }
   }
 
@@ -107,6 +157,24 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
           children: [
             const SizedBox(
               height: 10,
+            ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 940,
+                ),
+                _menuItem(
+                  'Select Month',
+                  DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
+                    "${_selectedDate.toLocal()}".split(' ')[0],
+                  )),
+                  onTap: () => _selectMonthYear(context),
+                ),
+              ],
+            ),
+
+            const SizedBox(
+              height: 10,
               width: 2000,
             ),
             SizedBox(
@@ -131,37 +199,50 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
                             const SizedBox(
                               height: 10,
                             ),
-                            EmployeeInfor("Ma nhan vien",
-                                salaryInforData![0]["manv"].toString()),
+                            EmployeeInfor(
+                                "Ma nhan vien",
+                                salaryInforData![0]["manv"].toString() ??
+                                    'null'),
                             const SizedBox(
                               height: 10,
                             ),
-                            EmployeeInfor("Ma ngach",
-                                salaryInforData![0]['mangach'].toString()),
+                            EmployeeInfor(
+                                "Ma ngach",
+                                salaryInforByMonthData![0]['mangach']
+                                        .toString() ??
+                                    'null'),
                             const SizedBox(
                               height: 10,
                             ),
                             EmployeeInfor(
                               "Bac luong",
-                              salaryInforData![0]['bacluong'].toString(),
+                              salaryInforByMonthData![0]['bacluong']
+                                      .toString() ??
+                                  'null',
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            EmployeeInfor("He so luong",
-                                salaryInforData![0]['hesoluong'].toString()),
+                            EmployeeInfor(
+                                "He so luong",
+                                salaryInforByMonthData![0]['hesoluong']
+                                        .toString() ??
+                                    'null'),
                             const SizedBox(
                               height: 10,
                             ),
                             EmployeeInfor(
                               "luong theo bac",
-                              "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforData![0]['luongtheobac'].toString()))} vnđ",
+                              "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['luongtheobac'].toString()))} vnđ" ??
+                                  'null',
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            EmployeeInfor("Total",
-                                "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforData![0]['tongluong'].toString()))} vnđ"),
+                            EmployeeInfor(
+                                "Total",
+                                "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['tongluong'].toString()))} vnđ" ??
+                                    'null'),
                             const SizedBox(
                               height: 10,
                             ),
@@ -169,7 +250,9 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
                               "Month",
                               DateFormat(AppConfigs.salaryMonth)
                                   .format(DateTime.parse(
-                                salaryInforData![0]['thang'].toString(),
+                                salaryInforByMonthData![0]['thang']
+                                        .toString() ??
+                                    'null',
                               )),
                             ),
                           ],
@@ -217,4 +300,41 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
     // _cubit.close();
     super.dispose();
   }
+}
+
+Widget _menuItem(
+  String title,
+  String date, {
+  required VoidCallback onTap,
+}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      width: 200,
+      height: 60,
+      decoration: BoxDecoration(
+        color: AppColors.textWhite,
+        border: Border.all(color: AppColors.borderMenuItem, width: 1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: AppTextStyle.brownS30W700.copyWith(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            date,
+            style: AppTextStyle.brownS30W700.copyWith(
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

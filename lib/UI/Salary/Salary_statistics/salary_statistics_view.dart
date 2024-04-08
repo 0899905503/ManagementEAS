@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:meas/UI/Employee/EmployeeList/employeelist_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_images.dart';
 import 'package:meas/common/app_text_styles.dart';
+import 'package:meas/configs/app_configs.dart';
 import 'package:meas/widgets/appbar/tk_app_bar.dart';
 import 'package:meas/widgets/images/app_cache_image.dart';
 import 'package:provider/provider.dart';
@@ -152,11 +154,13 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                           ? item['hesoluong'].toString()
                           : '')),
                       DataCell(Text(item['luongtheobac'] != null
-                          ? item['luongtheobac'].toString()
+                          ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['luongtheobac'].toString()))} vnđ"
                           : '')),
-                      DataCell(Text(item['tongluong'] != null
-                          ? item['tongluong'].toString()
-                          : '')),
+                      DataCell(
+                        Text(item['tongluong'] != null
+                            ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"
+                            : ''),
+                      )
                     ]);
                   }).toList(),
                 ),
