@@ -55,7 +55,7 @@ class SalaryInforChildPage extends StatefulWidget {
 }
 
 class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
-  List<Map<String, dynamic>>? salaryInforData;
+  // List<Map<String, dynamic>>? salaryInforData;
   List<Map<String, dynamic>>? salaryInforByMonthData;
 
   // selectdate
@@ -85,26 +85,26 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
     // Nhận dữ liệu từ arguments khi khởi tạo màn hình
     userId = Get.arguments['userId'];
     // infor();
-    fetchUsers();
+    //fetchUsers();
     getSalary();
   }
 
-  Future<void> fetchUsers() async {
-    try {
-      // Sử dụng Provider để lấy RelativeListViewModel
-      var salaryInforviewmodel =
-          Provider.of<SalaryInforViewModel>(context, listen: false);
-      List<Map<String, dynamic>> salaryData =
-          // await salaryInforviewmodel.getSalaryInfor(userId);
-          await salaryInforviewmodel.getSalaryInfor(1);
-      setState(() {
-        // Update the list of users
-        salaryInforData = List<Map<String, dynamic>>.from(salaryData);
-      });
-    } catch (e) {
-      print('Error fetching users: $e');
-    }
-  }
+  // Future<void> fetchUsers() async {
+  //   try {
+  //     // Sử dụng Provider để lấy RelativeListViewModel
+  //     var salaryInforviewmodel =
+  //         Provider.of<SalaryInforViewModel>(context, listen: false);
+  //     List<Map<String, dynamic>> salaryData =
+  //         // await salaryInforviewmodel.getSalaryInfor(userId);
+  //           int.parse(userId.toString()) ;
+  //     setState(() {
+  //       // Update the list of users
+  //       salaryInforData = List<Map<String, dynamic>>.from(salaryData);
+  //     });
+  //   } catch (e) {
+  //     print('Error fetching users: $e');
+  //   }
+  // }
 
   Future<void> getSalary() async {
     try {
@@ -114,15 +114,18 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
       List<Map<String, dynamic>> salaryByMonth =
           //  await salaryInforviewmodel.getSalaryInfor(userId);
           await salaryInforviewmodel.getSalaryInforByMonth(
-        // int.parse(await salaryInforviewmodel.getSalaryInfor(userId).toString()),
-        1,
+        int.parse(userId.toString()),
+        //1,
         int.parse(DateFormat(AppConfigs.month).format(DateTime.parse(
           _selectedDate.toString(),
         ))),
+        //  05,
+        // 2023
         int.parse(DateFormat(AppConfigs.year).format(DateTime.parse(
           _selectedDate.toString(),
         ))),
       );
+      // 2023);
       setState(() {
         // Update the list of users
         salaryInforByMonthData = List<Map<String, dynamic>>.from(salaryByMonth);
@@ -130,6 +133,7 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
     } catch (e) {
       print('Error fetching salary: $e');
     }
+    // print(userId);
   }
 
   @override
@@ -164,12 +168,12 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
                   width: 940,
                 ),
                 _menuItem(
-                  'Select Month',
-                  DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
-                    "${_selectedDate.toLocal()}".split(' ')[0],
-                  )),
-                  onTap: () => _selectMonthYear(context),
-                ),
+                    'Select Month',
+                    DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
+                      "${_selectedDate.toLocal()}".split(' ')[0],
+                    )), onTap: () {
+                  _selectMonthYear(context);
+                }),
               ],
             ),
 
@@ -200,9 +204,7 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
                               height: 10,
                             ),
                             EmployeeInfor(
-                                "Ma nhan vien",
-                                salaryInforData![0]["manv"].toString() ??
-                                    'null'),
+                                "Ma nhan vien", userId.toString() ?? 'null'),
                             const SizedBox(
                               height: 10,
                             ),

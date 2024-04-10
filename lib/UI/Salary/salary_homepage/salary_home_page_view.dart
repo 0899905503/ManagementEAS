@@ -163,6 +163,7 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
                   onTap: () {
                     Get.toNamed(RouteConfig.salaryInfor,
                         arguments: {'userId': res!['id']});
+                    // print(res!['id']);
                     // if (res!['Role_id'] == 4) {
                     //   Get.offNamed(RouteConfig.employeeList);
                     // } else {
