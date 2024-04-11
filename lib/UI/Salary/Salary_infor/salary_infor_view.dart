@@ -57,7 +57,7 @@ class SalaryInforChildPage extends StatefulWidget {
 class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
   // List<Map<String, dynamic>>? salaryInforData;
   List<Map<String, dynamic>>? salaryInforByMonthData;
-
+  bool isLoading = false; // Thêm biến trạng thái isLoading
   // selectdate
 
   DateTime _selectedDate = DateTime.now();
@@ -73,6 +73,7 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = DateTime(picked.year, picked.month, 1);
+        isLoading = true; // Cập nhật isLoading thành true khi chọn tháng mới
       });
       getSalary();
     }
@@ -83,7 +84,7 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
   void initState() {
     super.initState();
     // Nhận dữ liệu từ arguments khi khởi tạo màn hình
-    userId = Get.arguments['userId'];
+    // userId = Get.arguments['userId'];
     // infor();
     //fetchUsers();
     getSalary();
@@ -108,32 +109,29 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
 
   Future<void> getSalary() async {
     try {
-      // Sử dụng Provider để lấy RelativeListViewModel
       var salaryInforviewmodel =
           Provider.of<SalaryInforViewModel>(context, listen: false);
       List<Map<String, dynamic>> salaryByMonth =
-          //  await salaryInforviewmodel.getSalaryInfor(userId);
           await salaryInforviewmodel.getSalaryInforByMonth(
-        int.parse(userId.toString()),
-        //1,
+        //  int.parse(userId.toString()),
+        1,
         int.parse(DateFormat(AppConfigs.month).format(DateTime.parse(
           _selectedDate.toString(),
         ))),
-        //  05,
-        // 2023
         int.parse(DateFormat(AppConfigs.year).format(DateTime.parse(
           _selectedDate.toString(),
         ))),
       );
-      // 2023);
       setState(() {
-        // Update the list of users
         salaryInforByMonthData = List<Map<String, dynamic>>.from(salaryByMonth);
       });
     } catch (e) {
       print('Error fetching salary: $e');
+    } finally {
+      setState(() {
+        isLoading = false; // Kết thúc quá trình tải dữ liệu
+      });
     }
-    // print(userId);
   }
 
   @override
@@ -150,123 +148,179 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
   }
 
   Widget _buildBodyWidget() {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        decoration: BoxDecoration(
-          color: Color(0xFFF1F0EF),
-          // border: Border.all(color: AppColors.buttonLogin, width: 2)
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                const SizedBox(
-                  width: 940,
-                ),
-                _menuItem(
-                    'Select Month',
-                    DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
-                      "${_selectedDate.toLocal()}".split(' ')[0],
-                    )), onTap: () {
-                  _selectMonthYear(context);
-                }),
-              ],
-            ),
-
-            const SizedBox(
-              height: 10,
-              width: 2000,
-            ),
-            SizedBox(
-              height: 280,
-              width: 600,
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.buttonLogin, width: 1)),
-                child: ListView.builder(
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Salary Information",
-                              style: AppTextStyle.blackS22W800,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            EmployeeInfor(
-                                "Ma nhan vien", userId.toString() ?? 'null'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            EmployeeInfor(
-                                "Ma ngach",
-                                salaryInforByMonthData![0]['mangach']
-                                        .toString() ??
-                                    'null'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            EmployeeInfor(
-                              "Bac luong",
-                              salaryInforByMonthData![0]['bacluong']
-                                      .toString() ??
-                                  'null',
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            EmployeeInfor(
-                                "He so luong",
-                                salaryInforByMonthData![0]['hesoluong']
-                                        .toString() ??
-                                    'null'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            EmployeeInfor(
-                              "luong theo bac",
-                              "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['luongtheobac'].toString()))} vnđ" ??
-                                  'null',
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            EmployeeInfor(
-                                "Total",
-                                "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['tongluong'].toString()))} vnđ" ??
-                                    'null'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            EmployeeInfor(
-                              "Month",
-                              DateFormat(AppConfigs.salaryMonth)
-                                  .format(DateTime.parse(
-                                salaryInforByMonthData![0]['thang']
+    if (salaryInforByMonthData == null && isLoading) {
+      // Hiển thị trạng thái loading nếu đang tải dữ liệu
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (salaryInforByMonthData != null && !isLoading) {
+      // Hiển thị thông tin lương nếu có dữ liệu
+      return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          decoration: BoxDecoration(
+            color: Color(0xFFF1F0EF),
+            // border: Border.all(color: AppColors.buttonLogin, width: 2)
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 940,
+                  ),
+                  _menuItem(
+                      'Select Month',
+                      DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
+                        "${_selectedDate.toLocal()}".split(' ')[0],
+                      )), onTap: () {
+                    _selectMonthYear(context);
+                  }),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+                width: 2000,
+              ),
+              SizedBox(
+                height: 280,
+                width: 600,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border:
+                          Border.all(color: AppColors.buttonLogin, width: 1)),
+                  child: ListView.builder(
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Salary Information",
+                                style: AppTextStyle.blackS22W800,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              EmployeeInfor("Ma nhan vien", "1"),
+                              // userId.toString() ?? 'null'),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              EmployeeInfor(
+                                  "Ma ngach",
+                                  salaryInforByMonthData![0]['mangach']
+                                          .toString() ??
+                                      'null'),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              EmployeeInfor(
+                                "Bac luong",
+                                salaryInforByMonthData![0]['bacluong']
                                         .toString() ??
                                     'null',
-                              )),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              EmployeeInfor(
+                                  "He so luong",
+                                  salaryInforByMonthData![0]['hesoluong']
+                                          .toString() ??
+                                      'null'),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              EmployeeInfor(
+                                "luong theo bac",
+                                "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['luongtheobac'].toString()))} vnđ" ??
+                                    'null',
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              EmployeeInfor(
+                                  "Total",
+                                  "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['tongluong'].toString()))} vnđ" ??
+                                      'null'),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              EmployeeInfor(
+                                "Month",
+                                DateFormat(AppConfigs.salaryMonth)
+                                    .format(DateTime.parse(
+                                  salaryInforByMonthData![0]['thang']
+                                          .toString() ??
+                                      'null',
+                                )),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                ),
+              )
+              //Dayoff + remaining + working hours + overtime
+              //  _workingTime(state.PersonalIF?.essentials),
+            ],
+          ));
+    } else {
+      // Hiển thị thông báo khi không có dữ liệu
+      return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          decoration: BoxDecoration(
+            color: Color(0xFFF1F0EF),
+            // border: Border.all(color: AppColors.buttonLogin, width: 2)
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 10,
               ),
-            )
-            //Dayoff + remaining + working hours + overtime
-            //  _workingTime(state.PersonalIF?.essentials),
-          ],
-        ));
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 940,
+                  ),
+                  _menuItem(
+                      'Select Month',
+                      DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
+                        "${_selectedDate.toLocal()}".split(' ')[0],
+                      )), onTap: () {
+                    _selectMonthYear(context);
+                  }),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+                width: 2000,
+              ),
+              SizedBox(
+                height: 280,
+                width: 600,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border:
+                          Border.all(color: AppColors.buttonLogin, width: 1)),
+                  child: Center(
+                    child: Text("Không có thông tin lương trong tháng này!"),
+                  ),
+                ),
+              )
+              //Dayoff + remaining + working hours + overtime
+              //  _workingTime(state.PersonalIF?.essentials),
+            ],
+          ));
+    }
   }
 
   Widget EmployeeInfor(String content, String details) {
