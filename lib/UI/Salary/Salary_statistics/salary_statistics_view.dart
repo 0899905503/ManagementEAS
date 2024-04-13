@@ -50,20 +50,46 @@ class SalaryChildPage extends StatefulWidget {
 
 class _SalaryChildPageState extends State<SalaryChildPage> {
   late StreamController<List<Map<String, dynamic>>> _streamController;
+  late StreamController<List<Map<String, dynamic>>> _streamController1;
+
   late final List<Map<String, dynamic>> salaryDetails;
   SalaryDetailViewModel salaryDetailViewModel = SalaryDetailViewModel();
-
+  late final List<Map<String, dynamic>> salarylist;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
     _streamController = StreamController<List<Map<String, dynamic>>>();
+    _streamController1 = StreamController<List<Map<String, dynamic>>>();
+
     fetchSalaryDetail(); // Gọi hàm để lấy dữ liệu từ API khi StatefulWidget được khởi tạo
+    fetchSalaryList();
   }
 
   @override
   void dispose() {
     _streamController.close();
+    _streamController1.close();
     super.dispose();
+  }
+
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectMonthYear(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2101),
+      initialDatePickerMode: DatePickerMode.year,
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = DateTime(picked.year, picked.month, 1);
+        isLoading = true; // Cập nhật isLoading thành true khi chọn tháng mới
+      });
+      fetchSalaryList();
+    }
   }
 
   Future<void> fetchSalaryDetail() async {
@@ -75,6 +101,30 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
       print("////////////////////////////////////////////");
       setState(() {
         _streamController.add(salaryData);
+      });
+    } catch (e) {
+      print('Error fetching salary details: $e');
+    }
+  }
+
+  Future<void> fetchSalaryList() async {
+    try {
+      List<Map<String, dynamic>> salaryData1 =
+          await salaryDetailViewModel.showSalariesByMonthAndYear(
+        int.parse(DateFormat(AppConfigs.year).format(DateTime.parse(
+          _selectedDate.toString(),
+        ))),
+        int.parse(DateFormat(AppConfigs.month).format(DateTime.parse(
+          _selectedDate.toString(),
+        ))),
+      );
+      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+      print(salaryData1);
+      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+      setState(() {
+        salarylist =
+            salaryData1; // Cập nhật salarylist với dữ liệu mới nhận được từ API
+        _streamController1.add(salaryData1);
       });
     } catch (e) {
       print('Error fetching salary details: $e');
@@ -96,79 +146,140 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
   }
 
   Widget _buildBodyWidget() {
-    return Center(
-      child: StreamBuilder<List<Map<String, dynamic>>>(
-        stream: _streamController.stream,
+    return Column(children: [
+      const SizedBox(
+        height: 10,
+      ),
+      Row(
+        children: [
+          const SizedBox(
+            width: 940,
+          ),
+          _menuItem(
+              'Select Month',
+              DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
+                "${_selectedDate.toLocal()}".split(' ')[0],
+              )), onTap: () {
+            _selectMonthYear(context);
+          }),
+        ],
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      StreamBuilder<List<Map<String, dynamic>>>(
+        stream: _streamController1.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            salaryDetails = snapshot.data!;
-            // Chuyển đổi kiểu dữ liệu của trường 'tenngach' sang String
-            List<Map<String, dynamic>> convertedData =
-                snapshot.data!.map((item) {
-              return {
-                'name': item['name'].toString(),
-                'tongluong': int.parse(item['tongluong'].toString()),
-              };
-            }).toList();
-            return
-                //Text(convertedData.toString()),
-
-                Expanded(
-              child: SingleChildScrollView(
-                child: DataTable(
-                  columns: const [
-                    DataColumn(label: Text('Id')),
-                    DataColumn(label: Text('Name')),
-                    DataColumn(label: Text('Department')),
-                    DataColumn(label: Text('Rank Id')),
-                    DataColumn(label: Text("Rank's name")),
-                    DataColumn(label: Text('Bac luong ')),
-                    DataColumn(label: Text('He so luong')),
-                    DataColumn(label: Text('Luong cb')),
-                    DataColumn(label: Text('Salary total')),
-                  ],
-                  rows: salaryDetails.map((item) {
-                    return DataRow(cells: [
-                      DataCell(Text(item['userId'] != null
-                          ? item['userId'].toString()
-                          : '')),
-                      DataCell(Text(
-                          item['name'] != null ? item['name'].toString() : '')),
-                      DataCell(Text(item['department_name'] != null
-                          ? item['department_name'].toString()
-                          : '')),
-                      DataCell(Text(item['mangach'] != null
-                          ? item['mangach'].toString()
-                          : '')),
-                      DataCell(Text(item['tenngach'] != null
-                          ? item['tenngach'].toString()
-                          : '')),
-                      DataCell(Text(item['bacluong'] != null
-                          ? item['bacluong'].toString()
-                          : '')),
-                      DataCell(Text(item['hesoluong'] != null
-                          ? item['hesoluong'].toString()
-                          : '')),
-                      DataCell(Text(item['luongtheobac'] != null
-                          ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['luongtheobac'].toString()))} vnđ"
-                          : '')),
-                      DataCell(
-                        Text(item['tongluong'] != null
-                            ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"
-                            : ''),
-                      )
-                    ]);
-                  }).toList(),
+            if (snapshot.data == null || snapshot.data!.isEmpty) {
+              return Text(
+                  'No data available'); // Hiển thị thông báo khi không có dữ liệu
+            } else {
+              // Chuyển đổi kiểu dữ liệu của trường 'tenngach' sang String
+              List<Map<String, dynamic>> convertedData =
+                  snapshot.data!.map((item) {
+                return {
+                  'name': item['name'].toString(),
+                  'tongluong': int.parse(item['tongluong'].toString()),
+                };
+              }).toList();
+              return Expanded(
+                child: SingleChildScrollView(
+                  child: DataTable(
+                    columns: const [
+                      DataColumn(label: Text('Id')),
+                      DataColumn(label: Text('Name')),
+                      DataColumn(label: Text('Department')),
+                      DataColumn(label: Text('Rank Id')),
+                      DataColumn(label: Text("Rank's name")),
+                      DataColumn(label: Text('Bac luong ')),
+                      DataColumn(label: Text('He so luong')),
+                      DataColumn(label: Text('Luong cb')),
+                      DataColumn(label: Text('Salary total')),
+                    ],
+                    rows:
+                        List<DataRow>.generate(snapshot.data!.length, (index) {
+                      var item = snapshot.data![index];
+                      return DataRow(cells: [
+                        DataCell(Text(item['userId'] != null
+                            ? item['userId'].toString()
+                            : '')),
+                        DataCell(Text(item['']['name'] != null
+                            ? item['name'].toString()
+                            : '')),
+                        DataCell(Text(item['department_name'] != null
+                            ? item['department_name'].toString()
+                            : '')),
+                        DataCell(Text(item['mangach'] != null
+                            ? item['mangach'].toString()
+                            : '')),
+                        DataCell(Text(item['tenngach'] != null
+                            ? item['tenngach'].toString()
+                            : '')),
+                        DataCell(Text(item['bacluong'] != null
+                            ? item['bacluong'].toString()
+                            : '')),
+                        DataCell(Text(item['hesoluong'] != null
+                            ? item['hesoluong'].toString()
+                            : '')),
+                        DataCell(Text(item['luongtheobac'] != null
+                            ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['luongtheobac'].toString()))} vnđ"
+                            : '')),
+                        DataCell(
+                          Text(item['']['tongluong'] != null
+                              ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"
+                              : ''),
+                        ),
+                      ]);
+                    }),
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           }
         },
       ),
-    );
+    ]);
   }
+}
+
+Widget _menuItem(
+  String title,
+  String date, {
+  required VoidCallback onTap,
+}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      width: 200,
+      height: 60,
+      decoration: BoxDecoration(
+        color: AppColors.textWhite,
+        border: Border.all(color: AppColors.borderMenuItem, width: 1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: AppTextStyle.brownS30W700.copyWith(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            date,
+            style: AppTextStyle.brownS30W700.copyWith(
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
