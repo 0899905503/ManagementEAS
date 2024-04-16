@@ -33,9 +33,11 @@ class SalaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(child: SalaryChildPage()),
+    return SalaryDetailViewModelProvider(
+      child: MaterialApp(
+        home: Scaffold(
+          body: SafeArea(child: SalaryChildPage()),
+        ),
       ),
     );
   }
@@ -53,9 +55,11 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
   late StreamController<List<Map<String, dynamic>>> _streamController1;
 
   late final List<Map<String, dynamic>> salaryDetails;
-  SalaryDetailViewModel salaryDetailViewModel = SalaryDetailViewModel();
+  // SalaryDetailViewModel salaryDetailViewModel = SalaryDetailViewModel();
+  late SalaryDetailViewModel salaryDetailViewModel;
   late final List<Map<String, dynamic>> salarylist;
   bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -86,9 +90,10 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = DateTime(picked.year, picked.month, 1);
-        isLoading = true; // Cập nhật isLoading thành true khi chọn tháng mới
+        isLoading = true;
       });
-      fetchSalaryList();
+      await fetchSalaryList(); // Gọi lại fetchSalaryList để tải dữ liệu mới
+      print("Update API");
     }
   }
 
@@ -97,7 +102,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
       List<Map<String, dynamic>> salaryData =
           await salaryDetailViewModel.getSalaryDetail();
       print("////////////////////////////////////////////");
-      print(salaryData);
+      // print(salaryData);
       print("////////////////////////////////////////////");
       setState(() {
         _streamController.add(salaryData);
@@ -118,22 +123,23 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
           _selectedDate.toString(),
         ))),
       );
-      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-      print(salaryData1);
-      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       setState(() {
-        salarylist =
-            salaryData1; // Cập nhật salarylist với dữ liệu mới nhận được từ API
-        _streamController1.add(salaryData1);
+        salarylist = salaryData1;
+        _streamController1
+            .add(salaryData1); // Cập nhật dữ liệu mới cho StreamController
       });
     } catch (e) {
       print('Error fetching salary details: $e');
+    } finally {
+      setState(() {
+        isLoading = false; // Kết thúc quá trình tải dữ liệu
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var salaryDetailViewModel = Provider.of<SalaryDetailViewModel>(context);
+    salaryDetailViewModel = SalaryDetailViewModelProvider.of(context);
     return Scaffold(
       appBar: TKCommonAppBar(
         hasLeadingIcon: true,
@@ -171,23 +177,19 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
         stream: _streamController1.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
+            print(
+                'StreamBuilder is called'); // Đặt một print để kiểm tra xem builder có được gọi khi thay đổi tháng hay không
             if (snapshot.data == null || snapshot.data!.isEmpty) {
-              return Text(
-                  'No data available'); // Hiển thị thông báo khi không có dữ liệu
+              return const Text('No data available');
             } else {
-              // Chuyển đổi kiểu dữ liệu của trường 'tenngach' sang String
-              List<Map<String, dynamic>> convertedData =
-                  snapshot.data!.map((item) {
-                return {
-                  'name': item['name'].toString(),
-                  'tongluong': int.parse(item['tongluong'].toString()),
-                };
-              }).toList();
-              return Expanded(
+              return Container(
+                height: MediaQuery.of(context)
+                    .size
+                    .height, // Chiều cao không xác định
                 child: SingleChildScrollView(
                   child: DataTable(
                     columns: const [
@@ -205,14 +207,14 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         List<DataRow>.generate(snapshot.data!.length, (index) {
                       var item = snapshot.data![index];
                       return DataRow(cells: [
-                        DataCell(Text(item['userId'] != null
-                            ? item['userId'].toString()
+                        DataCell(Text(item['manv'] != null
+                            ? item['manv'].toString()
                             : '')),
-                        DataCell(Text(item['']['name'] != null
-                            ? item['name'].toString()
+                        DataCell(Text(item['tennv'] != null
+                            ? item['tennv'].toString()
                             : '')),
-                        DataCell(Text(item['department_name'] != null
-                            ? item['department_name'].toString()
+                        DataCell(Text(item['department'] != null
+                            ? item['department'].toString()
                             : '')),
                         DataCell(Text(item['mangach'] != null
                             ? item['mangach'].toString()
@@ -229,11 +231,9 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         DataCell(Text(item['luongtheobac'] != null
                             ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['luongtheobac'].toString()))} vnđ"
                             : '')),
-                        DataCell(
-                          Text(item['']['tongluong'] != null
-                              ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"
-                              : ''),
-                        ),
+                        DataCell(Text(item['tongluong'] != null
+                            ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"
+                            : '')),
                       ]);
                     }),
                   ),
@@ -281,5 +281,33 @@ Widget _menuItem(
         ],
       ),
     ),
+  );
+}
+
+Widget EmployeeInfor(String content, String details) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      const SizedBox(
+        width: 70,
+      ),
+      Column(
+        children: [
+          Text(
+            content + ": ",
+            style: AppTextStyle.blackS16W800,
+          ),
+        ],
+      ),
+      Column(
+        children: [
+          Text(
+            details,
+            style: AppTextStyle.blackS16W800
+                .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+          ),
+        ],
+      ),
+    ],
   );
 }

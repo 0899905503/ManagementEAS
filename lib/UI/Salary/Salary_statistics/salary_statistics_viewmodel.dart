@@ -76,3 +76,50 @@ class SalaryDetailViewModel extends ChangeNotifier {
     }
   }
 }
+
+class SalaryDetailViewModelProvider extends StatefulWidget {
+  final Widget child;
+
+  SalaryDetailViewModelProvider({required this.child});
+
+  static SalaryDetailViewModel of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<_SalaryDetailViewModelInherited>()!
+        .viewModel;
+  }
+
+  @override
+  _SalaryDetailViewModelProviderState createState() =>
+      _SalaryDetailViewModelProviderState();
+}
+
+class _SalaryDetailViewModelProviderState
+    extends State<SalaryDetailViewModelProvider> {
+  late final SalaryDetailViewModel _viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel = SalaryDetailViewModel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _SalaryDetailViewModelInherited(
+      viewModel: _viewModel,
+      child: widget.child,
+    );
+  }
+}
+
+class _SalaryDetailViewModelInherited extends InheritedWidget {
+  final SalaryDetailViewModel viewModel;
+
+  _SalaryDetailViewModelInherited({
+    required Widget child,
+    required this.viewModel,
+  }) : super(child: child);
+
+  @override
+  bool updateShouldNotify(_SalaryDetailViewModelInherited oldWidget) => true;
+}

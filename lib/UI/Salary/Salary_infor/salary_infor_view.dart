@@ -150,14 +150,14 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
   Widget _buildBodyWidget() {
     if (salaryInforByMonthData == null && isLoading) {
       // Hiển thị trạng thái loading nếu đang tải dữ liệu
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
     } else if (salaryInforByMonthData != null && !isLoading) {
       // Hiển thị thông tin lương nếu có dữ liệu
       return Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color(0xFFF1F0EF),
             // border: Border.all(color: AppColors.buttonLogin, width: 2)
           ),
