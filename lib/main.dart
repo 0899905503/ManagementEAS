@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => EmployeeListViewModel()),
         ChangeNotifierProvider(create: (_) => RelativeListViewModel()),
         ChangeNotifierProvider(create: (_) => ProfileViewModel()),
-        //   ChangeNotifierProvider(create: (_) => SalaryDetailViewModel()),
+        ChangeNotifierProvider(create: (_) => SalaryDetailViewModel()),
         ChangeNotifierProvider(create: (_) => RelativeListViewModel()),
         ChangeNotifierProvider(create: (_) => ListRelativeViewModel()),
         ChangeNotifierProvider(create: (_) => SalaryInforViewModel())
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           // Use GetMaterialApp here to access providers
           return GetMaterialApp(
-            home: const Signin(),
+            home: const SalaryPage(),
             getPages: [
               GetPage(name: '/signin', page: () => const Signin()),
               GetPage(

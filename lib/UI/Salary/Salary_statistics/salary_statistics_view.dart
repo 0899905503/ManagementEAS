@@ -53,10 +53,11 @@ class SalaryChildPage extends StatefulWidget {
 class _SalaryChildPageState extends State<SalaryChildPage> {
   late StreamController<List<Map<String, dynamic>>> _streamController;
   late StreamController<List<Map<String, dynamic>>> _streamController1;
-
+  late SalaryDetailViewModel salaryDetailViewModel =
+      SalaryDetailViewModelProvider.of(context);
   late final List<Map<String, dynamic>> salaryDetails;
   // SalaryDetailViewModel salaryDetailViewModel = SalaryDetailViewModel();
-  late SalaryDetailViewModel salaryDetailViewModel;
+
   late final List<Map<String, dynamic>> salarylist;
   bool isLoading = false;
 
@@ -139,7 +140,6 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
 
   @override
   Widget build(BuildContext context) {
-    salaryDetailViewModel = SalaryDetailViewModelProvider.of(context);
     return Scaffold(
       appBar: TKCommonAppBar(
         hasLeadingIcon: true,
@@ -187,9 +187,6 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
               return const Text('No data available');
             } else {
               return Container(
-                height: MediaQuery.of(context)
-                    .size
-                    .height, // Chiều cao không xác định
                 child: SingleChildScrollView(
                   child: DataTable(
                     columns: const [
@@ -209,31 +206,31 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                       return DataRow(cells: [
                         DataCell(Text(item['manv'] != null
                             ? item['manv'].toString()
-                            : '')),
+                            : 'null')),
                         DataCell(Text(item['tennv'] != null
                             ? item['tennv'].toString()
-                            : '')),
+                            : 'null')),
                         DataCell(Text(item['department'] != null
                             ? item['department'].toString()
-                            : '')),
+                            : 'null')),
                         DataCell(Text(item['mangach'] != null
                             ? item['mangach'].toString()
-                            : '')),
+                            : 'null')),
                         DataCell(Text(item['tenngach'] != null
                             ? item['tenngach'].toString()
-                            : '')),
+                            : 'null')),
                         DataCell(Text(item['bacluong'] != null
                             ? item['bacluong'].toString()
-                            : '')),
+                            : 'null')),
                         DataCell(Text(item['hesoluong'] != null
                             ? item['hesoluong'].toString()
-                            : '')),
+                            : 'null')),
                         DataCell(Text(item['luongtheobac'] != null
                             ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['luongtheobac'].toString()))} vnđ"
-                            : '')),
+                            : 'null')),
                         DataCell(Text(item['tongluong'] != null
                             ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"
-                            : '')),
+                            : 'null')),
                       ]);
                     }),
                   ),
