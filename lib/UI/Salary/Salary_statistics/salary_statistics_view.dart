@@ -130,7 +130,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
             .add(salaryData1); // Cập nhật dữ liệu mới cho StreamController
       });
     } catch (e) {
-      print('Error fetching salary details: $e');
+      print('Error fetching salary detail: $e');
     } finally {
       setState(() {
         isLoading = false; // Kết thúc quá trình tải dữ liệu
