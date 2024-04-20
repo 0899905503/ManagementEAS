@@ -390,7 +390,7 @@ class _EmployeeListState extends State<EmployeeList> {
                           },
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         StreamBuilder<String>(
                             stream: employeeListViewModel.roleIdStream,
