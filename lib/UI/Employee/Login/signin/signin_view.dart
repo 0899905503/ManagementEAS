@@ -117,12 +117,12 @@ class _SigninState extends State<Signin> {
   }
 
   Widget _buildBodyWidget() {
-    return Stack(
+    return Column(
       children: [
         Container(
           decoration: BoxDecoration(color: Color(0xFFF1F0EF)),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 100),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -212,20 +212,27 @@ class _SigninState extends State<Signin> {
                   const SizedBox(
                     height: 10,
                   ),
-                  _buildSignButton(),
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      child: _buildSignButton()),
                   Center(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          width: 610,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 35, left: 10),
+                      child: Center(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 610,
+                            ),
+                            Text(
+                              "You don't have an account ?",
+                              style: AppTextStyle.blackS12W400,
+                            ),
+                            boxMenu("Sign Up", 12, FontWeight.w700),
+                          ],
                         ),
-                        Text(
-                          "You don't have an account ?",
-                          style: AppTextStyle.blackS12W400,
-                        ),
-                        boxMenu("Sign Up", 12, FontWeight.w700),
-                      ],
+                      ),
                     ),
                   ),
                 ],

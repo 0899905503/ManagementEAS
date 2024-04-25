@@ -55,10 +55,9 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
   late StreamController<List<Map<String, dynamic>>> _streamController1;
   late SalaryDetailViewModel salaryDetailViewModel =
       SalaryDetailViewModelProvider.of(context);
-  late final List<Map<String, dynamic>> salaryDetails;
-  // SalaryDetailViewModel salaryDetailViewModel = SalaryDetailViewModel();
+  late final List<Map<String, dynamic>> salaryDetails = [];
+  late List<Map<String, dynamic>> salarylist = []; // Khởi tạo salarylist trước
 
-  late final List<Map<String, dynamic>> salarylist;
   bool isLoading = false;
 
   @override
@@ -126,15 +125,15 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
       );
       setState(() {
         salarylist = salaryData1;
-        _streamController1
-            .add(salaryData1); // Cập nhật dữ liệu mới cho StreamController
+        isLoading = false; // Kết thúc quá trình tải dữ liệu
       });
     } catch (e) {
       print('Error fetching salary detail: $e');
-    } finally {
       setState(() {
         isLoading = false; // Kết thúc quá trình tải dữ liệu
       });
+      _showErrorDialog(
+          "Không có thông tin lương của tháng này"); // Hiển thị dialog thông báo lỗi
     }
   }
 
@@ -173,138 +172,145 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
       const SizedBox(
         height: 10,
       ),
-      StreamBuilder<List<Map<String, dynamic>>>(
-        stream: _streamController1.stream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            print(
-                'StreamBuilder is called'); // Đặt một print để kiểm tra xem builder có được gọi khi thay đổi tháng hay không
-            if (snapshot.data == null || snapshot.data!.isEmpty) {
-              return const Text('No data available');
-            } else {
-              return Container(
-                child: SingleChildScrollView(
-                  child: DataTable(
-                    columns: const [
-                      DataColumn(label: Text('Id')),
-                      DataColumn(label: Text('Name')),
-                      DataColumn(label: Text('Department')),
-                      DataColumn(label: Text('Rank Id')),
-                      DataColumn(label: Text("Rank's name")),
-                      DataColumn(label: Text('Bac luong ')),
-                      DataColumn(label: Text('He so luong')),
-                      DataColumn(label: Text('Luong cb')),
-                      DataColumn(label: Text('Salary total')),
-                    ],
-                    rows:
-                        List<DataRow>.generate(snapshot.data!.length, (index) {
-                      var item = snapshot.data![index];
-                      return DataRow(cells: [
-                        DataCell(Text(item['manv'] != null
-                            ? item['manv'].toString()
-                            : 'null')),
-                        DataCell(Text(item['tennv'] != null
-                            ? item['tennv'].toString()
-                            : 'null')),
-                        DataCell(Text(item['department'] != null
-                            ? item['department'].toString()
-                            : 'null')),
-                        DataCell(Text(item['mangach'] != null
-                            ? item['mangach'].toString()
-                            : 'null')),
-                        DataCell(Text(item['tenngach'] != null
-                            ? item['tenngach'].toString()
-                            : 'null')),
-                        DataCell(Text(item['bacluong'] != null
-                            ? item['bacluong'].toString()
-                            : 'null')),
-                        DataCell(Text(item['hesoluong'] != null
-                            ? item['hesoluong'].toString()
-                            : 'null')),
-                        DataCell(Text(item['luongtheobac'] != null
-                            ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['luongtheobac'].toString()))} vnđ"
-                            : 'null')),
-                        DataCell(Text(item['tongluong'] != null
-                            ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"
-                            : 'null')),
-                      ]);
-                    }),
+      isLoading
+          ? CircularProgressIndicator() // Hiển thị indicator loading khi đang tải dữ liệu
+          : salarylist.isEmpty
+              ? const Text(
+                  'Select the month you want to view') // Hiển thị thông báo khi không có dữ liệu
+              : Container(
+                  child: SingleChildScrollView(
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Id')),
+                        DataColumn(label: Text('Name')),
+                        DataColumn(label: Text('Department')),
+                        DataColumn(label: Text('Rank Id')),
+                        DataColumn(label: Text("Rank's name")),
+                        DataColumn(label: Text('Bac luong ')),
+                        DataColumn(label: Text('He so luong')),
+                        DataColumn(label: Text('Luong cb')),
+                        DataColumn(label: Text('Salary total')),
+                      ],
+                      rows: List<DataRow>.generate(salarylist.length, (index) {
+                        var item = salarylist[index];
+                        return DataRow(cells: [
+                          DataCell(Text(item['manv'] != null
+                              ? item['manv'].toString()
+                              : 'null')),
+                          DataCell(Text(item['tennv'] != null
+                              ? item['tennv'].toString()
+                              : 'null')),
+                          DataCell(Text(item['department'] != null
+                              ? item['department'].toString()
+                              : 'null')),
+                          DataCell(Text(item['mangach'] != null
+                              ? item['mangach'].toString()
+                              : 'null')),
+                          DataCell(Text(item['tenngach'] != null
+                              ? item['tenngach'].toString()
+                              : 'null')),
+                          DataCell(Text(item['bacluong'] != null
+                              ? item['bacluong'].toString()
+                              : 'null')),
+                          DataCell(Text(item['hesoluong'] != null
+                              ? item['hesoluong'].toString()
+                              : 'null')),
+                          DataCell(Text(item['luongtheobac'] != null
+                              ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['luongtheobac'].toString()))} vnđ"
+                              : 'null')),
+                          DataCell(Text(item['tongluong'] != null
+                              ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"
+                              : 'null')),
+                        ]);
+                      }),
+                    ),
                   ),
                 ),
-              );
-            }
-          }
-        },
-      ),
     ]);
   }
-}
 
-Widget _menuItem(
-  String title,
-  String date, {
-  required VoidCallback onTap,
-}) {
-  return InkWell(
-    onTap: onTap,
-    child: Container(
-      width: 200,
-      height: 60,
-      decoration: BoxDecoration(
-        color: AppColors.textWhite,
-        border: Border.all(color: AppColors.borderMenuItem, width: 1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: AppTextStyle.brownS30W700.copyWith(
-              fontSize: 16,
+  Widget _menuItem(
+    String title,
+    String date, {
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 200,
+        height: 60,
+        decoration: BoxDecoration(
+          color: AppColors.textWhite,
+          border: Border.all(color: AppColors.borderMenuItem, width: 1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: AppTextStyle.brownS30W700.copyWith(
+                fontSize: 16,
+              ),
             ),
-          ),
-          Text(
-            date,
-            style: AppTextStyle.brownS30W700.copyWith(
-              fontSize: 16,
+            Text(
+              date,
+              style: AppTextStyle.brownS30W700.copyWith(
+                fontSize: 16,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget EmployeeInfor(String content, String details) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      const SizedBox(
-        width: 70,
-      ),
-      Column(
-        children: [
-          Text(
-            content + ": ",
-            style: AppTextStyle.blackS16W800,
-          ),
-        ],
-      ),
-      Column(
-        children: [
-          Text(
-            details,
-            style: AppTextStyle.blackS16W800
-                .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
-          ),
-        ],
-      ),
-    ],
-  );
+  Widget EmployeeInfor(String content, String details) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const SizedBox(
+          width: 70,
+        ),
+        Column(
+          children: [
+            Text(
+              content + ": ",
+              style: AppTextStyle.blackS16W800,
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Text(
+              details,
+              style: AppTextStyle.blackS16W800
+                  .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Future<void> _showErrorDialog(String errorMessage) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Warning"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

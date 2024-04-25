@@ -126,12 +126,33 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
         salaryInforByMonthData = List<Map<String, dynamic>>.from(salaryByMonth);
       });
     } catch (e) {
-      print('Error fetching salary: $e');
+      _showErrorDialog("Không có thông tin lương của tháng này");
     } finally {
       setState(() {
         isLoading = false; // Kết thúc quá trình tải dữ liệu
       });
+      // Hiển thị dialog thông báo lỗi
     }
+  }
+
+  Future<void> _showErrorDialog(String errorMessage) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Warning"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -148,214 +169,159 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
   }
 
   Widget _buildBodyWidget() {
-    if (salaryInforByMonthData == null && isLoading) {
-      // Hiển thị trạng thái loading nếu đang tải dữ liệu
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (salaryInforByMonthData != null && !isLoading) {
-      // Hiển thị thông tin lương nếu có dữ liệu
-      return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          decoration: const BoxDecoration(
-            color: Color(0xFFF1F0EF),
-            // border: Border.all(color: AppColors.buttonLogin, width: 2)
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 940,
+    return Column(children: [
+      const SizedBox(
+        height: 10,
+      ),
+      Row(
+        children: [
+          _menuItem(
+              'Select Month',
+              DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
+                "${_selectedDate.toLocal()}".split(' ')[0],
+              )), onTap: () {
+            _selectMonthYear(context);
+          }),
+        ],
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+      isLoading
+          ? CircularProgressIndicator()
+          : (salaryInforByMonthData == null)
+              ? const Text('Select the month you want to view')
+              : Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFF1F0EF),
+                    // border: Border.all(color: AppColors.buttonLogin, width: 2)
                   ),
-                  _menuItem(
-                      'Select Month',
-                      DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
-                        "${_selectedDate.toLocal()}".split(' ')[0],
-                      )), onTap: () {
-                    _selectMonthYear(context);
-                  }),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-                width: 2000,
-              ),
-              SizedBox(
-                height: 280,
-                width: 600,
-                child: Container(
-                  decoration: BoxDecoration(
-                      border:
-                          Border.all(color: AppColors.buttonLogin, width: 1)),
-                  child: ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Salary Information",
-                                style: AppTextStyle.blackS22W800,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              EmployeeInfor("Ma nhan vien", "1"),
-                              // userId.toString() ?? 'null'),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              EmployeeInfor(
-                                  "Ma ngach",
-                                  salaryInforByMonthData![0]['mangach']
-                                          .toString() ??
-                                      'null'),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              EmployeeInfor(
-                                "Bac luong",
-                                salaryInforByMonthData![0]['bacluong']
-                                        .toString() ??
-                                    'null',
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              EmployeeInfor(
-                                  "He so luong",
-                                  salaryInforByMonthData![0]['hesoluong']
-                                          .toString() ??
-                                      'null'),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              EmployeeInfor(
-                                "luong theo bac",
-                                "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['luongtheobac'].toString()))} vnđ" ??
-                                    'null',
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              EmployeeInfor(
-                                  "Total",
-                                  "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['tongluong'].toString()))} vnđ" ??
-                                      'null'),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              EmployeeInfor(
-                                "Month",
-                                DateFormat(AppConfigs.salaryMonth)
-                                    .format(DateTime.parse(
-                                  salaryInforByMonthData![0]['thang']
-                                          .toString() ??
-                                      'null',
-                                )),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                ),
-              )
-              //Dayoff + remaining + working hours + overtime
-              //  _workingTime(state.PersonalIF?.essentials),
-            ],
-          ));
-    } else {
-      // Hiển thị thông báo khi không có dữ liệu
-      return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          decoration: BoxDecoration(
-            color: Color(0xFFF1F0EF),
-            // border: Border.all(color: AppColors.buttonLogin, width: 2)
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 940,
-                  ),
-                  _menuItem(
-                      'Select Month',
-                      DateFormat(AppConfigs.salaryMonth).format(DateTime.parse(
-                        "${_selectedDate.toLocal()}".split(' ')[0],
-                      )), onTap: () {
-                    _selectMonthYear(context);
-                  }),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-                width: 2000,
-              ),
-              SizedBox(
-                height: 280,
-                width: 600,
-                child: Container(
-                  decoration: BoxDecoration(
-                      border:
-                          Border.all(color: AppColors.buttonLogin, width: 1)),
-                  child: Center(
-                    child: Text("Không có thông tin lương trong tháng này!"),
-                  ),
-                ),
-              )
-              //Dayoff + remaining + working hours + overtime
-              //  _workingTime(state.PersonalIF?.essentials),
-            ],
-          ));
-    }
-  }
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
 
-  Widget EmployeeInfor(String content, String details) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(
-          width: 70,
-        ),
-        Column(
-          children: [
-            Text(
-              content + ": ",
-              style: AppTextStyle.blackS16W800,
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Text(
-              details,
-              style: AppTextStyle.blackS16W800
-                  .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
-            ),
-          ],
-        ),
-      ],
-    );
+                      SizedBox(
+                        height: 280,
+                        width: 600,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.buttonLogin, width: 1)),
+                          child: ListView.builder(
+                              itemCount: 1,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Salary Information",
+                                        style: AppTextStyle.blackS22W800,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      EmployeeInfor("Ma nhan vien", "1"),
+                                      // userId.toString() ?? 'null'),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      EmployeeInfor(
+                                          "Ma ngach",
+                                          salaryInforByMonthData![0]['mangach']
+                                                  .toString() ??
+                                              'null'),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      EmployeeInfor(
+                                        "Bac luong",
+                                        salaryInforByMonthData![0]['bacluong']
+                                                .toString() ??
+                                            'null',
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      EmployeeInfor(
+                                          "He so luong",
+                                          salaryInforByMonthData![0]
+                                                      ['hesoluong']
+                                                  .toString() ??
+                                              'null'),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      EmployeeInfor(
+                                        "luong theo bac",
+                                        "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['luongtheobac'].toString()))} vnđ" ??
+                                            'null',
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      EmployeeInfor(
+                                          "Total",
+                                          "${NumberFormat(AppConfigs.formatter).format(int.parse(salaryInforByMonthData![0]['tongluong'].toString()))} vnđ" ??
+                                              'null'),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      EmployeeInfor(
+                                        "Month",
+                                        DateFormat(AppConfigs.salaryMonth)
+                                            .format(DateTime.parse(
+                                          salaryInforByMonthData![0]['thang']
+                                                  .toString() ??
+                                              'null',
+                                        )),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
+                      )
+                      //Dayoff + remaining + working hours + overtime
+                      //  _workingTime(state.PersonalIF?.essentials),
+                    ],
+                  ))
+    ]);
   }
+}
 
-  @override
-  void dispose() {
-    // _cubit.close();
-    super.dispose();
-  }
+Widget EmployeeInfor(String content, String details) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      const SizedBox(
+        width: 70,
+      ),
+      Column(
+        children: [
+          Text(
+            content + ": ",
+            style: AppTextStyle.blackS16W800,
+          ),
+        ],
+      ),
+      Column(
+        children: [
+          Text(
+            details,
+            style: AppTextStyle.blackS16W800
+                .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+          ),
+        ],
+      ),
+    ],
+  );
 }
 
 Widget _menuItem(
@@ -363,34 +329,41 @@ Widget _menuItem(
   String date, {
   required VoidCallback onTap,
 }) {
-  return InkWell(
-    onTap: onTap,
-    child: Container(
-      width: 200,
-      height: 60,
-      decoration: BoxDecoration(
-        color: AppColors.textWhite,
-        border: Border.all(color: AppColors.borderMenuItem, width: 1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: AppTextStyle.brownS30W700.copyWith(
-              fontSize: 16,
-            ),
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.end, // Đẩy widget tới phía bên phải
+    children: [
+      InkWell(
+        onTap: onTap,
+        child: Container(
+          width: 200,
+          height: 60,
+          margin: EdgeInsets.only(
+              right: 10), // Thêm khoảng cách 10 đơn vị từ phía bên phải
+          decoration: BoxDecoration(
+            color: AppColors.textWhite,
+            border: Border.all(color: AppColors.borderMenuItem, width: 1),
+            borderRadius: BorderRadius.circular(12),
           ),
-          Text(
-            date,
-            style: AppTextStyle.brownS30W700.copyWith(
-              fontSize: 16,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: AppTextStyle.brownS30W700.copyWith(
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                date,
+                style: AppTextStyle.brownS30W700.copyWith(
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
-    ),
+    ],
   );
 }
