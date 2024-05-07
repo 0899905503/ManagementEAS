@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           // Use GetMaterialApp here to access providers
           return GetMaterialApp(
-            home: SalaryHistoryPage(),
+            home: Signin(),
             getPages: [
               GetPage(name: '/signin', page: () => const Signin()),
               GetPage(
