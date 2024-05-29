@@ -119,6 +119,10 @@ class MyApp extends StatelessWidget {
               GetPage(
                 name: '/salaryInfor',
                 page: () => const SalaryInforPage(),
+              ),
+              GetPage(
+                name: '/salaryRanks',
+                page: () => const SalaryRankPage(),
               )
             ],
           );

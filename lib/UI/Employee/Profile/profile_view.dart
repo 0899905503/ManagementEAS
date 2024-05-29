@@ -133,11 +133,11 @@ class _TkProfileChildPageState extends State<TkProfileChildPage> {
                       },
                       child: Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color(0xFFF1F0EF), // Màu của nút chọn ảnh
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.camera_alt,
                           color: AppColors.buttonLogin,
                           size: 16,

@@ -11,8 +11,10 @@ import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_images.dart';
 import 'package:meas/common/app_text_styles.dart';
 import 'package:meas/configs/app_configs.dart';
+import 'package:meas/utils/routes/routes.dart';
 import 'package:meas/widgets/appbar/tk_app_bar.dart';
 import 'package:meas/widgets/images/app_cache_image.dart';
+import 'package:meas/widgets/textfields/app_text_field.dart';
 import 'package:provider/provider.dart';
 
 class SalaryArguments {
@@ -51,6 +53,12 @@ class SalaryChildPage extends StatefulWidget {
 }
 
 class _SalaryChildPageState extends State<SalaryChildPage> {
+  final TextEditingController mangachController = TextEditingController();
+  final TextEditingController bacluongController = TextEditingController();
+  final TextEditingController hesoluongController = TextEditingController();
+  final TextEditingController manvController = TextEditingController();
+  final TextEditingController luongtheobacController = TextEditingController();
+  final TextEditingController thangController = TextEditingController();
   late StreamController<List<Map<String, dynamic>>> _streamController;
   late StreamController<List<Map<String, dynamic>>> _streamController1;
   late SalaryDetailViewModel salaryDetailViewModel =
@@ -59,7 +67,12 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
   late List<Map<String, dynamic>> salarylist = []; // Khởi tạo salarylist trước
 
   bool isLoading = false;
-
+  final TextEditingController mangach = TextEditingController();
+  final TextEditingController bacluong = TextEditingController();
+  final TextEditingController hesoluong = TextEditingController();
+  final TextEditingController manv = TextEditingController();
+  final TextEditingController luongtheobac = TextEditingController();
+  final TextEditingController thang = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -167,6 +180,29 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
               )), onTap: () {
             _selectMonthYear(context);
           }),
+          const SizedBox(
+            width: 20,
+          ),
+          createSalary("Add", onTap: () {
+            _showDialog(context);
+          }),
+          const SizedBox(
+            width: 20,
+          ),
+          createSalary(
+            "Ranks",
+            onTap: () {
+              // Kiểm tra nếu salarylist không rỗng và salarylist[0]['thang'] không null
+              if (salarylist.isNotEmpty && salarylist[0]['thang'] != null) {
+                Get.toNamed(RouteConfig.salaryRanks,
+                    arguments: {'date': salarylist[0]['thang']});
+              } else {
+                // Xử lý trường hợp salarylist rỗng hoặc salarylist[0]['thang'] không có giá trị
+                print(
+                    'Không thể truyền tham số date vì salarylist rỗng hoặc không có giá trị cho thang');
+              }
+            },
+          )
         ],
       ),
       const SizedBox(
@@ -184,6 +220,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         DataColumn(label: Text('Id')),
                         DataColumn(label: Text('Name')),
                         DataColumn(label: Text('Department')),
+                        DataColumn(label: Text('Role')),
                         DataColumn(label: Text('Rank Id')),
                         DataColumn(label: Text("Rank's name")),
                         DataColumn(label: Text('Bac luong ')),
@@ -200,8 +237,11 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                           DataCell(Text(item['tennv'] != null
                               ? item['tennv'].toString()
                               : 'null')),
-                          DataCell(Text(item['department'] != null
-                              ? item['department'].toString()
+                          DataCell(Text(item['phongban'] != null
+                              ? item['phongban'].toString()
+                              : 'null')),
+                          DataCell(Text(item['chucvu'] != null
+                              ? item['chucvu'].toString()
                               : 'null')),
                           DataCell(Text(item['mangach'] != null
                               ? item['mangach'].toString()
@@ -312,5 +352,259 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
         );
       },
     );
+  }
+
+  Widget createSalary(
+    String func,
+
+    ///String department,
+    //String img,
+    {
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 200,
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppColors.textWhite,
+          border: Border.all(color: AppColors.borderMenuItem, width: 1),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              func,
+              style: AppTextStyle.brownS30W700.copyWith(
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Hàm để hiển thị dialog
+  Future<void> _showDialog(BuildContext context) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: true, // Ngăn chặn đóng dialog khi bấm ra ngoài
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Salary'),
+            content: SingleChildScrollView(
+                child: Container(
+              child: Column(children: [
+                SizedBox(
+                    height: 500,
+                    width: 800,
+                    child: ListView(
+                      children: [
+                        StreamBuilder<String>(
+                            stream: salaryDetailViewModel.manv,
+                            builder: (context, snapshot) {
+                              return createSalaryEmployee(
+                                  "Employee Id:", "Employee Id",
+                                  controller: manvController);
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        StreamBuilder<String>(
+                            stream: salaryDetailViewModel.mangach,
+                            builder: (context, snapshot) {
+                              return createSalaryEmployee("mangach:", "mangach",
+                                  controller: mangachController);
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        StreamBuilder<String>(
+                            stream: salaryDetailViewModel.bacluong,
+                            builder: (context, snapshot) {
+                              return createSalaryEmployee(
+                                  "bacluong:", "bacluong",
+                                  controller: bacluongController);
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        StreamBuilder<String>(
+                            stream: salaryDetailViewModel.hesoluong,
+                            builder: (context, snapshot) {
+                              return createSalaryEmployee(
+                                "hesoluong:",
+                                "hesoluong",
+                                controller: hesoluongController,
+                              );
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+
+                        StreamBuilder<String>(
+                            stream: salaryDetailViewModel.luongtheobac,
+                            builder: (context, snapshot) {
+                              return createSalaryEmployee(
+                                  "luongtheobac:", "luongtheobac",
+                                  controller: luongtheobacController);
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+
+                        StreamBuilder<String>(
+                            stream: salaryDetailViewModel.thang,
+                            builder: (context, snapshot) {
+                              return createSalaryEmployee("Month:", "Month",
+                                  controller: thangController);
+                            }),
+
+                        // StreamBuilder<String>(
+                        //   stream: salaryDetailViewModel.birthdayStream,
+                        //   builder: (context, snapshot) {
+                        //     return createSalaryEmployee1(
+                        //         "Birthday:", "Birthday",
+                        //         controller: birthdayController,
+                        //         onTap: () => _selectDate(
+                        //               context,
+                        //               selectedBirthday,
+                        //               (date) {
+                        //                 setState(() {
+                        //                   selectedBirthday = date;
+                        //                   birthdayController.text =
+                        //                       selectedBirthday!
+                        //                           .toLocal()
+                        //                           .toString()
+                        //                           .split(' ')[0];
+                        //                 });
+                        //               },
+                        //             ));
+                        //   },
+                        // ),
+
+                        // StreamBuilder<String>(
+                        //     stream: salaryDetailViewModel.roleIdStream,
+                        //     builder: (context, snapshot) {
+                        //       String roleId = snapshot.data ?? selectedRoleId;
+                        //       return Row(
+                        //         children: [
+                        //           createSalaryEmployee("Role Id", "Role Id",
+                        //               controller: roleIdController),
+                        //           const SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Container(
+                        //             width: 170,
+                        //             height: 40,
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.white,
+                        //                 borderRadius: BorderRadius.circular(10),
+                        //                 border: Border.all(
+                        //                     width: 2,
+                        //                     color: Color(0xff663300))),
+                        //             child: DropdownButton<String>(
+                        //               value: roleId,
+                        //               onChanged: (String? newValue) {
+                        //                 setState(() {
+                        //                   selectedRoleId = newValue!;
+                        //                   roleIdController.text =
+                        //                       selectedRoleId;
+                        //                 });
+                        //               },
+                        //               underline: Container(),
+                        //               items: const [
+                        //                 DropdownMenuItem(
+                        //                   value: '1',
+                        //                   child: Text('Employee'),
+                        //                 ),
+                        //                 DropdownMenuItem(
+                        //                   value: '2',
+                        //                   child: Text('Department Head'),
+                        //                 ),
+                        //                 DropdownMenuItem(
+                        //                   value: '3',
+                        //                   child: Text('Deputy Director'),
+                        //                 ),
+                        //                 DropdownMenuItem(
+                        //                   value: '4',
+                        //                   child: Text('Director'),
+                        //                 ),
+                        //                 DropdownMenuItem(
+                        //                   value: '5',
+                        //                   child: Text('Chairman'),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           )
+                        //         ],
+                        //       );
+                        //     }),
+                      ],
+                    ))
+              ]),
+            )),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Đồng ý'),
+                onPressed: () async {
+                  // Lấy dữ liệu từ các trường nhập
+                  // (Bạn cần điều chỉnh dòng sau tùy thuộc vào cách bạn thu thập dữ liệu)
+                  Map<String, String> salaryData = {
+                    'manv': manvController.text,
+                    'mangach': mangachController.text,
+                    'bacluong': bacluongController.text,
+                    'hesoluong': hesoluongController.text,
+                    'luongtheobac': luongtheobacController.text,
+                    'thang': thangController.text,
+
+                    // Thêm các trường khác tương tự
+                  };
+                  print(salaryData);
+                  // Gọi hàm để tạo lương mới
+                  await salaryDetailViewModel
+                      .createSalaryforEmployee(salaryData);
+
+                  Navigator.of(context).pop(); // Đóng dialog khi nút được nhấn
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget createSalaryEmployee(String title, String hintText,
+      {required TextEditingController controller}) {
+    return SizedBox(
+        width: 367,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyle.brownS14W800
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(
+                  width: 100,
+                )
+              ],
+            ),
+            AppTextField(
+              obscureText: false,
+              hintText: hintText,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              borderRadius: 10,
+              showOutline: true,
+              controller: controller,
+            ),
+          ],
+        ));
   }
 }
