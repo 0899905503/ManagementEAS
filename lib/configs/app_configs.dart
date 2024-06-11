@@ -37,6 +37,7 @@ class AppConfigs {
   static const timeDisplay = 'kk:mm';
   //format month take salary
   static const salaryMonth = 'MM-yyyy';
+  static const day = 'dd';
   static const month = 'M';
   static const year = 'yyyy';
 

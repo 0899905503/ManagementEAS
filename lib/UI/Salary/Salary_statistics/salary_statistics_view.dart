@@ -63,22 +63,23 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
   late StreamController<List<Map<String, dynamic>>> _streamController1;
   late SalaryDetailViewModel salaryDetailViewModel =
       SalaryDetailViewModelProvider.of(context);
+  late SalaryDetailViewModel salaryDetailViewModel1 = SalaryDetailViewModel();
   late final List<Map<String, dynamic>> salaryDetails = [];
   late List<Map<String, dynamic>> salarylist = []; // Khởi tạo salarylist trước
-
+  List<Map<String, dynamic>> userid = [];
+  Map<String, dynamic>? salaryinfor;
   bool isLoading = false;
-  final TextEditingController mangach = TextEditingController();
-  final TextEditingController bacluong = TextEditingController();
-  final TextEditingController hesoluong = TextEditingController();
-  final TextEditingController manv = TextEditingController();
-  final TextEditingController luongtheobac = TextEditingController();
-  final TextEditingController thang = TextEditingController();
+
+  //static Stream<String> get manv => Stream.value("some value");
+  int? selectedEmployeeId;
+  int? selectedRankId;
   @override
   void initState() {
     super.initState();
     _streamController = StreamController<List<Map<String, dynamic>>>();
     _streamController1 = StreamController<List<Map<String, dynamic>>>();
-
+    fetchEmployeeIds();
+    //fetchSalaryInfor(selectedEmployeeId!);
     fetchSalaryDetail(); // Gọi hàm để lấy dữ liệu từ API khi StatefulWidget được khởi tạo
     fetchSalaryList();
   }
@@ -115,13 +116,48 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
       List<Map<String, dynamic>> salaryData =
           await salaryDetailViewModel.getSalaryDetail();
       print("////////////////////////////////////////////");
-      // print(salaryData);
+      print(salaryData);
       print("////////////////////////////////////////////");
       setState(() {
         _streamController.add(salaryData);
       });
     } catch (e) {
       print('Error fetching salary details: $e');
+    }
+  }
+
+  Future<void> fetchSalaryInfor(int userid1) async {
+    try {
+      Map<String, dynamic> salaryinfor1 =
+          await salaryDetailViewModel1.getinfor(userid1);
+      print("////////////////////////////////////////////");
+      print(salaryinfor1);
+      print("////////////////////////////////////////////");
+      setState(() {
+        salaryinfor = Map<String, dynamic>.from(salaryinfor1);
+        // _streamController.add(salaryinfor);
+      });
+      print("salary infor : $salaryinfor");
+    } catch (e) {
+      print('Error fetching salary details: $e');
+    }
+  }
+
+  Future<void> fetchEmployeeIds() async {
+    try {
+      List<Map<String, dynamic>> ids = await salaryDetailViewModel1.getIds();
+      print('############################');
+      // print('Fetched IDs: $ids');
+      print('############################');
+      setState(() {
+        userid = ids;
+      });
+      print('############################');
+      print('State updated: $userid');
+      print('############################');
+    } catch (e) {
+      _showErrorDialog("Không có id nhân viên");
+      // Handle error
     }
   }
 
@@ -184,7 +220,16 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
             width: 20,
           ),
           createSalary("Add", onTap: () {
-            _showDialog(context);
+            // Kiểm tra nếu salarylist không rỗng và salarylist[0]['thang'] không null
+            if (salarylist.isNotEmpty && salarylist[0]['thang'] != null) {
+              Get.toNamed(RouteConfig.createEmployeeSalary,
+                  arguments: {'date': salarylist[0]['thang']});
+            } else {
+              // Xử lý trường hợp salarylist rỗng hoặc salarylist[0]['thang'] không có giá trị
+              print(
+                  'Không thể truyền tham số date vì salarylist rỗng hoặc không có giá trị cho thang');
+            }
+            //(context);
           }),
           const SizedBox(
             width: 20,
@@ -404,19 +449,80 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                     child: ListView(
                       children: [
                         StreamBuilder<String>(
-                            stream: salaryDetailViewModel.manv,
-                            builder: (context, snapshot) {
-                              return createSalaryEmployee(
-                                  "Employee Id:", "Employee Id",
-                                  controller: manvController);
-                            }),
+                          stream: salaryDetailViewModel.manv,
+                          builder: (context, snapshot) {
+                            print('User IDs: $userid');
+                            return Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    print(
+                                        '${salaryinfor?['mangach'].runtimeType}');
+                                  },
+                                  child: Text("click"),
+                                ),
+                                createSalaryEmployee(
+                                  "Employee Id:",
+                                  selectedEmployeeId?.toString() ??
+                                      'No ID selected',
+                                  controller: manvController,
+                                ),
+                                Container(
+                                  width: 170,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        width: 2, color: Color(0xff663300)),
+                                  ),
+                                  child: DropdownButton<String>(
+                                    value: selectedEmployeeId?.toString(),
+                                    hint: const Text("Select Employee ID"),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedEmployeeId =
+                                            int.tryParse(newValue!);
+                                        manvController.text =
+                                            selectedEmployeeId?.toString() ??
+                                                '';
+                                        if (selectedEmployeeId != null) {
+                                          fetchSalaryInfor(selectedEmployeeId!);
+                                        } else {
+                                          fetchSalaryInfor(1);
+                                        }
+                                      });
+                                      print(selectedEmployeeId);
+                                    },
+                                    underline: Container(),
+                                    items: (userid[0]['employee_ids']
+                                            as List<dynamic>)
+                                        .map<DropdownMenuItem<String>>(
+                                            (dynamic id) {
+                                      return DropdownMenuItem<String>(
+                                        value: id.toString(),
+                                        child: Text(id.toString()),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
                         StreamBuilder<String>(
                             stream: salaryDetailViewModel.mangach,
                             builder: (context, snapshot) {
-                              return createSalaryEmployee("mangach:", "mangach",
+                              // salaryinfor == null
+                              //     ? Text("null data")
+                              //     : mangachController.text =
+                              //         salaryinfor!["mangach"].toString();
+
+                              return createSalaryEmployee(
+                                  "mangach:", salaryinfor.toString(),
                                   controller: mangachController);
                             }),
                         const SizedBox(
@@ -425,6 +531,10 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         StreamBuilder<String>(
                             stream: salaryDetailViewModel.bacluong,
                             builder: (context, snapshot) {
+                              salaryinfor == null
+                                  ? Text("null data")
+                                  : bacluongController.text =
+                                      salaryinfor!["bacluong"].toString();
                               return createSalaryEmployee(
                                   "bacluong:", "bacluong",
                                   controller: bacluongController);
@@ -435,6 +545,10 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         StreamBuilder<String>(
                             stream: salaryDetailViewModel.hesoluong,
                             builder: (context, snapshot) {
+                              salaryinfor == null
+                                  ? Text("null data")
+                                  : hesoluongController.text =
+                                      salaryinfor!["hesoluong"].toString();
                               return createSalaryEmployee(
                                 "hesoluong:",
                                 "hesoluong",
@@ -444,10 +558,13 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         const SizedBox(
                           height: 10,
                         ),
-
                         StreamBuilder<String>(
                             stream: salaryDetailViewModel.luongtheobac,
                             builder: (context, snapshot) {
+                              salaryinfor == null
+                                  ? Text("null data")
+                                  : luongtheobacController.text =
+                                      salaryinfor!["luongtheobac"].toString();
                               return createSalaryEmployee(
                                   "luongtheobac:", "luongtheobac",
                                   controller: luongtheobacController);
@@ -455,94 +572,14 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         const SizedBox(
                           height: 10,
                         ),
-
                         StreamBuilder<String>(
                             stream: salaryDetailViewModel.thang,
                             builder: (context, snapshot) {
+                              thangController.text =
+                                  "${(DateFormat(AppConfigs.dateAPI).format(_selectedDate))}";
                               return createSalaryEmployee("Month:", "Month",
                                   controller: thangController);
                             }),
-
-                        // StreamBuilder<String>(
-                        //   stream: salaryDetailViewModel.birthdayStream,
-                        //   builder: (context, snapshot) {
-                        //     return createSalaryEmployee1(
-                        //         "Birthday:", "Birthday",
-                        //         controller: birthdayController,
-                        //         onTap: () => _selectDate(
-                        //               context,
-                        //               selectedBirthday,
-                        //               (date) {
-                        //                 setState(() {
-                        //                   selectedBirthday = date;
-                        //                   birthdayController.text =
-                        //                       selectedBirthday!
-                        //                           .toLocal()
-                        //                           .toString()
-                        //                           .split(' ')[0];
-                        //                 });
-                        //               },
-                        //             ));
-                        //   },
-                        // ),
-
-                        // StreamBuilder<String>(
-                        //     stream: salaryDetailViewModel.roleIdStream,
-                        //     builder: (context, snapshot) {
-                        //       String roleId = snapshot.data ?? selectedRoleId;
-                        //       return Row(
-                        //         children: [
-                        //           createSalaryEmployee("Role Id", "Role Id",
-                        //               controller: roleIdController),
-                        //           const SizedBox(
-                        //             width: 10,
-                        //           ),
-                        //           Container(
-                        //             width: 170,
-                        //             height: 40,
-                        //             decoration: BoxDecoration(
-                        //                 color: Colors.white,
-                        //                 borderRadius: BorderRadius.circular(10),
-                        //                 border: Border.all(
-                        //                     width: 2,
-                        //                     color: Color(0xff663300))),
-                        //             child: DropdownButton<String>(
-                        //               value: roleId,
-                        //               onChanged: (String? newValue) {
-                        //                 setState(() {
-                        //                   selectedRoleId = newValue!;
-                        //                   roleIdController.text =
-                        //                       selectedRoleId;
-                        //                 });
-                        //               },
-                        //               underline: Container(),
-                        //               items: const [
-                        //                 DropdownMenuItem(
-                        //                   value: '1',
-                        //                   child: Text('Employee'),
-                        //                 ),
-                        //                 DropdownMenuItem(
-                        //                   value: '2',
-                        //                   child: Text('Department Head'),
-                        //                 ),
-                        //                 DropdownMenuItem(
-                        //                   value: '3',
-                        //                   child: Text('Deputy Director'),
-                        //                 ),
-                        //                 DropdownMenuItem(
-                        //                   value: '4',
-                        //                   child: Text('Director'),
-                        //                 ),
-                        //                 DropdownMenuItem(
-                        //                   value: '5',
-                        //                   child: Text('Chairman'),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           )
-                        //         ],
-                        //       );
-                        //     }),
                       ],
                     ))
               ]),

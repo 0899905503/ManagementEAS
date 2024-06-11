@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class SalaryDetailViewModel extends ChangeNotifier {
   final BehaviorSubject<bool> _SaveSubject = BehaviorSubject<bool>();
   final BehaviorSubject<String> luongtheobac = BehaviorSubject<String>();
   final BehaviorSubject<String> thang = BehaviorSubject<String>();
+  final BehaviorSubject<String> luongcoban = BehaviorSubject<String>();
   Stream<String> get mangachStream => mangach.stream;
   Sink<String> get mangachSink => mangach.sink;
 
@@ -31,17 +33,22 @@ class SalaryDetailViewModel extends ChangeNotifier {
   Stream<String> get thangStream => thang.stream;
   Sink<String> get thangSink => thang.sink;
 
+  Stream<String> get luongcobanStream => luongcoban.stream;
+  Sink<String> get luongcobanSink => luongcoban.sink;
   Stream<bool> get saveStream => _SaveSubject.stream;
   Sink<bool> get saveSink => _SaveSubject.sink;
   final String? Url = AppConfigs.baseUrl;
   static const String apiUrlPath = "api";
   static const String getSalaryDetailsList = "/getSalaryDetailsList";
-
+  static const String getid = "/getAllEmployeeIds/";
   //
   static const String showSalariesByMonthAndYear1 =
       "/showSalariesByMonthAndYear/";
   //
+  static const String getSalaryScaleByUserId = "/getSalaryScaleByUserId/";
+  //
   static const String createSalaryScale = "/createSalaryScale/";
+  static const String checkIfSalaryExist = "/checkIfSalaryExists";
   Future<List<Map<String, dynamic>>> getSalaryDetail() async {
     try {
       http.Response response = await http.get(
@@ -74,6 +81,38 @@ class SalaryDetailViewModel extends ChangeNotifier {
     }
   }
 
+  Future<List<Map<String, dynamic>>> getIds() async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse("$Url$apiUrlPath$getid"),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+      ).timeout(Duration(seconds: 10));
+
+      print('Received response: ${response.body}');
+
+      if (response.statusCode == 200) {
+        var responseData1 = jsonDecode(response.body);
+        if (responseData1 is List) {
+          return List<Map<String, dynamic>>.from(responseData1);
+        } else if (responseData1 is Map<String, dynamic>) {
+          // Handle the case where a single object is returned
+          return [responseData1];
+        } else {
+          throw Exception('Invalid response format - Not a List');
+        }
+      } else {
+        // Handle other HTTP status codes
+        print('Error ${response.statusCode}: ${response.reasonPhrase}');
+        throw Exception('Failed to load users id');
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
   Future<Map<String, dynamic>> createSalaryforEmployee(dynamic data) async {
     try {
       http.Response response = await http
@@ -86,7 +125,55 @@ class SalaryDetailViewModel extends ChangeNotifier {
           )
           .timeout(Duration(seconds: 10));
 
-      print('Received response: ${response.body}');
+      print('Received response1: ${response.body}');
+
+      var responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        return responseData;
+      } else if (response.statusCode == 400) {
+        return responseData;
+      } else {
+        print('Error ${response.statusCode}: ${response.reasonPhrase}');
+        return responseData;
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  Future<bool> checkIfSalaryExists(String manv, String thang) async {
+    final response = await http.post(
+      Uri.parse("$Url$apiUrlPath$checkIfSalaryExist"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'manv': manv,
+        'thang': thang,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Giả sử server trả về một JSON với một trường 'exists' để chỉ ra sự tồn tại của thông tin lương
+      final data = jsonDecode(response.body);
+      return data['exists'];
+    } else {
+      throw Exception('Failed to check salary existence');
+    }
+  }
+
+  Future<Map<String, dynamic>> getinfor(int userid1) async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse("$Url$apiUrlPath$getSalaryScaleByUserId$userid1"),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+      ).timeout(Duration(seconds: 10));
+
+      print('Received response salary infor: ${response.body}');
 
       var responseData = jsonDecode(response.body);
 

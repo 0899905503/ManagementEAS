@@ -34,6 +34,7 @@ class RouteConfig {
   static const String salaryRanking = "/salaryRanking";
   static const String salaryInfor = "/salaryInfor";
   static const String salaryRanks = "/salaryRanks";
+  static const String createEmployeeSalary = "/createEmployeeSalary";
   //============================================================================================================
 
   ///Alias ​​mapping page

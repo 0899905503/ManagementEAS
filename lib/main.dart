@@ -19,6 +19,7 @@ import 'package:meas/UI/Salary/Salary_infor/salary_infor_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_ranking/salary_rank_view.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_view.dart';
+import 'package:meas/UI/Salary/create_employee_salary/create_employee_salary_view.dart';
 import 'package:meas/UI/Salary/salary_history/salary_history_view.dart';
 import 'package:meas/UI/Salary/salary_homepage/salary_home_page_view.dart';
 import 'package:meas/UI/choose_app_screen.dart';
@@ -82,7 +83,7 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           // Use GetMaterialApp here to access providers
           return GetMaterialApp(
-            home: Signin(),
+            home: const Signin(),
             getPages: [
               GetPage(name: '/signin', page: () => const Signin()),
               GetPage(
@@ -123,7 +124,10 @@ class MyApp extends StatelessWidget {
               GetPage(
                 name: '/salaryRanks',
                 page: () => const SalaryRankPage(),
-              )
+              ),
+              GetPage(
+                  name: '/createEmployeeSalary',
+                  page: () => const CreateEmployeeSalaryPagePAge()),
             ],
           );
         },

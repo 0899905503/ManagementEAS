@@ -17,7 +17,7 @@ extension EnvironmentExt on Environment {
   }
 
   String get baseUrl {
-    return "http://192.168.18.27:8000/";
+    return "http://192.168.18.30:8000/";
   }
 
   String get wsKey => "98dc33b1317783036aba";

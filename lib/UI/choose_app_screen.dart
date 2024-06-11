@@ -82,7 +82,7 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      width: 550,
+                      width: 650,
                     ),
                     _menuItem(
                       "Nhân viên",
