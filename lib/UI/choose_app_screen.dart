@@ -79,10 +79,9 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
                   height: 32,
                 ),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      width: 650,
+                      width: 550,
                     ),
                     _menuItem(
                       "Nhân viên",
@@ -99,6 +98,16 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
                       AppImages.icSalary,
                       onTap: () {
                         Get.toNamed(RouteConfig.managementSalary);
+                      },
+                    ),
+                    const SizedBox(
+                      width: 11,
+                    ),
+                    _menuItem(
+                      "Admin",
+                      AppImages.icPerson,
+                      onTap: () {
+                        Get.toNamed(RouteConfig.adminPage);
                       },
                     ),
                   ],

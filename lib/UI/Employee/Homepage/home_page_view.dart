@@ -158,10 +158,12 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
               alignment: WrapAlignment.start,
               children: [
                 _menuItem(
-                  "Employees",
+                  "Personal",
                   AppImages.icEmployee,
                   onTap: () {
-                    Get.toNamed(RouteConfig.employeeList);
+                    Get.toNamed(RouteConfig.personalInformation,
+                        arguments: {'userid': res!["id"]});
+
                     // if (res!['Role_id'] == 4) {
                     //   Get.offNamed(RouteConfig.employeeList);
                     // } else {

@@ -172,8 +172,9 @@ class _TkProfileChildPageState extends State<TkProfileChildPage> {
             //change password
             Row(
               children: [
-                const SizedBox(width: 500),
-                _itemMenu('Change Password', AppImages.icTkLock,
+                const SizedBox(width: 600),
+                _itemMenu('Change Password',
+                    // AppImages.icTkLock,
                     iconBgColor: const Color(0xffF3B7B7), onTap: () {
                   //Get.toNamed(
                   // RouteConfig.tkChangePassword,
@@ -184,7 +185,7 @@ class _TkProfileChildPageState extends State<TkProfileChildPage> {
                 //LOGOUT
                 _itemMenu(
                   'Sign Out',
-                  AppImages.icTkLogout,
+                  //  AppImages.icTkLogout,
                   onTap: () {
                     _logout();
                   },
@@ -205,8 +206,7 @@ class _TkProfileChildPageState extends State<TkProfileChildPage> {
     Get.offNamed(RouteConfig.signIn);
   }
 
-  Widget _itemMenu(String title, String iconName,
-      {Color? iconBgColor, VoidCallback? onTap}) {
+  Widget _itemMenu(String title, {Color? iconBgColor, VoidCallback? onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -226,15 +226,15 @@ class _TkProfileChildPageState extends State<TkProfileChildPage> {
         ),
         child: Row(
           children: [
-            Container(
-              width: 46,
-              height: 46,
-              decoration: BoxDecoration(
-                color: iconBgColor ?? const Color(0xffADD5EF),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Image.asset(iconName),
-            ),
+            // Container(
+            //   width: 46,
+            //   height: 46,
+            //   decoration: BoxDecoration(
+            //     color: iconBgColor ?? const Color(0xffADD5EF),
+            //     borderRadius: BorderRadius.circular(12),
+            //   ),
+            //   child: Image.asset(iconName),
+            // ),
             const SizedBox(width: 20),
             Text(title, style: AppTextStyle.blackS20Medium)
           ],

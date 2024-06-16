@@ -270,7 +270,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         DataColumn(label: Text("Rank's name")),
                         DataColumn(label: Text('Bac luong ')),
                         DataColumn(label: Text('He so luong')),
-                        DataColumn(label: Text('Luong cb')),
+                        DataColumn(label: Text('Luong theo bac')),
                         DataColumn(label: Text('Salary total')),
                       ],
                       rows: List<DataRow>.generate(salarylist.length, (index) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meas/UI/Admin/Management/choose_app.dart';
+import 'package:meas/UI/Admin/admin_page_view.dart';
 import 'package:meas/UI/Employee/EmployeeList/employeelist_view.dart';
 import 'package:meas/UI/Employee/EmployeeList/employeelist_viewmodel.dart';
 
@@ -14,6 +16,10 @@ import 'package:meas/UI/Employee/Profile/profile_viewmodel.dart';
 import 'package:meas/UI/Employee/RelativeList/relativeInformation.dart';
 import 'package:meas/UI/Employee/RelativeList/relativelist_view.dart';
 import 'package:meas/UI/Employee/RelativeList/relativelist_viewmodel.dart';
+import 'package:meas/UI/Salary/Bonus/create_bonus_view.dart';
+import 'package:meas/UI/Salary/Bonus/create_bonus_viewmodel.dart';
+import 'package:meas/UI/Salary/Discipline/create_discipline_view.dart';
+import 'package:meas/UI/Salary/Discipline/create_discipline_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_infor/salary_infor_view.dart';
 import 'package:meas/UI/Salary/Salary_infor/salary_infor_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_ranking/salary_rank_view.dart';
@@ -77,7 +83,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SalaryDetailViewModel()),
         ChangeNotifierProvider(create: (_) => RelativeListViewModel()),
         ChangeNotifierProvider(create: (_) => ListRelativeViewModel()),
-        ChangeNotifierProvider(create: (_) => SalaryInforViewModel())
+        ChangeNotifierProvider(create: (_) => SalaryInforViewModel()),
+        ChangeNotifierProvider(create: (_) => CreateDisciplineViewModel()),
+        ChangeNotifierProvider(create: (_) => CreateBonusViewModel()),
       ],
       child: Builder(
         builder: (context) {
@@ -128,6 +136,14 @@ class MyApp extends StatelessWidget {
               GetPage(
                   name: '/createEmployeeSalary',
                   page: () => const CreateEmployeeSalaryPagePAge()),
+              GetPage(name: '/adminPage', page: () => const AdminPage()),
+              GetPage(name: '/choosePage', page: () => const ChoosePage()),
+              GetPage(
+                  name: '/createBonusPage',
+                  page: () => const CreateBonusPage()),
+              GetPage(
+                  name: '/createDisciplinePage',
+                  page: () => const CreateDisciplinePage()),
             ],
           );
         },

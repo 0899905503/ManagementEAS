@@ -36,6 +36,11 @@ class RouteConfig {
   static const String salaryRanks = "/salaryRanks";
   static const String createEmployeeSalary = "/createEmployeeSalary";
   //============================================================================================================
+//ADMIN
+  static const String adminPage = "/adminPage";
+  static const String choosePage = "/choosePage";
+  static const String createBonusPage = "/createBonusPage";
+  static const String createDisciplinePage = "/createDisciplinePage";
 
   ///Alias ​​mapping page
   static final List<GetPage> getPages = [

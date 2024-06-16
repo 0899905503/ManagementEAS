@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:meas/UI/Employee/EmployeeList/employeelist_view.dart';
 import 'package:meas/UI/Employee/EmployeeList/employeelist_viewmodel.dart';
+import 'package:meas/UI/Employee/Personal_information.dart/Personal_information_viewmodel.dart';
 
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_images.dart';
@@ -46,7 +47,8 @@ class TkPersonalIFChildPage extends StatefulWidget {
 }
 
 class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
-  Map<String, dynamic>? userData;
+  int? userData;
+  Map<String, dynamic>? userDataById;
   final String? Url = AppConfigs.baseUrl;
   final String? Path = "storage/Img/AVT/";
   final EmployeeListViewModel employeeListViewModel = EmployeeListViewModel();
@@ -72,38 +74,63 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
   final TextEditingController roleIdController = TextEditingController();
   final TextEditingController permanentAddressController =
       TextEditingController();
-
+  PersonalInformationViewModel personalinfor = PersonalInformationViewModel();
   DateTime? selectedIssueDate;
   DateTime? selectedStartDate;
   String selectedRoleId = '1';
   String selectedGender = 'male';
+
   @override
   void initState() {
     super.initState();
-    userData = Get.arguments['user'];
-
+    userData = Get.arguments['userid'];
+    fetchUsers(userData!);
     // Initialize controllers with user data
-    idController.text = userData!['id'].toString();
-    personalIdController.text = userData!['Personal_Id'].toString();
-    emailController.text = userData!['email'].toString();
-    passwordController.text = userData!['password'].toString();
-    firstNameController.text = userData!['first_name'].toString();
-    lastNameController.text = userData!['last_name'].toString();
-    phoneNumberController.text = userData!['phone_number'].toString();
-    genderController.text = userData!['gender'].toString();
-    addressController.text = userData!['address'].toString();
-    qualificationController.text = userData!['Qualification'].toString();
-    nationalityController.text = userData!['Nationality'].toString();
-    ethnicityController.text = userData!['Ethnicity'].toString();
-    languageController.text = userData!['Language'].toString();
-    computerScienceController.text = userData!['Computer_Science'].toString();
-    religionController.text = userData!['Religion'].toString();
-    issueDateController.text = userData!['Issue_Date'].toString();
-    issueByController.text = userData!['Issued_By'].toString();
-    startDateController.text = userData!['Start_Date'].toString();
-    roleIdController.text = userData!['Role_id'].toString();
-    permanentAddressController.text =
-        userData!['Permanent_AdduserDatas'].toString();
+    // idController.text = userDataById!['employee']['id'].toString();
+    // personalIdController.text =
+    //     userDataById!['employee']['Personal_Id'].toString();
+    // emailController.text = userDataById!['employee']['email'].toString();
+    // passwordController.text = userDataById!['employee']['password'].toString();
+    // firstNameController.text =
+    //     userDataById!['employee']['first_name'].toString();
+    // lastNameController.text = userDataById!['employee']['last_name'].toString();
+    // phoneNumberController.text =
+    //     userDataById!['employee']['phone_number'].toString();
+    // genderController.text = userDataById!['employee']['gender'].toString();
+    // addressController.text = userDataById!['employee']['address'].toString();
+    // qualificationController.text =
+    //     userDataById!['employee']['Qualification'].toString();
+    // nationalityController.text =
+    //     userDataById!['employee']['Nationality'].toString();
+    // ethnicityController.text =
+    //     userDataById!['employee']['Ethnicity'].toString();
+    // languageController.text = userDataById!['employee']['Language'].toString();
+    // computerScienceController.text =
+    //     userDataById!['employee']['Computer_Science'].toString();
+    // religionController.text = userDataById!['employee']['Religion'].toString();
+    // issueDateController.text =
+    //     userDataById!['employee']['Issue_Date'].toString();
+    // issueByController.text = userDataById!['employee']['Issued_By'].toString();
+    // startDateController.text =
+    //     userDataById!['employee']['Start_Date'].toString();
+    // roleIdController.text = userDataById!['employee']['Role_id'].toString();
+    // permanentAddressController.text =
+    //     userDataById!['employee']['Permanent_AdduserDatas'].toString();
+  }
+
+  Future<void> fetchUsers(int id) async {
+    try {
+      Map<String, dynamic> userData1 = await personalinfor.userInfor(id);
+      print("===================================");
+      print(userData1);
+      print("===================================");
+      setState(() {
+        // Update the list of users
+        userDataById = userData1;
+      });
+    } catch (e) {
+      print('Error fetching users: $e');
+    }
   }
 
   @override
@@ -443,23 +470,23 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(width: 500),
-                _avatarWidget(Url! + Path! + userData!['avatar'].toString()),
-                const SizedBox(width: 30),
-                Text(
-                  userData!['first_name'].toString() +
-                      userData!['last_name'].toString(),
-                  style: AppTextStyle.brownS20W800,
-                ),
-                const SizedBox(width: 150),
-                _menuItem("Relative", onTap: () {
-                  Get.toNamed(RouteConfig.relative,
-                      arguments: {'user': userData!['id']});
-                }),
+                // const SizedBox(width: 500),
+                // _avatarWidget(Url! + Path! + userData!['avatar'].toString()),
+                // const SizedBox(width: 30),
+                // Text(
+                //   userData!['first_name'].toString() +
+                //       userData!['last_name'].toString(),
+                //   style: AppTextStyle.brownS20W800,
+                // ),
+                // const SizedBox(width: 150),
+                // _menuItem("Relative", onTap: () {
+                //   Get.toNamed(RouteConfig.relative,
+                //       arguments: {'user': userData!['id']});
+                // }),
                 const SizedBox(width: 10),
                 _menuItem("Fix", onTap: () {
                   updateUser(context);
-                })
+                }),
               ],
             ),
           ),
@@ -485,26 +512,27 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
                         const SizedBox(height: 10),
                         EmployeeInfor(
                           "Id",
-                          userData!['id'].toString(),
+                          userDataById!['employee']['id'].toString(),
                         ),
                         const SizedBox(height: 10),
                         EmployeeInfor(
                           "Personal Id",
-                          userData!['Personal_Id'].toString(),
+                          userDataById!['employee']['Personal_Id'].toString(),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         EmployeeInfor(
                           "Name",
-                          userData!['first_name'].toString() +
+                          userDataById!['employee']['first_name'].toString() +
                               ' ' +
-                              userData!['last_name'].toString(),
+                              userDataById!['employee']['last_name'].toString(),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        EmployeeInfor("Gender", userData!['gender'].toString()),
+                        EmployeeInfor("Gender",
+                            userDataById!['employee']['gender'].toString()),
                         const SizedBox(
                           height: 10,
                         ),
@@ -512,78 +540,92 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
                         EmployeeInfor(
                           "Birth day",
                           DateFormat(AppConfigs.dateAPI).format(DateTime.parse(
-                              userData!['birth_date'].toString())),
+                              userDataById!['employee']['birth_date']
+                                  .toString())),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        EmployeeInfor("Email", userData!['email'].toString()),
+                        EmployeeInfor("Email",
+                            userDataById!['employee']['email'].toString()),
                         const SizedBox(
                           height: 10,
                         ),
-                        EmployeeInfor(
-                            "Address", userData!['address'].toString()),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        EmployeeInfor(
-                            "Contract", userData!['phone_number'].toString()),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        EmployeeInfor("Qualification",
-                            userData!['Qualification'].toString()),
+                        EmployeeInfor("Address",
+                            userDataById!['employee']['address'].toString()),
                         const SizedBox(
                           height: 10,
                         ),
                         EmployeeInfor(
-                            "Nationality", userData!['Nationality'].toString()),
+                            "Contract",
+                            userDataById!['employee']['phone_number']
+                                .toString()),
                         const SizedBox(
                           height: 10,
                         ),
                         EmployeeInfor(
-                            "Ethnicity", userData!['Ethnicity'].toString()),
+                            "Qualification",
+                            userDataById!['employee']['Qualification']
+                                .toString()),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        EmployeeInfor(
+                            "Nationality",
+                            userDataById!['employee']['Nationality']
+                                .toString()),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        EmployeeInfor("Ethnicity",
+                            userDataById!['employee']['Ethnicity'].toString()),
                         const SizedBox(
                           height: 10,
                         ),
                         EmployeeInfor(
                           "Issue Date",
                           DateFormat(AppConfigs.dateAPI).format(DateTime.parse(
-                              userData!['Issue_Date'].toString())),
+                              userDataById!['employee']['Issue_Date']
+                                  .toString())),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        EmployeeInfor(
-                            "Issue By", userData!['Issued_By'].toString()),
+                        EmployeeInfor("Issue By",
+                            userDataById!['employee']['Issued_By'].toString()),
                         const SizedBox(
                           height: 10,
                         ),
                         EmployeeInfor(
                           "Start Date",
                           DateFormat(AppConfigs.dateAPI).format(DateTime.parse(
-                              userData!['Start_Date'].toString())),
+                              userDataById!['employee']['Start_Date']
+                                  .toString())),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        EmployeeInfor("Language",
+                            userDataById!['employee']['Language'].toString()),
                         const SizedBox(
                           height: 10,
                         ),
                         EmployeeInfor(
-                            "Language", userData!['Language'].toString()),
+                            "Computer Science",
+                            userDataById!['employee']['Computer_Science']
+                                .toString()),
                         const SizedBox(
                           height: 10,
                         ),
-                        EmployeeInfor("Computer Science",
-                            userData!['Computer_Science'].toString()),
+                        EmployeeInfor("Role Id",
+                            userDataById!['employee']['Role_id'].toString()),
                         const SizedBox(
                           height: 10,
                         ),
                         EmployeeInfor(
-                            "Role Id", userData!['Role_id'].toString()),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        EmployeeInfor("Permanent Address",
-                            userData!['Permanent_Address'].toString()),
+                            "Permanent Address",
+                            userDataById!['employee']['Permanent_Address']
+                                .toString()),
                         const SizedBox(
                           height: 10,
                         ),
