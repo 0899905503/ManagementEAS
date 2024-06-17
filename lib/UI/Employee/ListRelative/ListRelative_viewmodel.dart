@@ -32,6 +32,13 @@ class ListRelativeViewModel extends ChangeNotifier {
   Sink<String> get employeeIdSink => _employeeIdSubject.sink;
 
   ////////////////
+  ///  final BehaviorSubject<String> manv = BehaviorSubject<String>();
+
+  final BehaviorSubject<String> manv = BehaviorSubject<String>();
+
+  Stream<String> get manvStream => manv.stream;
+  Sink<String> get manvSink => manv.sink;
+  ////////////////////////
 
   Future<List<Map<String, dynamic>>> getAllRelativesApi() async {
     try {

@@ -690,8 +690,10 @@ class _EmployeeListState extends State<EmployeeList> {
                           : 'No Email'),
                   onTap: () {
                     // Gọi hàm xử lý sự kiện khi tiêu đề được nhấn
-                    Get.toNamed(RouteConfig.personalInformation,
-                        arguments: {'user': user!['users'][index]});
+                    Get.toNamed(RouteConfig.personalInformation, arguments: {
+                      'useridemployeelist': user['users'][index]['id']
+                    });
+                    //   print(user!['users'][index]['id']);
                   },
                   trailing: IconButton(
                     icon: Icon(Icons.delete),

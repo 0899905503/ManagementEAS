@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meas/UI/Admin/Management/choose_app.dart';
 import 'package:meas/UI/Admin/admin_page_view.dart';
+import 'package:meas/UI/Admin/search_relative_by_employeeid/search_relative_by_employeeid_view.dart';
+import 'package:meas/UI/Admin/search_relative_by_employeeid/search_relative_by_employeeid_viewmodel.dart';
 import 'package:meas/UI/Employee/EmployeeList/employeelist_view.dart';
 import 'package:meas/UI/Employee/EmployeeList/employeelist_viewmodel.dart';
 
@@ -86,6 +88,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SalaryInforViewModel()),
         ChangeNotifierProvider(create: (_) => CreateDisciplineViewModel()),
         ChangeNotifierProvider(create: (_) => CreateBonusViewModel()),
+        ChangeNotifierProvider(
+            create: (_) => SearchRelativeByEmployeeIdViewModel()),
       ],
       child: Builder(
         builder: (context) {

@@ -48,32 +48,31 @@ class TkPersonalIFChildPage extends StatefulWidget {
 
 class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
   int? userData;
+  int? useridbyemployeelist;
   Map<String, dynamic>? userDataById;
   final String? Url = AppConfigs.baseUrl;
   final String? Path = "storage/Img/AVT/";
   final EmployeeListViewModel employeeListViewModel = EmployeeListViewModel();
-  final TextEditingController idController = TextEditingController();
-  final TextEditingController personalIdController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController qualificationController = TextEditingController();
-  final TextEditingController nationalityController = TextEditingController();
-  final TextEditingController ethnicityController = TextEditingController();
-  final TextEditingController languageController = TextEditingController();
-  final TextEditingController computerScienceController =
-      TextEditingController();
-  final TextEditingController religionController = TextEditingController();
-  final TextEditingController issueDateController = TextEditingController();
-  final TextEditingController issueByController = TextEditingController();
-  final TextEditingController startDateController = TextEditingController();
-  final TextEditingController roleIdController = TextEditingController();
-  final TextEditingController permanentAddressController =
-      TextEditingController();
+  final idController = TextEditingController();
+  final personalIdController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final genderController = TextEditingController();
+  final addressController = TextEditingController();
+  final qualificationController = TextEditingController();
+  final nationalityController = TextEditingController();
+  final ethnicityController = TextEditingController();
+  final languageController = TextEditingController();
+  final computerScienceController = TextEditingController();
+  final religionController = TextEditingController();
+  final issueDateController = TextEditingController();
+  final issueByController = TextEditingController();
+  final startDateController = TextEditingController();
+  final roleIdController = TextEditingController();
+  final permanentAddressController = TextEditingController();
   PersonalInformationViewModel personalinfor = PersonalInformationViewModel();
   DateTime? selectedIssueDate;
   DateTime? selectedStartDate;
@@ -84,7 +83,13 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
   void initState() {
     super.initState();
     userData = Get.arguments['userid'];
-    fetchUsers(userData!);
+    useridbyemployeelist = Get.arguments['useridemployeelist'];
+    if (userData == null) {
+      fetchUsers(useridbyemployeelist!);
+    } else {
+      fetchUsers(userData!);
+    }
+    //fetchUsers(userData! ?? useridbyemployeelist!);
     // Initialize controllers with user data
     // idController.text = userDataById!['employee']['id'].toString();
     // personalIdController.text =
@@ -127,6 +132,42 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
       setState(() {
         // Update the list of users
         userDataById = userData1;
+        idController.text = userDataById!['employee']['id'].toString();
+        personalIdController.text =
+            userDataById!['employee']['Personal_Id'].toString();
+        emailController.text = userDataById!['employee']['email'].toString();
+        passwordController.text =
+            userDataById!['employee']['password'].toString();
+        firstNameController.text =
+            userDataById!['employee']['first_name'].toString();
+        lastNameController.text =
+            userDataById!['employee']['last_name'].toString();
+        phoneNumberController.text =
+            userDataById!['employee']['phone_number'].toString();
+        genderController.text = userDataById!['employee']['gender'].toString();
+        addressController.text =
+            userDataById!['employee']['address'].toString();
+        qualificationController.text =
+            userDataById!['employee']['Qualification'].toString();
+        nationalityController.text =
+            userDataById!['employee']['Nationality'].toString();
+        ethnicityController.text =
+            userDataById!['employee']['Ethnicity'].toString();
+        languageController.text =
+            userDataById!['employee']['Language'].toString();
+        computerScienceController.text =
+            userDataById!['employee']['Computer_Science'].toString();
+        religionController.text =
+            userDataById!['employee']['Religion'].toString();
+        issueDateController.text =
+            userDataById!['employee']['Issue_Date'].toString();
+        issueByController.text =
+            userDataById!['employee']['Issued_By'].toString();
+        startDateController.text =
+            userDataById!['employee']['Start_Date'].toString();
+        roleIdController.text = userDataById!['employee']['Role_id'].toString();
+        permanentAddressController.text =
+            userDataById!['employee']['Permanent_AdduserDatas'].toString();
       });
     } catch (e) {
       print('Error fetching users: $e');
@@ -170,7 +211,7 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
       barrierDismissible: true,
       builder: (context) {
         return AlertDialog(
-          title: Text('Employee'),
+          title: const Text('Employee'),
           content: SingleChildScrollView(
             child: Container(
               child: Column(
@@ -697,6 +738,26 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
 
   @override
   void dispose() {
+    // personalIdController.dispose();
+    // emailController.dispose();
+    // passwordController.dispose();
+    // firstNameController.dispose();
+    // lastNameController.dispose();
+    // phoneNumberController.dispose();
+    // genderController.dispose();
+    // addressController.dispose();
+    // nationalityController.dispose();
+    // qualificationController.dispose();
+    // ethnicityController.dispose();
+    // languageController.dispose();
+    // computerScienceController.dispose();
+    // religionController.dispose();
+    // issueDateController.dispose();
+    // issueByController.dispose();
+    // startDateController.dispose();
+    // roleIdController.dispose();
+    // permanentAddressController.dispose();
+    // idController.dispose();
     super.dispose();
   }
 }

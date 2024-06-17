@@ -184,9 +184,8 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
                   "Relatives",
                   AppImages.icJob,
                   onTap: () {
-                    Get.toNamed(
-                      RouteConfig.listRelative,
-                    );
+                    Get.toNamed(RouteConfig.relative,
+                        arguments: {'userid': res!["id"]});
                   },
                 ),
                 _menuItem(

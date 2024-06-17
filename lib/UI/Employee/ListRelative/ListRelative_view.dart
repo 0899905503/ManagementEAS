@@ -53,6 +53,10 @@ class _ListRelativeState extends State<ListRelative> {
   String selectedGender = 'male';
   late StreamSubscription<String> emailSubscription;
 
+  int? selectedEmployeeId;
+  final TextEditingController manvController = TextEditingController();
+  List<Map<String, dynamic>> userid = [];
+
   @override
   void initState() {
     super.initState();
@@ -230,6 +234,62 @@ class _ListRelativeState extends State<ListRelative> {
             _menuItem("Add", onTap: () {
               _showDialog(context);
             }),
+            StreamBuilder<String>(
+              stream: listRelativeViewModel.manv,
+              builder: (context, snapshot) {
+                return Row(
+                  children: [
+                    SearchRelativeByUserId(
+                      "* Employee Id:",
+                      selectedEmployeeId?.toString() ?? 'No ID selected',
+                      controller: manvController,
+                    ),
+                    const SizedBox(width: 20),
+                    Container(
+                      width: 170,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: Color(0xff663300)),
+                      ),
+                      child: DropdownButton<String>(
+                        value: selectedEmployeeId?.toString(),
+                        hint: const Text("Select Employee ID"),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedEmployeeId = int.tryParse(newValue!);
+                            manvController.text =
+                                selectedEmployeeId?.toString() ?? '';
+                          });
+                        },
+                        underline: Container(),
+                        items: userid.isNotEmpty
+                            ? (userid[0]['employee_ids'] as List<dynamic>)
+                                .map<DropdownMenuItem<String>>((dynamic id) {
+                                return DropdownMenuItem<String>(
+                                  value: id.toString(),
+                                  child: Text(id.toString()),
+                                );
+                              }).toList()
+                            : [],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(RouteConfig.relative, arguments: {
+                    'useridadmin': int.parse(manvController.text)
+                  });
+                  //  print(manvController.text);
+                },
+                child: Text("Search")),
           ],
         ),
         Expanded(
@@ -459,6 +519,37 @@ Widget createrelative1(String title, String hintText,
             controller: controller,
             enabled: false, // Tắt khả năng chỉnh sửa trực tiếp trên TextField
           ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget SearchRelativeByUserId(String title, String hintText,
+    {required TextEditingController controller}) {
+  return SizedBox(
+    width: 367,
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: AppTextStyle.brownS14W800
+                  .copyWith(fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(width: 100),
+          ],
+        ),
+        AppTextField(
+          obscureText: false,
+          hintText: hintText,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          borderRadius: 10,
+          showOutline: true,
+          controller: controller,
         ),
       ],
     ),
