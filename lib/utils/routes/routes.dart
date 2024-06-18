@@ -41,6 +41,8 @@ class RouteConfig {
   static const String choosePage = "/choosePage";
   static const String createBonusPage = "/createBonusPage";
   static const String createDisciplinePage = "/createDisciplinePage";
+  static const String bonusListPage = "/bonusListPage";
+  static const String showBonusesByEmployeeId1 = "/showBonusesByEmployeeId";
 
   ///Alias ​​mapping page
   static final List<GetPage> getPages = [

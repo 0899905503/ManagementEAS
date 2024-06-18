@@ -8,6 +8,7 @@ import 'package:meas/UI/Employee/Homepage/home_page_view.dart';
 import 'package:meas/UI/Employee/ListRelative/ListRelative_viewmodel.dart';
 import 'package:meas/UI/Employee/Login/auth_viewmodel.dart';
 import 'package:meas/UI/Employee/Login/signin/signin_viewmodel.dart';
+import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_images.dart';
 import 'package:meas/common/app_text_styles.dart';
@@ -46,6 +47,7 @@ class _ListRelativeState extends State<ListRelative> {
 
   //
   ListRelativeViewModel listRelativeViewModel = ListRelativeViewModel();
+  SalaryDetailViewModel salaryDetailViewModel1 = SalaryDetailViewModel();
 //
   String selectedRoleId = '1';
   DateTime? selectedBirthDay;
@@ -60,9 +62,43 @@ class _ListRelativeState extends State<ListRelative> {
   @override
   void initState() {
     super.initState();
-
+    fetchEmployeeIds();
     fetchRelatives();
 //================
+  }
+
+  Future<void> fetchEmployeeIds() async {
+    try {
+      List<Map<String, dynamic>> ids = await salaryDetailViewModel1.getIds();
+      setState(() {
+        userid = ids;
+      });
+      print("=================================");
+      print(userid.toString());
+      print("=================================");
+    } catch (e) {
+      _showErrorDialog("Không có id nhân viên");
+    }
+  }
+
+  Future<void> _showErrorDialog(String errorMessage) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Warning"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   ///////////////////////////////////

@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:meas/UI/Salary/Bonus/create_bonus_viewmodel.dart';
 
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_text_styles.dart';
+import 'package:meas/configs/app_configs.dart';
 import 'package:meas/widgets/appbar/tk_app_bar.dart';
 import 'package:meas/widgets/textfields/app_text_field.dart';
 import 'package:provider/provider.dart';
@@ -61,13 +64,15 @@ class _CreateBonusChildPageState extends State<CreateBonusChildPage> {
   List<Map<String, dynamic>> userid = [];
   List<Map<String, dynamic>> bonusd1 = [];
   Map<String, dynamic>? bonusname;
-
+  DateTime? selectedNgaykhenthuong1;
   @override
   void initState() {
     super.initState();
     _streamController = StreamController<List<Map<String, dynamic>>>();
     fetchBonusIds();
     fetchEmployeeIds();
+    selectedNgaykhenthuong1 = DateTime.parse(DateFormat(AppConfigs.dateAPI)
+        .format(Get.arguments['date'] ?? DateTime.now().toString()));
   }
 
   @override
@@ -271,17 +276,21 @@ class _CreateBonusChildPageState extends State<CreateBonusChildPage> {
                       StreamBuilder<String>(
                         stream: createBonusViewModel.ngaykhenthuongStream,
                         builder: (context, snapshot) {
+                          ngaykhenthuongController.text =
+                              DateFormat(AppConfigs.dateAPI)
+                                  .format(selectedNgaykhenthuong1!);
                           return CreateBonusEmployee1(
                               "ngaykhenthuong:", "ngaykhenthuong",
                               controller: ngaykhenthuongController,
                               onTap: () => _selectDate(
                                     context,
-                                    selectedNgaykhenthuong,
+                                    selectedNgaykhenthuong1 ??
+                                        selectedNgaykhenthuong,
                                     (date) {
                                       setState(() {
-                                        selectedNgaykhenthuong = date;
+                                        selectedNgaykhenthuong1 = date;
                                         ngaykhenthuongController.text =
-                                            selectedNgaykhenthuong!
+                                            selectedNgaykhenthuong1!
                                                 .toLocal()
                                                 .toString()
                                                 .split(' ')[0];

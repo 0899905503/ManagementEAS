@@ -20,6 +20,10 @@ import 'package:meas/UI/Employee/RelativeList/relativelist_view.dart';
 import 'package:meas/UI/Employee/RelativeList/relativelist_viewmodel.dart';
 import 'package:meas/UI/Salary/Bonus/create_bonus_view.dart';
 import 'package:meas/UI/Salary/Bonus/create_bonus_viewmodel.dart';
+import 'package:meas/UI/Salary/Bonus/show_bonus_by_employee_id/show_bonus_by_employee_id_view.dart';
+import 'package:meas/UI/Salary/Bonus/show_bonus_by_employee_id/show_bonus_by_employee_id_viewmodel.dart';
+import 'package:meas/UI/Salary/Bonus/show_bonus_list/show_bonus_list_view.dart';
+import 'package:meas/UI/Salary/Bonus/show_bonus_list/show_bonus_list_viewmodel.dart';
 import 'package:meas/UI/Salary/Discipline/create_discipline_view.dart';
 import 'package:meas/UI/Salary/Discipline/create_discipline_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_infor/salary_infor_view.dart';
@@ -90,6 +94,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CreateBonusViewModel()),
         ChangeNotifierProvider(
             create: (_) => SearchRelativeByEmployeeIdViewModel()),
+        ChangeNotifierProvider(create: (_) => BonusListViewModel()),
+        ChangeNotifierProvider(create: (_) => ShowBonusByEmployeeIdViewModel()),
       ],
       child: Builder(
         builder: (context) {
@@ -148,6 +154,11 @@ class MyApp extends StatelessWidget {
               GetPage(
                   name: '/createDisciplinePage',
                   page: () => const CreateDisciplinePage()),
+              GetPage(
+                  name: '/bonusListPage', page: () => const BonusListPage()),
+              GetPage(
+                  name: '/showBonusesByEmployeeId',
+                  page: () => const ShowBonusByEmployeeIdPage()),
             ],
           );
         },

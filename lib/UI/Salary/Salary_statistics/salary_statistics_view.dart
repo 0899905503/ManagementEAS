@@ -103,7 +103,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
-        _selectedDate = DateTime(picked.year, picked.month, 1);
+        _selectedDate = DateTime(picked.year, picked.month, picked.day);
         isLoading = true;
       });
       await fetchSalaryList(); // Gọi lại fetchSalaryList để tải dữ liệu mới
@@ -267,11 +267,13 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                         DataColumn(label: Text('Department')),
                         DataColumn(label: Text('Role')),
                         DataColumn(label: Text('Rank Id')),
-                        DataColumn(label: Text("Rank's name")),
-                        DataColumn(label: Text('Bac luong ')),
-                        DataColumn(label: Text('He so luong')),
-                        DataColumn(label: Text('Luong theo bac')),
-                        DataColumn(label: Text('Salary total')),
+                        DataColumn(label: Text("Rank Name")),
+                        DataColumn(label: Text('Salary Rank')),
+                        DataColumn(label: Text('Coefficients Salary')),
+                        DataColumn(label: Text('Salary Scale')),
+                        DataColumn(label: Text('Salary Bonus')),
+                        DataColumn(label: Text('Salary Discipline')),
+                        DataColumn(label: Text('Total')),
                       ],
                       rows: List<DataRow>.generate(salarylist.length, (index) {
                         var item = salarylist[index];
@@ -302,6 +304,12 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                               : 'null')),
                           DataCell(Text(item['luongtheobac'] != null
                               ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['luongtheobac'].toString()))} vnđ"
+                              : 'null')),
+                          DataCell(Text(item['tienthuong'] != null
+                              ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tienthuong'].toString()))} vnđ"
+                              : 'null')),
+                          DataCell(Text(item['tienphat'] != null
+                              ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tienphat'].toString()))} vnđ"
                               : 'null')),
                           DataCell(Text(item['tongluong'] != null
                               ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tongluong'].toString()))} vnđ"

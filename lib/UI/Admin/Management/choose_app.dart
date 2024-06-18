@@ -85,7 +85,7 @@ class _ChooseChildPageState extends State<ChooseChildPage> {
                     "Khen Thưởng",
                     AppImages.icEmployee,
                     onTap: () {
-                      Get.toNamed(RouteConfig.createBonusPage);
+                      Get.toNamed(RouteConfig.bonusListPage);
                     },
                   ),
                   const SizedBox(
