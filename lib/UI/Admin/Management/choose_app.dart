@@ -72,7 +72,7 @@ class _ChooseChildPageState extends State<ChooseChildPage> {
                     .center, // Center the Wrap's children horizontally
                 children: [
                   _menuItem(
-                    "Nhân viên",
+                    "Employee",
                     AppImages.icEmployee,
                     onTap: () {
                       Get.toNamed(RouteConfig.employeeList);
@@ -82,7 +82,7 @@ class _ChooseChildPageState extends State<ChooseChildPage> {
                     width: 11,
                   ),
                   _menuItem(
-                    "Khen Thưởng",
+                    "Bonus",
                     AppImages.icEmployee,
                     onTap: () {
                       Get.toNamed(RouteConfig.bonusListPage);
@@ -92,17 +92,17 @@ class _ChooseChildPageState extends State<ChooseChildPage> {
                     width: 11,
                   ),
                   _menuItem(
-                    "Kỷ Luật",
+                    "Discipline",
                     AppImages.icEmployee,
                     onTap: () {
-                      Get.toNamed(RouteConfig.createDisciplinePage);
+                      Get.toNamed(RouteConfig.disciplineListPage);
                     },
                   ),
                   const SizedBox(
                     width: 11,
                   ),
                   _menuItem(
-                    "Thân Nhân",
+                    "Relative",
                     AppImages.icEmployee,
                     onTap: () {
                       Get.toNamed(RouteConfig.listRelative);
@@ -112,7 +112,7 @@ class _ChooseChildPageState extends State<ChooseChildPage> {
                     width: 11,
                   ),
                   _menuItem(
-                    "Lương",
+                    "Salary",
                     AppImages.icSalary,
                     onTap: () {
                       Get.toNamed(RouteConfig.salaryStatistic);

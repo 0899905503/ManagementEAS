@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -15,7 +18,12 @@ import 'package:meas/utils/routes/routes.dart';
 import 'package:meas/widgets/appbar/tk_app_bar.dart';
 import 'package:meas/widgets/images/app_cache_image.dart';
 import 'package:meas/widgets/textfields/app_text_field.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' as excel;
+import 'dart:html' as html;
+import 'dart:typed_data';
 
 class SalaryArguments {
   String param;
@@ -67,6 +75,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
   late final List<Map<String, dynamic>> salaryDetails = [];
   late List<Map<String, dynamic>> salarylist = []; // Khởi tạo salarylist trước
   List<Map<String, dynamic>> userid = [];
+  List<Map<String, dynamic>> userid1 = [];
   Map<String, dynamic>? salaryinfor;
   bool isLoading = false;
 
@@ -82,6 +91,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
     //fetchSalaryInfor(selectedEmployeeId!);
     fetchSalaryDetail(); // Gọi hàm để lấy dữ liệu từ API khi StatefulWidget được khởi tạo
     fetchSalaryList();
+    fetchexpdf();
   }
 
   @override
@@ -108,6 +118,21 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
       });
       await fetchSalaryList(); // Gọi lại fetchSalaryList để tải dữ liệu mới
       print("Update API");
+    }
+  }
+
+  Future<void> fetchexpdf() async {
+    try {
+      List<Map<String, dynamic>> salaryData =
+          await salaryDetailViewModel.exPdf();
+      print("////////////////////////////////////////////");
+      print(salaryData);
+      print("////////////////////////////////////////////");
+      setState(() {
+        userid1 = salaryData;
+      });
+    } catch (e) {
+      print('Error fetching salary details: $e');
     }
   }
 
@@ -207,7 +232,13 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
       Row(
         children: [
           const SizedBox(
-            width: 940,
+            width: 540,
+          ),
+          createSalary('Export', onTap: () {
+            exportToExcel(salarylist);
+          }),
+          const SizedBox(
+            width: 20,
           ),
           _menuItem(
               'Select Month',
@@ -322,6 +353,58 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
     ]);
   }
 
+  void exportToExcel(List<Map<String, dynamic>> salaryList) {
+    // Tạo một Workbook mới
+    var excel = Excel.createExcel();
+
+    // Thêm một Sheet vào Workbook
+    var sheet = excel['Sheet1'];
+
+    // Thêm các cột vào Sheet
+    sheet.appendRow([
+      'Id',
+      'Name',
+      'Department',
+      'Role',
+      'Rank Id',
+      'Rank Name',
+      'Salary Rank',
+      'Coefficients Salary',
+      'Salary Scale',
+      'Salary Bonus',
+      'Salary Discipline',
+      'Total'
+    ]);
+
+    // Thêm dữ liệu từ DataTable vào Sheet
+    for (var item in salaryList) {
+      sheet.appendRow([
+        item['manv'] != null ? item['manv'].toString() : '',
+        item['tennv'] != null ? item['tennv'].toString() : '',
+        item['phongban'] != null ? item['phongban'].toString() : '',
+        item['chucvu'] != null ? item['chucvu'].toString() : '',
+        item['mangach'] != null ? item['mangach'].toString() : '',
+        item['tenngach'] != null ? item['tenngach'].toString() : '',
+        item['bacluong'] != null ? item['bacluong'].toString() : '',
+        item['hesoluong'] != null ? item['hesoluong'].toString() : '',
+        item['luongtheobac'] != null ? item['luongtheobac'].toString() : '',
+        item['tienthuong'] != null ? item['tienthuong'].toString() : '',
+        item['tienphat'] != null ? item['tienphat'].toString() : '',
+        item['tongluong'] != null ? item['tongluong'].toString() : '',
+      ]);
+    }
+
+    // Tạo và lưu file Excel
+    List<int>? excelBytes = excel.encode();
+    final blob = html.Blob([excelBytes],
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    html.AnchorElement(href: url)
+      ..setAttribute('download', 'salary_list.xlsx')
+      ..click();
+    html.Url.revokeObjectUrl(url);
+  }
+
   Widget _menuItem(
     String title,
     String date, {
@@ -334,7 +417,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
         height: 60,
         decoration: BoxDecoration(
           color: AppColors.textWhite,
-          border: Border.all(color: AppColors.borderMenuItem, width: 1),
+          // border: Border.all(color: AppColors.borderMenuItem, width: 1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -422,7 +505,7 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
         height: 40,
         decoration: BoxDecoration(
           color: AppColors.textWhite,
-          border: Border.all(color: AppColors.borderMenuItem, width: 1),
+          //border: Border.all(color: AppColors.borderMenuItem, width: 1),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
@@ -481,8 +564,8 @@ class _SalaryChildPageState extends State<SalaryChildPage> {
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        width: 2, color: Color(0xff663300)),
+                                    // border: Border.all(
+                                    //     width: 2, color: Color(0xff663300)),
                                   ),
                                   child: DropdownButton<String>(
                                     value: selectedEmployeeId?.toString(),

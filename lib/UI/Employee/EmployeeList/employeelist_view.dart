@@ -144,7 +144,7 @@ class _EmployeeListState extends State<EmployeeList> {
                         StreamBuilder<String>(
                             stream: employeeListViewModel.personalIdStream,
                             builder: (context, snapshot) {
-                              return createUser("Personal Id:", "Personal Id",
+                              return createUser("* Personal Id:", "Personal Id",
                                   controller: personalIdController);
                             }),
                         const SizedBox(
@@ -153,7 +153,7 @@ class _EmployeeListState extends State<EmployeeList> {
                         StreamBuilder<String>(
                             stream: employeeListViewModel.emailStream,
                             builder: (context, snapshot) {
-                              return createUser("Email:", "Email",
+                              return createUser("* Email:", "Email",
                                   controller: emailController);
                             }),
                         const SizedBox(
@@ -163,7 +163,7 @@ class _EmployeeListState extends State<EmployeeList> {
                             stream: employeeListViewModel.passwordStream,
                             builder: (context, snapshot) {
                               return createPassword(
-                                "Password:",
+                                "* Password:",
                                 "Password",
                                 controller: passwordController,
                               );
@@ -192,7 +192,8 @@ class _EmployeeListState extends State<EmployeeList> {
                         StreamBuilder<String>(
                             stream: employeeListViewModel.phoneNumberStream,
                             builder: (context, snapshot) {
-                              return createUser("Phone Number:", "Phone Number",
+                              return createUser(
+                                  "* Phone Number:", "Phone Number",
                                   controller: phoneNumberController);
                             }),
                         const SizedBox(
@@ -398,7 +399,7 @@ class _EmployeeListState extends State<EmployeeList> {
                               String roleId = snapshot.data ?? selectedRoleId;
                               return Row(
                                 children: [
-                                  createUser("Role Id", "Role Id",
+                                  createUser("* Role Id", "Role Id",
                                       controller: roleIdController),
                                   const SizedBox(
                                     width: 10,
@@ -429,19 +430,31 @@ class _EmployeeListState extends State<EmployeeList> {
                                         ),
                                         DropdownMenuItem(
                                           value: '2',
-                                          child: Text('Department Head'),
+                                          child: Text('Deputy Manager'),
                                         ),
                                         DropdownMenuItem(
                                           value: '3',
-                                          child: Text('Deputy Director'),
+                                          child: Text('Manager'),
                                         ),
                                         DropdownMenuItem(
                                           value: '4',
-                                          child: Text('Director'),
+                                          child: Text('Vice President'),
                                         ),
                                         DropdownMenuItem(
                                           value: '5',
+                                          child: Text('President'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '6',
+                                          child: Text('Vice Chairman'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '7',
                                           child: Text('Chairman'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: '8',
+                                          child: Text('Admin'),
                                         ),
                                       ],
                                     ),

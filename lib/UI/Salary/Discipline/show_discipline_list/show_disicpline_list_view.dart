@@ -5,7 +5,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:meas/UI/Salary/Bonus/show_bonus_list/show_bonus_list_viewmodel.dart';
+
+import 'package:meas/UI/Salary/Discipline/show_discipline_list/show_discipline_list_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
 
 import 'package:meas/common/app_colors.dart';
@@ -15,43 +16,45 @@ import 'package:meas/utils/routes/routes.dart';
 import 'package:meas/widgets/appbar/tk_app_bar.dart';
 import 'package:meas/widgets/textfields/app_text_field.dart';
 
-class BonusListPage extends StatelessWidget {
-  // final BonusListArguments arguments;
+class DisciplineListPage extends StatelessWidget {
+  // final DisciplineListArguments arguments;
 
-  const BonusListPage({
+  const DisciplineListPage({
     Key? key,
     // required this.arguments,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BonusListViewModelProvider(
+    return DisciplineListViewModelProvider(
       child: MaterialApp(
         home: Scaffold(
-          body: SafeArea(child: BonusListChildPage()),
+          body: SafeArea(child: DisciplineListChildPage()),
         ),
       ),
     );
   }
 }
 
-class BonusListChildPage extends StatefulWidget {
-  const BonusListChildPage({Key? key}) : super(key: key);
+class DisciplineListChildPage extends StatefulWidget {
+  const DisciplineListChildPage({Key? key}) : super(key: key);
 
   @override
-  State<BonusListChildPage> createState() => _BonusListChildPageState();
+  State<DisciplineListChildPage> createState() =>
+      _DisciplineListChildPageState();
 }
 
-class _BonusListChildPageState extends State<BonusListChildPage> {
+class _DisciplineListChildPageState extends State<DisciplineListChildPage> {
   late StreamController<List<Map<String, dynamic>>> _streamController;
   late StreamController<List<Map<String, dynamic>>> _streamController1;
   final TextEditingController manvController = TextEditingController();
-  late BonusListViewModel bonusListViewModel =
-      BonusListViewModelProvider.of(context);
-  late BonusListViewModel bonusListViewModel1 = BonusListViewModel();
+  late DisciplineListViewModel disciplineListViewModel =
+      DisciplineListViewModelProvider.of(context);
+  late DisciplineListViewModel disciplineListViewModel1 =
+      DisciplineListViewModel();
   SalaryDetailViewModel salaryDetailViewModel1 = SalaryDetailViewModel();
-  late List<Map<String, dynamic>> bonusList =
-      []; // Khởi tạo BonusListlist trước
+  late List<Map<String, dynamic>> DisciplineList =
+      []; // Khởi tạo DisciplineListlist trước
   List<Map<String, dynamic>> userid = [];
 
   bool isLoading = false;
@@ -65,7 +68,7 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
     _streamController = StreamController<List<Map<String, dynamic>>>();
     _streamController1 = StreamController<List<Map<String, dynamic>>>();
     fetchEmployeeIds();
-    fetchBonusList();
+    fetchDisciplineList();
   }
 
   @override
@@ -90,15 +93,15 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
         _selectedDate = DateTime(picked.year, picked.month, 1);
         isLoading = true;
       });
-      await fetchBonusList(); // Gọi lại fetchBonusListList để tải dữ liệu mới
+      await fetchDisciplineList(); // Gọi lại fetchDisciplineListList để tải dữ liệu mới
       print("Update API");
     }
   }
 
-  Future<void> fetchBonusList() async {
+  Future<void> fetchDisciplineList() async {
     try {
-      List<Map<String, dynamic>> bonusListData1 =
-          await bonusListViewModel.showBonusListByMonthAndYear(
+      List<Map<String, dynamic>> DisciplineListData1 =
+          await disciplineListViewModel.showDisciplineListByMonthAndYear(
         int.parse(DateFormat(AppConfigs.year).format(DateTime.parse(
           _selectedDate.toString(),
         ))),
@@ -107,16 +110,16 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
         ))),
       );
       setState(() {
-        bonusList = bonusListData1;
+        DisciplineList = DisciplineListData1;
         isLoading = false; // Kết thúc quá trình tải dữ liệu
       });
     } catch (e) {
-      print('Error fetching BonusList : $e');
+      print('Error fetching DisciplineList : $e');
       setState(() {
         isLoading = false; // Kết thúc quá trình tải dữ liệu
       });
       _showErrorDialog(
-          "Không có thông tin lương của tháng này"); // Hiển thị dialog thông báo lỗi
+          "Không có thông tin kỷ luật của tháng này"); // Hiển thị dialog thông báo lỗi
     }
   }
 
@@ -139,7 +142,7 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
     return Scaffold(
       appBar: TKCommonAppBar(
         hasLeadingIcon: true,
-        title: "BonusList",
+        title: "DisciplineList",
       ),
       body: SafeArea(
         child: _buildBodyWidget(),
@@ -167,17 +170,17 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
           const SizedBox(
             width: 20,
           ),
-          createBonusList("Add", onTap: () {
-            Get.toNamed(RouteConfig.createBonusPage,
+          createDisciplineList("Add", onTap: () {
+            Get.toNamed(RouteConfig.createDisciplinePage,
                 arguments: {'date': _selectedDate});
-            // // Kiểm tra nếu BonusListlist không rỗng và BonusListlist[0]['thang'] không null
-            // if (bonusList.isNotEmpty && bonusList[0]['thang'] != null) {
+            // // Kiểm tra nếu DisciplineListlist không rỗng và DisciplineListlist[0]['thang'] không null
+            // if (DisciplineList.isNotEmpty && DisciplineList[0]['thang'] != null) {
             //   Get.toNamed(RouteConfig.createEmployeeSalary,
-            //       arguments: {'date': bonusList[0]['thang']});
+            //       arguments: {'date': DisciplineList[0]['thang']});
             // } else {
-            //   // Xử lý trường hợp BonusListlist rỗng hoặc BonusListlist[0]['thang'] không có giá trị
+            //   // Xử lý trường hợp DisciplineListlist rỗng hoặc DisciplineListlist[0]['thang'] không có giá trị
             //   print(
-            //       'Không thể truyền tham số date vì BonusListlist rỗng hoặc không có giá trị cho thang');
+            //       'Không thể truyền tham số date vì DisciplineListlist rỗng hoặc không có giá trị cho thang');
             // }
             // //(context);
           }),
@@ -185,11 +188,11 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
             width: 20,
           ),
           StreamBuilder<String>(
-            stream: bonusListViewModel1.manv,
+            stream: disciplineListViewModel1.manv,
             builder: (context, snapshot) {
               return Row(
                 children: [
-                  createBonusListEmployee(
+                  createDisciplineListEmployee(
                     "* Employee Id:",
                     selectedEmployeeId?.toString() ?? 'No ID selected',
                     controller: manvController,
@@ -234,7 +237,7 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
           ),
           ElevatedButton(
               onPressed: () {
-                Get.toNamed(RouteConfig.showBonusesByEmployeeId1,
+                Get.toNamed(RouteConfig.showDisciplinesByEmployeeId,
                     arguments: {'useridadmin': int.parse(manvController.text)});
                 //  print(manvController.text);
               },
@@ -246,7 +249,7 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
       ),
       isLoading
           ? const CircularProgressIndicator() // Hiển thị indicator loading khi đang tải dữ liệu
-          : bonusList.isEmpty
+          : DisciplineList.isEmpty
               ? const Text(
                   'Select the month you want to view') // Hiển thị thông báo khi không có dữ liệu
               : Container(
@@ -254,32 +257,33 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
                     child: DataTable(
                       columns: const [
                         DataColumn(label: Text('Employee Id')),
-                        DataColumn(label: Text('Bonus Id')),
+                        DataColumn(label: Text('Discipline Id')),
                         DataColumn(label: Text('Reason')),
                         DataColumn(label: Text('Create Date')),
-                        DataColumn(label: Text('Salary Bonus')),
+                        DataColumn(label: Text('Salary Discipline')),
                       ],
-                      rows: List<DataRow>.generate(bonusList.length, (index) {
-                        var item = bonusList[index];
+                      rows: List<DataRow>.generate(DisciplineList.length,
+                          (index) {
+                        var item = DisciplineList[index];
                         return DataRow(cells: [
                           DataCell(Text(item['manv'] != null
                               ? item['manv'].toString()
                               : 'null')),
-                          DataCell(Text(item['makhenthuong'] != null
-                              ? item['makhenthuong'].toString()
+                          DataCell(Text(item['makyluat'] != null
+                              ? item['makyluat'].toString()
                               : 'null')),
                           DataCell(Text(item['lydo'] != null
                               ? item['lydo'].toString()
                               : 'null')),
                           //dateAPI
-                          DataCell(Text(item['ngaykhenthuong'] != null
+                          DataCell(Text(item['ngaykyluat'] != null
                               ? DateFormat(AppConfigs.dateAPI)
                                   .format(DateTime.parse(
-                                  item['ngaykhenthuong'].toString(),
+                                  item['ngaykyluat'].toString(),
                                 ))
                               : 'null')),
-                          DataCell(Text(item['tienthuong'] != null
-                              ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tienthuong'].toString()))} vnđ"
+                          DataCell(Text(item['tienphat'] != null
+                              ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tienphat'].toString()))} vnđ"
                               //NumberFormat(AppConfigs.formatter).format(int.parse( item['tienthuong'].toString()))
                               : 'null')),
                         ]);
@@ -375,7 +379,7 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
     );
   }
 
-  Widget createBonusList(
+  Widget createDisciplineList(
     String func,
 
     ///String department,
@@ -410,7 +414,7 @@ class _BonusListChildPageState extends State<BonusListChildPage> {
 
   // Hàm để hiển thị dialog
 
-  Widget createBonusListEmployee(String title, String hintText,
+  Widget createDisciplineListEmployee(String title, String hintText,
       {required TextEditingController controller}) {
     return SizedBox(
         width: 367,

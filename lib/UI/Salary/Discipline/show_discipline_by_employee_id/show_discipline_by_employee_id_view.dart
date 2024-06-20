@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:meas/UI/Salary/Discipline/show_discipline_by_employee_id/show_discipline_by_employee_id_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_text_styles.dart';
 import 'package:meas/configs/app_configs.dart';
@@ -47,7 +48,7 @@ class _ShowDisciplineByEmployeeIdChildPageState
   late ShowDisciplineByEmployeeIdViewModel
       showDisciplineByEmployeeIdViewModel1 =
       ShowDisciplineByEmployeeIdViewModel();
-  int? idsearch1;
+  int? idsearch;
   late List<Map<String, dynamic>> showDisciplineByEmployeeId =
       []; // Khởi tạo ShowDisciplineByEmployeeIdlist trước
 
@@ -58,9 +59,9 @@ class _ShowDisciplineByEmployeeIdChildPageState
     super.initState();
     _streamController = StreamController<List<Map<String, dynamic>>>();
     _streamController1 = StreamController<List<Map<String, dynamic>>>();
-    idsearch1 = Get.arguments['useridadmin'];
+    idsearch = Get.arguments['useridadmin'];
     //  fetchDisciplineList(idsearch!);
-    fetchDisciplineList(idsearch1!);
+    fetchDisciplineList(idsearch!);
   }
 
   @override
@@ -72,11 +73,11 @@ class _ShowDisciplineByEmployeeIdChildPageState
 
   Future<void> fetchDisciplineList(int userid) async {
     try {
-      List<Map<String, dynamic>> Disciplinelist =
+      List<Map<String, dynamic>> disciplinelist =
           await showDisciplineByEmployeeIdViewModel1
               .GetDisciplineesByEmployeeId(userid);
       setState(() {
-        showDisciplineByEmployeeId = Disciplinelist;
+        showDisciplineByEmployeeId = disciplinelist;
         isLoading = false; // Kết thúc quá trình tải dữ liệu
       });
     } catch (e) {
@@ -85,7 +86,7 @@ class _ShowDisciplineByEmployeeIdChildPageState
         isLoading = false; // Kết thúc quá trình tải dữ liệu
       });
       _showErrorDialog(
-          "Không có thông tin khen thưởng của nhân viên này!"); // Hiển thị dialog thông báo lỗi
+          "Không có thông tin kỷ luật của nhân viên này!"); // Hiển thị dialog thông báo lỗi
     }
   }
 
@@ -109,7 +110,7 @@ class _ShowDisciplineByEmployeeIdChildPageState
             ? const CircularProgressIndicator() // Hiển thị indicator loading khi đang tải dữ liệu
             : showDisciplineByEmployeeId.isEmpty
                 ? const Text(
-                    'Không có thông tin khen thưởng của nhân viên này!') // Hiển thị thông báo khi không có dữ liệu
+                    'Không có thông tin kỷ luật của nhân viên này!') // Hiển thị thông báo khi không có dữ liệu
                 : Container(
                     child: SingleChildScrollView(
                       child: DataTable(
@@ -123,21 +124,21 @@ class _ShowDisciplineByEmployeeIdChildPageState
                             showDisciplineByEmployeeId.length, (index) {
                           var item = showDisciplineByEmployeeId[index];
                           return DataRow(cells: [
-                            DataCell(Text(item['makhenthuong'] != null
-                                ? item['makhenthuong'].toString()
+                            DataCell(Text(item['makyluat'] != null
+                                ? item['makyluat'].toString()
                                 : 'null')),
                             DataCell(Text(item['lydo'] != null
                                 ? item['lydo'].toString()
                                 : 'null')),
                             //dateAPI
-                            DataCell(Text(item['ngaykhenthuong'] != null
+                            DataCell(Text(item['ngaykyluat'] != null
                                 ? DateFormat(AppConfigs.dateAPI)
                                     .format(DateTime.parse(
-                                    item['ngaykhenthuong'].toString(),
+                                    item['ngaykyluat'].toString(),
                                   ))
                                 : 'null')),
-                            DataCell(Text(item['tienthuong'] != null
-                                ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tienthuong'].toString()))} vnđ"
+                            DataCell(Text(item['tienphat'] != null
+                                ? "${NumberFormat(AppConfigs.formatter).format(int.parse(item['tienphat'].toString()))} vnđ"
                                 //NumberFormat(AppConfigs.formatter).format(int.parse( item['tienthuong'].toString()))
                                 : 'null')),
                           ]);

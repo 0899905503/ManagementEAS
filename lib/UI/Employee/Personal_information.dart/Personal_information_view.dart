@@ -136,8 +136,9 @@ class _TkPersonalIFChildPageState extends State<TkPersonalIFChildPage> {
         personalIdController.text =
             userDataById!['employee']['Personal_Id'].toString();
         emailController.text = userDataById!['employee']['email'].toString();
-        passwordController.text =
-            userDataById!['employee']['password'].toString();
+        // passwordController.text =
+        //     userDataById!['employee']['password'].toString();
+        passwordController.text = "Password input";
         firstNameController.text =
             userDataById!['employee']['first_name'].toString();
         lastNameController.text =

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -6,6 +8,7 @@ import 'package:meas/UI/Employee/Login/signin/signin_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_images.dart';
 import 'package:meas/common/app_text_styles.dart';
+import 'package:meas/configs/app_configs.dart';
 import 'package:meas/configs/security.dart';
 import 'package:meas/utils/routes/routes.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +24,8 @@ class ChooseAppScreen extends StatefulWidget {
 }
 
 class _ChooseAppScreenState extends State<ChooseAppScreen> {
+  bool ispermission = true;
+  Map<String, dynamic>? res;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,13 +37,42 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
   @override
   void initState() {
     a();
+
+    // if (int.parse(res!['id'].toString()) == 35) {
+    //   ispermission = true;
+    // } else {
+    //   ispermission = false;
+    // }
   }
 
   Future<void> a() async {
-    print(await Security.storage.read(key: 'token'));
+    final String? Url = AppConfigs.baseUrl;
+    const String apiUrlPath = "api";
+    const String Users = "/users";
+    String? token = await Security.storage.read(key: 'token');
+
+    final response = await http.get(
+      Uri.parse('$Url$apiUrlPath$Users'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    setState(() {
+      res = jsonDecode(response.body);
+    });
   }
 
+  // Future<void> a() async {
+  //   print(await Security.storage.read(key: 'token'));
+  // }
+
   Widget _buildBodyWidget() {
+    if (int.parse(res!['id'].toString()) == 35) {
+      ispermission = true;
+    } else {
+      ispermission = false;
+    }
     return Stack(
       children: [
         Container(
@@ -81,7 +115,7 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
                 Row(
                   children: [
                     const SizedBox(
-                      width: 550,
+                      width: 620,
                     ),
                     _menuItem(
                       "Nhân viên",
@@ -103,13 +137,23 @@ class _ChooseAppScreenState extends State<ChooseAppScreen> {
                     const SizedBox(
                       width: 11,
                     ),
-                    _menuItem(
-                      "Admin",
-                      AppImages.icPerson,
-                      onTap: () {
-                        Get.toNamed(RouteConfig.adminPage);
-                      },
+                    Visibility(
+                      visible: ispermission,
+                      child: _menuItem(
+                        "Admin",
+                        AppImages.icPerson,
+                        onTap: () {
+                          Get.toNamed(RouteConfig.adminPage);
+                        },
+                      ),
                     ),
+                    // _menuItem(
+                    //   "print",
+                    //   AppImages.icPerson,
+                    //   onTap: () {
+                    //     Get.toNamed(RouteConfig.adminPage);
+                    //   },
+                    // ),
                   ],
                 ),
                 const SizedBox(

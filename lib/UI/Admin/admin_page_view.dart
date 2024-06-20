@@ -77,23 +77,23 @@ class _AdminChildPageState extends State<AdminChildPage> {
                 const SizedBox(
                   width: 11,
                 ),
-                _menuItem(
-                  "Xem báo cáo",
-                  AppImages.icJob,
-                  onTap: () {
-                    Get.toNamed('/admin/view-reports');
-                  },
-                ),
-                const SizedBox(
-                  width: 11,
-                ),
-                _menuItem(
-                  "Hồ sơ",
-                  AppImages.icMenuSupplier,
-                  onTap: () {
-                    Get.toNamed('/admin/profile');
-                  },
-                ),
+                // _menuItem(
+                //   "Xem báo cáo",
+                //   AppImages.icJob,
+                //   onTap: () {
+                //     Get.toNamed('/admin/view-reports');
+                //   },
+                // ),
+                // const SizedBox(
+                //   width: 11,
+                // ),
+                // _menuItem(
+                //   "Hồ sơ",
+                //   AppImages.icMenuSupplier,
+                //   onTap: () {
+                //     Get.toNamed('/admin/profile');
+                //   },
+                // ),
               ],
             ),
           ],

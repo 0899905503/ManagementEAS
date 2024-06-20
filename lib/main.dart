@@ -26,8 +26,13 @@ import 'package:meas/UI/Salary/Bonus/show_bonus_list/show_bonus_list_view.dart';
 import 'package:meas/UI/Salary/Bonus/show_bonus_list/show_bonus_list_viewmodel.dart';
 import 'package:meas/UI/Salary/Discipline/create_discipline_view.dart';
 import 'package:meas/UI/Salary/Discipline/create_discipline_viewmodel.dart';
+import 'package:meas/UI/Salary/Discipline/show_discipline_by_employee_id/show_discipline_by_employee_id_view.dart';
+import 'package:meas/UI/Salary/Discipline/show_discipline_by_employee_id/show_discipline_by_employee_id_viewmodel.dart';
+import 'package:meas/UI/Salary/Discipline/show_discipline_list/show_discipline_list_viewmodel.dart';
+import 'package:meas/UI/Salary/Discipline/show_discipline_list/show_disicpline_list_view.dart';
 import 'package:meas/UI/Salary/Salary_infor/salary_infor_view.dart';
 import 'package:meas/UI/Salary/Salary_infor/salary_infor_viewmodel.dart';
+import 'package:meas/UI/Salary/Salary_rank_only_person/salary_rank_only_person_view.dart';
 import 'package:meas/UI/Salary/Salary_ranking/salary_rank_view.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_view.dart';
@@ -96,6 +101,9 @@ class MyApp extends StatelessWidget {
             create: (_) => SearchRelativeByEmployeeIdViewModel()),
         ChangeNotifierProvider(create: (_) => BonusListViewModel()),
         ChangeNotifierProvider(create: (_) => ShowBonusByEmployeeIdViewModel()),
+        ChangeNotifierProvider(create: (_) => DisciplineListViewModel()),
+        ChangeNotifierProvider(
+            create: (_) => ShowDisciplineByEmployeeIdViewModel()),
       ],
       child: Builder(
         builder: (context) {
@@ -159,6 +167,15 @@ class MyApp extends StatelessWidget {
               GetPage(
                   name: '/showBonusesByEmployeeId',
                   page: () => const ShowBonusByEmployeeIdPage()),
+              GetPage(
+                  name: '/disciplineListPage',
+                  page: () => const DisciplineListPage()),
+              GetPage(
+                  name: '/showDisciplinesByEmployeeId',
+                  page: () => const ShowDisciplineByEmployeeIdPage()),
+              GetPage(
+                  name: '/rankSalaryPersonal',
+                  page: () => const SalaryRankOnlyPersonPage()),
             ],
           );
         },

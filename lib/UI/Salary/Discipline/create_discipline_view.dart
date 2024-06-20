@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:meas/UI/Salary/Discipline/create_discipline_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
 import 'package:meas/common/app_colors.dart';
 import 'package:meas/common/app_text_styles.dart';
+import 'package:meas/configs/app_configs.dart';
 import 'package:meas/widgets/appbar/tk_app_bar.dart';
 import 'package:meas/widgets/textfields/app_text_field.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +54,7 @@ class _CreateDisciplineChildPageState extends State<CreateDisciplineChildPage> {
   int? selectedEmployeeId;
   int? selectedDisciplineId;
   DateTime? selectedNgaykyluat;
+  DateTime? selectedNgaykyluat1;
 
   final TextEditingController makyluatController = TextEditingController();
   final TextEditingController lydoController = TextEditingController();
@@ -68,6 +73,8 @@ class _CreateDisciplineChildPageState extends State<CreateDisciplineChildPage> {
     _streamController = StreamController<List<Map<String, dynamic>>>();
     fetchDisciplineIds();
     fetchEmployeeIds();
+    selectedNgaykyluat1 = DateTime.parse(DateFormat(AppConfigs.dateAPI)
+        .format(Get.arguments['date'] ?? DateTime.now().toString()));
   }
 
   @override
@@ -276,12 +283,15 @@ class _CreateDisciplineChildPageState extends State<CreateDisciplineChildPage> {
                       StreamBuilder<String>(
                         stream: createDisciplineViewModel.ngaykyluatStream,
                         builder: (context, snapshot) {
+                          ngaykyluatController.text =
+                              DateFormat(AppConfigs.dateAPI)
+                                  .format(selectedNgaykyluat1!);
                           return createDisciplineEmployee1(
                               "ngaykyluat:", "ngaykyluat",
                               controller: ngaykyluatController,
                               onTap: () => _selectDate(
                                     context,
-                                    selectedNgaykyluat,
+                                    selectedNgaykyluat1 ?? selectedNgaykyluat,
                                     (date) {
                                       setState(() {
                                         selectedNgaykyluat = date;

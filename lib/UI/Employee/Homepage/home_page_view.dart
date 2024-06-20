@@ -188,13 +188,13 @@ class _TkHomeChildPageState extends State<TkHomeChildPage> {
                         arguments: {'userid': res!["id"]});
                   },
                 ),
-                _menuItem(
-                  "Xin nghỉ phép",
-                  AppImages.icLeave,
-                  onTap: () {
-                    // Get.toNamed(RouteConfig.tkTakeLeavePage);
-                  },
-                ),
+                // _menuItem(
+                //   "Xin nghỉ phép",
+                //   AppImages.icLeave,
+                //   onTap: () {
+                //     // Get.toNamed(RouteConfig.tkTakeLeavePage);
+                //   },
+                // ),
                 _menuItem(
                   "Profile",
                   AppImages.icMenuSupplier,

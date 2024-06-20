@@ -10,11 +10,11 @@ class SalaryInforViewModel extends ChangeNotifier {
   static const String getSalaryInfors = "/showSalaryUser/";
   static const String getSalaryByMonth = '/salary/';
 
-  Future<List<Map<String, dynamic>>> getSalaryInfor(int UserId) async {
+  Future<List<Map<String, dynamic>>> getSalaryInfor(int userId) async {
     String? token = await Security.storage.read(key: 'token');
     try {
       http.Response response = await http.get(
-        Uri.parse("$Url$apiUrlPath$getSalaryInfors$UserId"),
+        Uri.parse("$Url$apiUrlPath$getSalaryInfors$userId"),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'

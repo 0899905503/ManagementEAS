@@ -6,14 +6,16 @@ import 'package:http/http.dart' as http;
 import 'package:meas/configs/app_configs.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ShowBonusByEmployeeIdViewModel extends ChangeNotifier {
+class ShowDisciplineByEmployeeIdViewModel extends ChangeNotifier {
   final String? Url = AppConfigs.baseUrl;
   static const String apiUrlPath = "api";
-  static const String showBonusesByEmployeeId = "/showBonusesByEmployeeId/";
-  Future<List<Map<String, dynamic>>> GetBonusesByEmployeeId(int userid) async {
+  static const String showDisciplinesByEmployeeId =
+      "/showDisciplinesByEmployeeId/";
+  Future<List<Map<String, dynamic>>> GetDisciplineesByEmployeeId(
+      int userid) async {
     try {
       http.Response response = await http.get(
-        Uri.parse("$Url$apiUrlPath$showBonusesByEmployeeId$userid"),
+        Uri.parse("$Url$apiUrlPath$showDisciplinesByEmployeeId$userid"),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -43,51 +45,52 @@ class ShowBonusByEmployeeIdViewModel extends ChangeNotifier {
   }
 }
 
-class ShowBonusByEmployeeIdViewModelProvider extends StatefulWidget {
+class ShowDisciplineByEmployeeIdViewModelProvider extends StatefulWidget {
   final Widget child;
 
-  ShowBonusByEmployeeIdViewModelProvider({required this.child});
+  ShowDisciplineByEmployeeIdViewModelProvider({required this.child});
 
-  static ShowBonusByEmployeeIdViewModel of(BuildContext context) {
+  static ShowDisciplineByEmployeeIdViewModel of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<
-            ShowBonusByEmployeeIdViewModelInherited>()!
+            ShowDisciplineByEmployeeIdViewModelInherited>()!
         .viewModel;
   }
 
   @override
-  ShowBonusByEmployeeIdViewModelProviderState createState() =>
-      ShowBonusByEmployeeIdViewModelProviderState();
+  ShowDisciplineByEmployeeIdViewModelProviderState createState() =>
+      ShowDisciplineByEmployeeIdViewModelProviderState();
 }
 
-class ShowBonusByEmployeeIdViewModelProviderState
-    extends State<ShowBonusByEmployeeIdViewModelProvider> {
-  late final ShowBonusByEmployeeIdViewModel _viewModel;
+class ShowDisciplineByEmployeeIdViewModelProviderState
+    extends State<ShowDisciplineByEmployeeIdViewModelProvider> {
+  late final ShowDisciplineByEmployeeIdViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    _viewModel = ShowBonusByEmployeeIdViewModel();
+    _viewModel = ShowDisciplineByEmployeeIdViewModel();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ShowBonusByEmployeeIdViewModelInherited(
+    return ShowDisciplineByEmployeeIdViewModelInherited(
       viewModel: _viewModel,
       child: widget.child,
     );
   }
 }
 
-class ShowBonusByEmployeeIdViewModelInherited extends InheritedWidget {
-  final ShowBonusByEmployeeIdViewModel viewModel;
+class ShowDisciplineByEmployeeIdViewModelInherited extends InheritedWidget {
+  final ShowDisciplineByEmployeeIdViewModel viewModel;
 
-  ShowBonusByEmployeeIdViewModelInherited({
+  ShowDisciplineByEmployeeIdViewModelInherited({
     required Widget child,
     required this.viewModel,
   }) : super(child: child);
 
   @override
-  bool updateShouldNotify(ShowBonusByEmployeeIdViewModelInherited oldWidget) =>
+  bool updateShouldNotify(
+          ShowDisciplineByEmployeeIdViewModelInherited oldWidget) =>
       true;
 }

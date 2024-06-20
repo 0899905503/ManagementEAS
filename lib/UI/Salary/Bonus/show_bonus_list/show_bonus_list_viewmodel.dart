@@ -7,36 +7,11 @@ import 'package:meas/configs/app_configs.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BonusListViewModel extends ChangeNotifier {
-  final BehaviorSubject<String> mangach = BehaviorSubject<String>();
-  final BehaviorSubject<String> bacluong = BehaviorSubject<String>();
-  final BehaviorSubject<String> hesoluong = BehaviorSubject<String>();
   final BehaviorSubject<String> manv = BehaviorSubject<String>();
-  final BehaviorSubject<bool> _SaveSubject = BehaviorSubject<bool>();
-  final BehaviorSubject<String> luongtheobac = BehaviorSubject<String>();
-  final BehaviorSubject<String> thang = BehaviorSubject<String>();
-  final BehaviorSubject<String> luongcoban = BehaviorSubject<String>();
-  Stream<String> get mangachStream => mangach.stream;
-  Sink<String> get mangachSink => mangach.sink;
-
-  Stream<String> get bacluongStream => bacluong.stream;
-  Sink<String> get bacluongSink => bacluong.sink;
-
-  Stream<String> get hesoluongStream => hesoluong.stream;
-  Sink<String> get hesoluongSink => hesoluong.sink;
 
   Stream<String> get manvStream => manv.stream;
   Sink<String> get manvSink => manv.sink;
 
-  Stream<String> get luongtheobacStream => luongtheobac.stream;
-  Sink<String> get luongtheobacSink => luongtheobac.sink;
-
-  Stream<String> get thangStream => thang.stream;
-  Sink<String> get thangSink => thang.sink;
-
-  Stream<String> get luongcobanStream => luongcoban.stream;
-  Sink<String> get luongcobanSink => luongcoban.sink;
-  Stream<bool> get saveStream => _SaveSubject.stream;
-  Sink<bool> get saveSink => _SaveSubject.sink;
   final String? Url = AppConfigs.baseUrl;
   static const String apiUrlPath = "api";
   static const String showbonuslistbymonthandyear = "/showBonusesByMonth/";

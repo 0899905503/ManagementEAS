@@ -1,34 +1,28 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-import 'package:meas/UI/Employee/EmployeeList/employeelist_viewmodel.dart';
+import 'package:meas/UI/Salary/Salary_infor/salary_infor_viewmodel.dart';
 import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_viewmodel.dart';
-import 'package:meas/UI/Salary/Salary_statistics/salary_statistics_view.dart';
-
 import 'package:meas/common/app_colors.dart';
-import 'package:meas/common/app_images.dart';
-import 'package:meas/common/app_text_styles.dart';
 import 'package:meas/configs/app_configs.dart';
 import 'package:meas/widgets/appbar/tk_app_bar.dart';
-import 'package:meas/widgets/images/app_cache_image.dart';
 import 'package:provider/provider.dart';
 
-class SalaryRankArguments {
+class SalaryRankOnlyPersonArguments {
   String param;
 
-  SalaryRankArguments({
+  SalaryRankOnlyPersonArguments({
     required this.param,
   });
 }
 
-class SalaryRankPage extends StatelessWidget {
-  // final SalaryRankArguments arguments;
+class SalaryRankOnlyPersonPage extends StatelessWidget {
+  // final SalaryRankOnlyPersonArguments arguments;
 
-  const SalaryRankPage({
+  const SalaryRankOnlyPersonPage({
     Key? key,
     // required this.arguments,
   }) : super(key: key);
@@ -37,34 +31,33 @@ class SalaryRankPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: SafeArea(child: SalaryRankChildPage()),
+        body: SafeArea(child: SalaryRankOnlyPersonChildPage()),
       ),
     );
   }
 }
 
-class SalaryRankChildPage extends StatefulWidget {
-  const SalaryRankChildPage({Key? key}) : super(key: key);
+class SalaryRankOnlyPersonChildPage extends StatefulWidget {
+  const SalaryRankOnlyPersonChildPage({Key? key}) : super(key: key);
 
   @override
-  State<SalaryRankChildPage> createState() => _SalaryRankChildPageState();
+  State<SalaryRankOnlyPersonChildPage> createState() =>
+      _SalaryRankOnlyPersonChildPageState();
 }
 
-class _SalaryRankChildPageState extends State<SalaryRankChildPage> {
+class _SalaryRankOnlyPersonChildPageState
+    extends State<SalaryRankOnlyPersonChildPage> {
   late StreamController<List<Map<String, dynamic>>> _streamController;
 
-  late SalaryDetailViewModel salaryDetailViewModel =
-      SalaryDetailViewModelProvider.of(context);
+  SalaryInforViewModel salaryInforViewModel = SalaryInforViewModel();
   List<Map<String, dynamic>> ranks = [];
-  late DateTime _selectedDate;
+  int? userid;
+
   @override
   void initState() {
     super.initState();
     _streamController = StreamController<List<Map<String, dynamic>>>();
-
-    // Không truy cập SalaryDetailViewModel ở đây
-    _selectedDate =
-        DateTime.parse(Get.arguments['date'] ?? DateTime.now().toString());
+    userid = Get.arguments['userId'];
   }
 
   @override
@@ -77,44 +70,32 @@ class _SalaryRankChildPageState extends State<SalaryRankChildPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Truy cập SalaryDetailViewModelProvider ở đây sau khi dependencies hoàn thành
-    var salaryRankDetailViewModel = Provider.of<SalaryDetailViewModel>(context);
-
     // Fetch dữ liệu khi dependencies thay đổi
-    fetchSalaryRankDetail(salaryRankDetailViewModel);
+    fetchUsers(userid!);
   }
 
-  Future<void> fetchSalaryRankDetail(
-      SalaryDetailViewModel salaryRankDetailViewModel) async {
+  Future<void> fetchUsers(int userid) async {
     try {
-      List<Map<String, dynamic>> data =
-          await salaryRankDetailViewModel.showSalariesByMonthAndYear(
-        int.parse(DateFormat(AppConfigs.year).format(_selectedDate)),
-        int.parse(DateFormat(AppConfigs.month).format(_selectedDate)),
-      );
+      List<Map<String, dynamic>> salaryData =
+          await salaryInforViewModel.getSalaryInfor(userid);
       setState(() {
-        ranks = data;
-        _streamController.add(data);
+        // Update the list of users
+        ranks = salaryData;
+        _streamController.add(salaryData);
       });
     } catch (e) {
-      print('Error fetching salary detail: $e');
+      print('Error fetching users: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     // Lấy tham số từ đường dẫn
-    var arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-    // Kiểm tra nếu arguments không null và có giá trị 'date'
-    if (arguments != null && arguments.containsKey('date')) {
-      _selectedDate = DateTime.parse(arguments['date']);
-    }
     return Scaffold(
       appBar: TKCommonAppBar(
         hasLeadingIcon: true,
-        title: "SalaryRank",
+        title: "Salary Rank MySelf",
       ),
       body: SafeArea(
         child: _buildBodyWidget(),
@@ -137,15 +118,14 @@ class _SalaryRankChildPageState extends State<SalaryRankChildPage> {
             List<Map<String, dynamic>> convertedData =
                 snapshot.data!.map((item) {
               return {
-                'tennv': item['tennv'].toString(),
+                'thang': item['thang'].toString(),
                 'tongluong': double.parse(item['tongluong'].toString()),
               };
             }).toList();
             return Center(
               child:
                   //Text(convertedData.toString()),
-
-                  _buildSalaryRankChart(convertedData),
+                  _buildSalaryRankOnlyPersonChart(convertedData),
             );
           }
         },
@@ -154,23 +134,18 @@ class _SalaryRankChildPageState extends State<SalaryRankChildPage> {
   }
 }
 
-Widget _buildSalaryRankChart(List<Map<String, dynamic>> salaryRankData) {
-  List<SalaryRank> data = [];
-  List<Map<String, dynamic>> arraylist = salaryRankData;
+Widget _buildSalaryRankOnlyPersonChart(
+    List<Map<String, dynamic>> SalaryRankOnlyPersonData) {
+  List<SalaryRankOnlyPerson> data = [];
 
-  arraylist.sort(
-    (a, b) => b['tongluong'] - a['tongluong'],
-  );
-  arraylist.length >= 2 && arraylist.length <= 8;
-  arraylist = arraylist.reversed.toList();
   // Chuyển đổi dữ liệu và thêm vào danh sách
-  for (var item in arraylist) {
-    String name = item['tennv'].toString();
+  for (var item in SalaryRankOnlyPersonData) {
+    String name = item['thang'].toString();
     // Kiểm tra nếu giá trị 'tongluong' không phải là null và có thể chuyển đổi sang double
     if (item['tongluong'] != null && item['tongluong'] is num) {
       double? tongluong = item['tongluong']; // Chuyển đổi sang int
       if (tongluong != null) {
-        data.add(SalaryRank(name, tongluong));
+        data.add(SalaryRankOnlyPerson(name, tongluong));
       } else {
         print('Invalid tongluong value: ${item['tongluong']}');
       }
@@ -185,11 +160,11 @@ Widget _buildSalaryRankChart(List<Map<String, dynamic>> salaryRankData) {
     width: 800,
     child: charts.BarChart(
       [
-        charts.Series<SalaryRank, String>(
-          id: 'SalaryRank',
+        charts.Series<SalaryRankOnlyPerson, String>(
+          id: 'SalaryRankOnlyPerson',
           colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.chart),
-          domainFn: (SalaryRank rank, _) => rank.name,
-          measureFn: (SalaryRank rank, _) => rank.Salary,
+          domainFn: (SalaryRankOnlyPerson rank, _) => rank.name,
+          measureFn: (SalaryRankOnlyPerson rank, _) => rank.Salary,
           data: data,
         ),
       ],
@@ -205,9 +180,9 @@ Widget _buildSalaryRankChart(List<Map<String, dynamic>> salaryRankData) {
   );
 }
 
-class SalaryRank {
+class SalaryRankOnlyPerson {
   final String name;
   final double Salary;
 
-  SalaryRank(this.name, this.Salary);
+  SalaryRankOnlyPerson(this.name, this.Salary);
 }

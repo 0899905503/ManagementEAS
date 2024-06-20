@@ -77,5 +77,5 @@ class AppColors {
   //chart
   static const Color universeGradientStart = Color(0xFF20002c); // Dark Purple
   static const Color universeGradientEnd = Color(0xFFb000ff); // Light Magenta
-  static const Color chart = Color(0xFF522157); // Light Magenta
+  static const Color chart = Color(0xFF2F4F4F); // Light Magenta
 }

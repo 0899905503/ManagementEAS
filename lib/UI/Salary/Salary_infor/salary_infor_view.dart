@@ -90,23 +90,6 @@ class _SalaryInforChildPageState extends State<SalaryInforChildPage> {
     getSalary();
   }
 
-  // Future<void> fetchUsers() async {
-  //   try {
-  //     // Sử dụng Provider để lấy RelativeListViewModel
-  //     var salaryInforviewmodel =
-  //         Provider.of<SalaryInforViewModel>(context, listen: false);
-  //     List<Map<String, dynamic>> salaryData =
-  //         // await salaryInforviewmodel.getSalaryInfor(userId);
-  //           int.parse(userId.toString()) ;
-  //     setState(() {
-  //       // Update the list of users
-  //       salaryInforData = List<Map<String, dynamic>>.from(salaryData);
-  //     });
-  //   } catch (e) {
-  //     print('Error fetching users: $e');
-  //   }
-  // }
-
   Future<void> getSalary() async {
     try {
       var salaryInforviewmodel =

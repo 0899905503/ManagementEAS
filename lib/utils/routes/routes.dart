@@ -39,10 +39,16 @@ class RouteConfig {
 //ADMIN
   static const String adminPage = "/adminPage";
   static const String choosePage = "/choosePage";
+  ///////////////////////////////////////////////////
   static const String createBonusPage = "/createBonusPage";
-  static const String createDisciplinePage = "/createDisciplinePage";
   static const String bonusListPage = "/bonusListPage";
   static const String showBonusesByEmployeeId1 = "/showBonusesByEmployeeId";
+  ///////////////////////////////////////////////////
+  static const String createDisciplinePage = "/createDisciplinePage";
+  static const String disciplineListPage = "/disciplineListPage";
+  static const String showDisciplinesByEmployeeId =
+      "/showDisciplinesByEmployeeId";
+  static const String rankSalaryPersonal = "/rankSalaryPersonal";
 
   ///Alias ​​mapping page
   static final List<GetPage> getPages = [
