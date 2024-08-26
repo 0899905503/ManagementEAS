@@ -49,6 +49,7 @@ class RouteConfig {
   static const String showDisciplinesByEmployeeId =
       "/showDisciplinesByEmployeeId";
   static const String rankSalaryPersonal = "/rankSalaryPersonal";
+  static const String orderPage = "/orderPage";
 
   ///Alias ​​mapping page
   static final List<GetPage> getPages = [

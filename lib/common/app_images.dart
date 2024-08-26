@@ -116,4 +116,8 @@ class AppImages {
   static const icProfile = "assets/images/Profile.png";
 
   //===========================================================================================
+  static const icPizza1 = "assets/images/pizza1.png";
+  static const icPizza2 = "assets/images/pizza2.png";
+  static const icPizza3 = "assets/images/pizza3.jpg";
+  static const icPizza4 = "assets/images/pizza4.jpg";
 }
